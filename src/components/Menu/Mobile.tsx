@@ -16,9 +16,9 @@ const Mobile = ({ isOpen }: IMobileProps): React.JSX.Element => {
                 `}
         >
             <NavItems href="/">Home</NavItems>
-            <NavItems href="">Projetos</NavItems>
-            <NavItems href="">Sobre Mim</NavItems>
-            <NavItems href="">Contato</NavItems>
+            <NavItems href="/projects">Projetos</NavItems>
+            <NavItems href="/about">Sobre Mim</NavItems>
+            <NavItems href="/contact">Contato</NavItems>
         </ul>
     )
 }

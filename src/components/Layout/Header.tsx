@@ -22,7 +22,7 @@ const Header = (): React.JSX.Element => {
         bg-blue-deep text-blue-light-00 w-full 
         sticky top-0 left-0">
 
-            <nav className="w-full max-w-6xl h-16 flex justify-end items-center md:justify-center 
+            <nav className="w-full max-w-6xl h-16 flex justify-end items-center md:justify-end lg:justify-center 
              relative">
                 <Logo />
                 <button onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">

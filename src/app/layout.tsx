@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
-import { LoadingPage } from "./components/LoadingPage";
-import Header from "./components/Layout/Header";
-import Footer from "./components/Layout/Footer";
+import Footer from "@/components/Layout/Footer";
+import { LoadingPage } from "@/components/LoadingPage";
+import Header from "@/components/Layout/Header";
+import Body from "@/components/Layout/Body";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +35,9 @@ export default function RootLayout({
       >
         <Header />
         <Suspense fallback={<LoadingPage />} >
-          {children}
+          <Body>
+            {children}
+          </Body>
         </Suspense>
         <Footer />
       </body>

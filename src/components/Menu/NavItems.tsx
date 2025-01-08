@@ -9,7 +9,7 @@ interface INavItemsProps {
 
 const NavItems = ({ children, href }: INavItemsProps): React.JSX.Element => {
   const pathName: string = usePathname()
-  const isCurrentPath = pathName === href
+  const isCurrentPath: boolean = pathName === href
   console.log(pathName)
 
   return (
@@ -17,7 +17,7 @@ const NavItems = ({ children, href }: INavItemsProps): React.JSX.Element => {
       replace
       href={href}>
       <li
-        className={`text-center p-5 h-full w-32 relative group`}>
+        className={`text-center p-5 w-32 relative group `}>
         {children}
         <p className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-white/70 h-1 bg-white transition-all duration-300 ${isCurrentPath ? 'w-full group-hover:bg-white' : 'w-0'}`} />
       </li>

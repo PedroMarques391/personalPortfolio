@@ -4,7 +4,7 @@ interface IBodyProps {
 
 const Body = ({ children }: IBodyProps): React.JSX.Element => {
     return (
-        <main className="flex flex-col items-center  min-h-screen w-full max-w-7xl mx-auto p-5">
+        <main className="flex flex-col items-start  min-h-screen w-full max-w-7xl mx-auto p-5">
             {children}
         </main>
     )
