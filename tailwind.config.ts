@@ -22,7 +22,9 @@ export default {
         'blue-soft': '#5c7a99',
       },
       fontFamily: {
-        'sans': ['Montserrat', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
+        mono: ['Fira Code', 'monospace'],
       },
     },
   },
