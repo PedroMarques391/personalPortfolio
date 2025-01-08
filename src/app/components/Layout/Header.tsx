@@ -18,7 +18,7 @@ const Header = (): React.JSX.Element => {
 
     return (
         <header className="flex justify-center items-center 
-        bg-blue-deep text-blue-light-00 w-full max-w-6xl
+        bg-blue-deep text-blue-light-00 w-full 
         sticky top-0 left-0 z-30">
             <nav className="w-full max-w-6xl h-16 flex justify-end items-center md:justify-center">
                 <button onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">
