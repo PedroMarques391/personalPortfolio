@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Desktop from "../Menu/Desktop"
 import Mobile from "../Menu/Mobile"
 import Logo from "../Menu/Logo"
@@ -10,12 +10,6 @@ const Header = (): React.JSX.Element => {
     function handleMenu() {
         setIsOpen((prev) => !prev)
     }
-
-    useEffect(() => {
-
-    })
-
-
 
     return (
         <header className="flex justify-center items-center 
@@ -35,6 +29,8 @@ const Header = (): React.JSX.Element => {
                 </button>
                 <Mobile
                     isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+
                 />
                 <Desktop />
             </nav>
