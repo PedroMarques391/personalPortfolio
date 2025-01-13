@@ -9,17 +9,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'blue-primary': '#1962a0',
-        'blue-secondary': '#144e80',
-        'blue-dark': '#0f3a60',
-        'blue-darker': '#0a2740',
-        'blue-deep': '#051320',
-
-        'blue-light-00': '#e0f7ff',
-        'blue-light': '#7cb7e1',
-        'gray-light': '#d1d1d1',
+        'gray-light': '#1c1c1c',
         'gray-dark': '#a0a0a0',
-        'blue-soft': '#5c7a99',
+        'gray-soft': '#d1d1d1',
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],

@@ -1,7 +1,7 @@
 
 const Footer = (): React.JSX.Element => {
     return (
-        <div>Footer</div>
+        <footer className="">Footer</footer>
     )
 }
 

@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import Footer from "@/components/Layout/Footer";
-import { LoadingPage } from "@/components/LoadingPage";
 import Header from "@/components/Layout/Header";
 import Body from "@/components/Layout/Body";
+import ScrollLinked from "@/components/Motions/ScrollLinked";
+import { LoadingPage } from "@/components/UI/LoadingPage";
 
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ScrollLinked />
         <Header />
         <Suspense fallback={<LoadingPage />} >
           <Body>
