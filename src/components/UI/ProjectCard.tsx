@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 interface IProjectCardProps {
+    index: number
     src: string;
     title: string;
     type: string;
@@ -12,7 +13,7 @@ interface IProjectCardProps {
     url?: string;
 }
 
-const ProjectCard = ({ src, title, children, tags, url, type }: IProjectCardProps) => {
+const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectCardProps) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { amount: 0.2 });
 
@@ -32,7 +33,7 @@ const ProjectCard = ({ src, title, children, tags, url, type }: IProjectCardProp
             </div>
 
             <div className="p-6 flex flex-col gap-2 justify-start">
-                <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-gray-dark group-hover:text-gray-500 transition duration-200">
+                <h2 className="text-base sm:text-lg md:text-xl  font-semibold text-gray-dark group-hover:text-gray-500 transition duration-200">
                     {title}
                 </h2>
 
@@ -58,13 +59,14 @@ const ProjectCard = ({ src, title, children, tags, url, type }: IProjectCardProp
     return (
         <motion.section
             ref={ref}
-            initial={{ opacity: 0, x: -60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
+            initial={{ opacity: 0.2, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0.2, x: -30 }}
             transition={{
-                duration: 1.5,
+                duration: 0.6, // Animação mais curta
                 type: "spring",
-                stiffness: 100,
-                damping: 10,
+                stiffness: 80, // Movimento mais suave
+                damping: 15,
+                delay: index * 0.1, // Atraso dinâmico com base no índice do card
             }}
             className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden group  duration-700 ${url ? "cursor-pointer" : ""
                 }`}

@@ -55,7 +55,7 @@ const ProjectsPage = (): React.JSX.Element => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
                 {getProjects.map((project, index) => (
-                    <ProjectCard key={index} src={project.src} tags={project.tags} type={project.type} title={project.title} url={project.url}>
+                    <ProjectCard key={index} src={project.src} tags={project.tags} type={project.type} title={project.title} url={project.url} index={index}>
                         {project.content}
                     </ProjectCard>
                 ))}
