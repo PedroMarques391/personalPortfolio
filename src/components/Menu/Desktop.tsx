@@ -1,5 +1,5 @@
 import React from 'react'
-import NavItems from './NavItems'
+import { NavItems } from './NavItems'
 
 const Desktop = (): React.JSX.Element => {
     return (

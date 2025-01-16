@@ -1,5 +1,5 @@
 "use client"
-import Button from "@/components/UI/Button"
+import { Button } from "@/components/UI/Button"
 import ProjectCard from "@/components/UI/ProjectCard"
 import { projects } from "@/utils/data"
 import { IProjectInterface } from "@/utils/model/projectModel"

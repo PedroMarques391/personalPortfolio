@@ -42,6 +42,7 @@ export default function RootLayout({
           </Body>
         </Suspense>
         <Footer />
+
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 "use client"
-import Button from "@/components/UI/Button";
-
+import { Button } from "@/components/UI/Button";
 import * as motion from "motion/react-client";
 import MarqueeEffect from "@/components/Motions/Marquee";
 import ServicesCards from "@/components/Motions/ServicesCards";
@@ -17,32 +16,41 @@ import { TbWorldWww } from "react-icons/tb";
 import HardSkillsCard from "@/components/UI/HardSkillsCard";
 import MotionPath from "@/components/Motions/MotionPath";
 import { skills } from "@/utils/data";
+import Image from "next/image";
+import Typewriter from "@/components/UI/Typewriter";
+import { useEffect, useState } from "react";
+import { handleDownload } from "@/utils/functions/handleDownload";
+import { handleScroll } from "@/utils/functions/handleScroll";
 
 
 
 export default function Home() {
 
+  const stacks: string[] = ["Front-end", "Mobile"]
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
 
 
 
-  const handleScroll = () => {
-    window.scrollBy({
-      top: 900,
-      behavior: "smooth",
-    });
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevState) => (prevState + 1) % stacks.length)
+    }, 3000);
+    return () => clearInterval(interval)
+  }, [currentIndex])
+
+
 
   return (
     <div className="text-gray-soft flex h-full flex-col">
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
         <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1  pt-0 md:pt-20">
           <div>
-            <h1 className="text-xl lg:text-3xl font-bold w-full text-center md:text-start">
-              Olá, meu nome é{" "}
-              <span className="text-orange-500">Pedro Marques</span>
+            <h1 className="text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-3">
+              Olá, meu nome é <Typewriter writing="Pedro Marques" hiddenCursor color="text-orange-500" />
             </h1>
-            <h2 className="text-xl lg:text-2xl text-white text-center md:text-left">
-              Desenvolvedor Web e Mobile
+            <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start">
+              Desenvolvedor
+              <Typewriter key={currentIndex} writing={stacks[currentIndex]} color="text-orange-500" />
             </h2>
           </div>
           <p className="text-justify leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
@@ -50,12 +58,12 @@ export default function Home() {
           </p>
           <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4 ">
             <Button>
-              <Link className="flex gap-2" href={"/contact"}>
+              <Link className="flex gap-2" href={"/contact"} prefetch>
                 <MessageCircle size={20} />
                 <p>Contato</p>
               </Link>
             </Button>
-            <Button styles="w-auto">
+            <Button styles="w-auto" onClick={handleDownload}>
               <Download size={20} />
               <p>CV</p>
             </Button>
@@ -67,21 +75,42 @@ export default function Home() {
 
         </div>
         <div className="flex flex-col md:justify-start items-center  pt-20 h-full p-3 w-full order-1 md:order-2 gap-5">
-          <div className="bg-red-500 w-64 h-64 rounded-full flex justify-center items-center ">foto</div>
+          <div className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden">
+            <Image
+              src="/assets/profile.jpeg"
+              alt="Perfil"
+              width={300}
+              height={200}
+              priority
+              className="object-cover"
+            />
+          </div>
 
           <div className="flex gap-3 justify-center lg:mx-3 w-full">
             <Button styles={"w-auto p-3 rounded-full"}>
-              <Link href={""}>
+              <Link
+                prefetch
+                target="_blank"
+                rel="noopener noreferrer"
+                href={"https://github.com/PedroMarques391"}>
                 <GithubIcon />
               </Link>
             </Button>
             <Button styles={"w-auto p-3 rounded-full"}>
-              <Link href={""}>
+              <Link
+                prefetch
+                target="_black"
+                rel="noopener noreferrer"
+                href={"https://x.com/PedroMarques391"}>
                 <X />
               </Link>
             </Button>
             <Button styles={"w-auto p-3 rounded-full"}>
-              <Link href={""}>
+              <Link
+                prefetch
+                target="_blank"
+                rel="noopener noreferrer"
+                href={"https://www.linkedin.com/in/pedromarques391/"}>
                 <Linkedin />
               </Link>
             </Button>
@@ -113,7 +142,7 @@ export default function Home() {
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
-          onClick={handleScroll}
+          onClick={() => handleScroll(900)}
           className="mx-auto text-center p-6 animate-bounce "
 
         ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>

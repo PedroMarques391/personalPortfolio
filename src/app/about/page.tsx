@@ -1,9 +1,12 @@
 "use client"
 
-import Button from '@/components/UI/Button'
+import { Button } from '@/components/UI/Button'
 import TechList from '@/components/UI/TechList'
+import { handleDownload } from '@/utils/functions/handleDownload'
+import Image from 'next/image'
 import React from 'react'
 import { BiDownload } from 'react-icons/bi'
+import { motion } from "motion/react"
 
 const About = (): React.JSX.Element => {
 
@@ -15,7 +18,11 @@ const About = (): React.JSX.Element => {
     return (
         <div className='w-full flex flex-col mb-10'>
             <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-10'>
-                <section className='lg:col-span-2 order-2 md:order-1 '>
+                <motion.section
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, type: "spring" }}
+                    className='lg:col-span-2 order-2 md:order-1 '>
                     <div className="p-0 md:p-4 text-gray-soft w-full lg:w-[90%] font-mono text-center  mx-auto md:mx-0">
                         <h1 className="text-xl lg:text-2xl font-bold font-serif w-full  md:text-left">
                             Olá, me chamo Pedro Marques
@@ -42,6 +49,7 @@ const About = (): React.JSX.Element => {
                     </div>
 
                     <Button
+                        onClick={handleDownload}
                         styles={
                             "bg-gray-800 w-auto  px-6 py-3 rounded-md mt-8 hover:scale-105 transition-transform duration-300 hover:border hover:border-white hover:text-white text-gray-300 ml-3"
                         }
@@ -52,10 +60,23 @@ const About = (): React.JSX.Element => {
                         <p className=" font-medium">Download CV</p>
                     </Button>
 
-                </section >
-                <section className='lg:col-span-1 flex justify-center items-center order-1 md:order-2'>
-                    <div className='w-[90%] h-56 m-2 bg-red-300'>Foto aqui</div>
-                </section>
+                </motion.section >
+                <motion.section
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, type: "spring" }}
+                    className='lg:col-span-1 flex justify-center items-center order-1 md:order-2'>
+                    <div className='w-[90%] mx-auto'>
+                        <Image
+                            src="/assets/profile2.jpeg"
+                            alt="Perfil"
+                            width={300}
+                            height={300}
+                            priority
+                            className="object-cover mx-auto"
+                        />
+                    </div>
+                </motion.section>
 
             </div >
             <div className='w-[90%] md:w-full  flex flex-col justify-center items-center mx-auto'>

@@ -62,11 +62,11 @@ const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectC
             initial={{ opacity: 0.2, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0.2, x: -30 }}
             transition={{
-                duration: 0.6, // Animação mais curta
+                duration: 0.6,
                 type: "spring",
-                stiffness: 80, // Movimento mais suave
+                stiffness: 80,
                 damping: 15,
-                delay: index * 0.1, // Atraso dinâmico com base no índice do card
+                delay: index * 0.1,
             }}
             className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden group  duration-700 ${url ? "cursor-pointer" : ""
                 }`}
