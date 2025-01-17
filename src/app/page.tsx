@@ -3,10 +3,11 @@ import { Button } from "@/components/UI/Button";
 import * as motion from "motion/react-client";
 import MarqueeEffect from "@/components/Motions/Marquee";
 import ServicesCards from "@/components/Motions/ServicesCards";
-import { Download, GithubIcon, Linkedin, MessageCircle, X } from "lucide-react";
+import { Download, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import {
 
+  FaGithub,
   FaRobot,
 } from "react-icons/fa";
 import { IoIosPhonePortrait } from "react-icons/io";
@@ -21,6 +22,8 @@ import Typewriter from "@/components/UI/Typewriter";
 import { useEffect, useState } from "react";
 import { handleDownload } from "@/utils/functions/handleDownload";
 import { handleScroll } from "@/utils/functions/handleScroll";
+import { ImLinkedin } from "react-icons/im";
+import { BsTwitterX } from "react-icons/bs";
 
 
 
@@ -93,7 +96,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={"https://github.com/PedroMarques391"}>
-                <GithubIcon />
+                <FaGithub size={25} />
               </Link>
             </Button>
             <Button styles={"w-auto p-3 rounded-full"}>
@@ -102,7 +105,7 @@ export default function Home() {
                 target="_black"
                 rel="noopener noreferrer"
                 href={"https://x.com/PedroMarques391"}>
-                <X />
+                <BsTwitterX size={25} />
               </Link>
             </Button>
             <Button styles={"w-auto p-3 rounded-full"}>
@@ -111,7 +114,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={"https://www.linkedin.com/in/pedromarques391/"}>
-                <Linkedin />
+                <ImLinkedin size={25} />
               </Link>
             </Button>
           </div>
