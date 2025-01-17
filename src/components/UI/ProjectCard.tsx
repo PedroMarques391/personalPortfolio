@@ -23,9 +23,8 @@ const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectC
                 <Image
                     src={src}
                     alt={title}
-                    layout="fill"
+                    fill
                     objectFit="cover"
-                    priority
                     className="rounded-t-lg group-hover:scale-105 transform transition duration-300"
                 />
                 <span className="absolute top-3 left-3 bg-gray-light text-gray-soft text-xs font-semibold py-1 px-3 rounded-md shadow-md">
