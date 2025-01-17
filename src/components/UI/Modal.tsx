@@ -11,7 +11,7 @@ interface IModalProps {
 
 const Modal = ({ title, subtitle, success, children, onClose }: IModalProps): React.JSX.Element => {
     const modalVariants = {
-        hidden: { opacity: 0, y: -50 },
+        hidden: { opacity: 0, y: 250 },
         visible: { opacity: 1, y: 0 },
     };
 
@@ -22,7 +22,7 @@ const Modal = ({ title, subtitle, success, children, onClose }: IModalProps): Re
             exit="hidden"
             variants={modalVariants}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className={`absolute top-10 right-0 md:-right-36 p-5 rounded-md shadow-lg transition-all w-full sm:w-[80%] md:w-[40%] lg:w-[30%] xl:w-[25%] ${success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+            className={`fixed bottom-0 flex flex-col justify-center items-center md:top-24 md:right-5 right-0 h-[30%] md:h-[19%] z-10 rounded-md shadow-lg transition-all w-full md:w-[50%] lg:w-[40%] xl:w-[30%] ${success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
         >
             <button
                 onClick={onClose}
@@ -32,8 +32,8 @@ const Modal = ({ title, subtitle, success, children, onClose }: IModalProps): Re
             </button>
 
             <h2 className="text-lg font-semibold text-center sm:text-xl">{title}</h2>
-            <p className="text-sm sm:text-base mt-2">{subtitle}</p>
-            <div className="mt-3">{children}</div>
+            <p className="px-5 text-sm text-center mt-2 md:mt-1">{subtitle}</p>
+            <div className="px-5 mt-3 md:mt-1 text-center">{children}</div>
         </motion.div>
     );
 };

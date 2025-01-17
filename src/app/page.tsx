@@ -45,7 +45,7 @@ export default function Home() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
         <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1  pt-0 md:pt-20">
           <div>
-            <h1 className="text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-3">
+            <h1 className="text-base sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap">
               Olá, meu nome é <Typewriter writing="Pedro Marques" hiddenCursor color="text-orange-500" />
             </h1>
             <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start">
@@ -146,8 +146,8 @@ export default function Home() {
           className="mx-auto text-center p-6 animate-bounce "
 
         ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>
-        <p className="mx-auto font-mono tracking-wider text-gray-dark text-lg">Veja o que posso fazer por você...</p>
-        <h1 className="mx-auto font-bold text-4xl font-mono tracking-wider text-gray-softF">Seviços</h1>
+        <p className="mx-auto w-full font-mono tracking-wider text-gray-dark text-base md:text-lg ">Veja o que posso fazer por você...</p>
+        <h1 className="mx-auto font-bold text-3xl md:text-4xl font-mono tracking-wider text-gray-softF">Seviços</h1>
         <div className="flex gap-6 mt-10 flex-wrap justify-center">
           <ServicesCards icon={<TbWorldWww size={50} />} title="Desenvolvimento Web">
             Construo de sites modernos, responsivos e de alta performance, criados sob medida para atender às suas necessidades. Utilizo tecnologias como <code className="text-orange-500">Node.js, Next.js, React e Tailwind</code> para oferecer soluções eficientes e personalizadas.

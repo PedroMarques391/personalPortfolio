@@ -32,7 +32,8 @@ interface IMessageInterface {
 const Contact = (): React.JSX.Element => {
     const [pending, setPending] = useState<boolean>(false)
     const [showModal, setShowModal] = useState<boolean>(false)
-    const [message, setMessage] = useState({} as IMessageInterface)
+    const [message, setMessage] = useState({
+    } as IMessageInterface)
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
         resolver: zodResolver(schema)
     })
@@ -72,9 +73,9 @@ const Contact = (): React.JSX.Element => {
     }
 
     useEffect(() => {
-        const timer = setTimeout(() => {
+        const timer: NodeJS.Timeout = setTimeout(() => {
             setShowModal(false)
-        }, 3000);
+        }, 4000);
 
         return () => clearTimeout(timer);
     }, [showModal]);
@@ -95,7 +96,7 @@ const Contact = (): React.JSX.Element => {
                     <UseAnimationFrame />
                 </div>
                 <div className='w-full flex flex-col justify-center items-center '>
-                    <form onSubmit={handleSubmit(handleContact)} className=' pt-10 pb-16 w-full flex flex-col justify-center items-center gap-6 rounded-2xl '>
+                    <form onSubmit={handleSubmit(handleContact)} className='md:pt-10 pb-16 w-full flex flex-col justify-center items-center gap-6 rounded-2xl '>
                         <Input
                             duration={0.5}
                             {...register('name')}

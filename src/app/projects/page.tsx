@@ -34,14 +34,14 @@ const ProjectsPage = (): React.JSX.Element => {
 
     return (
         <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
-            <p className="mx-auto font-mono tracking-wider text-gray-dark text-lg">Um pouco do meu trabalho</p>
-            <h1 className="mx-auto font-bold text-4xl font-mono tracking-wider text-gray-soft">Projetos</h1>
+            <p className="mx-auto font-mono tracking-wider text-gray-dark text-base md:text-lg">Um pouco do meu trabalho</p>
+            <h1 className="mx-auto font-bold text-3xl md:text-4xl font-mono tracking-wider text-gray-soft">Projetos</h1>
             <div className="flex flex-wrap justify-center gap-5 mt-10 w-[90%] mx-auto ">
                 {buttonsValues.map((button, index) => (
                     <Button
                         key={index}
                         onClick={() => handleFilter(button.title, index)}
-                        styles={`uppercase bg-gray-light rounded-md w-24 border 
+                        styles={`uppercase bg-gray-light rounded-md w-auto border 
                     ${active === index
                                 ? "scale-110 font-bold text-white"
                                 : "border-transparent text-gray-dark"
