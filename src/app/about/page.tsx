@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Button } from '@/components/UI/Button'
-import TechList from '@/components/UI/TechList'
-import { handleDownload } from '@/utils/functions/handleDownload'
-import Image from 'next/image'
-import React from 'react'
-import { BiDownload } from 'react-icons/bi'
-import { motion } from "motion/react"
+import { Button } from '@/components/UI/Button';
+import TechList from '@/components/UI/TechList';
+import { handleDownload } from '@/utils/functions/handleDownload';
+import Image from 'next/image';
+import React from 'react';
+import { BiDownload } from 'react-icons/bi';
+import { motion } from "motion/react";
 
 const About = (): React.JSX.Element => {
 
-    const frontend: string[] = ["HTML", "CSS", "Bootstrap", "TypeScript", "TailwindCSS", "Bootstrap", "React.js", "Next.js"]
-    const backend: string[] = ["Node.js", "Nest.js", "Express.js", "Java"]
-    const database: string[] = ["Postgres", "MongoDB", "Firebase", "TypeScript"]
-    const mobile: string[] = ["React Native", "Flutter"]
+    const frontend: string[] = ["HTML", "CSS", "Bootstrap", "TypeScript", "TailwindCSS", "Bootstrap", "React.js", "Next.js"];
+    const backend: string[] = ["Node.js", "Nest.js", "Express.js", "Java"];
+    const database: string[] = ["Postgres", "MongoDB", "Firebase", "TypeScript"];
+    const mobile: string[] = ["React Native", "Flutter"];
 
     return (
         <div className='w-full flex flex-col mb-10'>
@@ -119,7 +119,7 @@ const About = (): React.JSX.Element => {
 
 
         </div>
-    )
-}
+    );
+};
 
-export default About
+export default About;

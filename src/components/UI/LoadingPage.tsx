@@ -5,5 +5,5 @@ export const LoadingPage = (): React.JSX.Element => {
             <p className="text-4xl text-yellow-500">Carregando</p>
 
         </div>
-    )
-}
+    );
+};

@@ -1,5 +1,5 @@
-import React from 'react'
-import { NavItems } from './NavItems'
+import React from 'react';
+import { NavItems } from './NavItems';
 
 const Desktop = (): React.JSX.Element => {
     return (
@@ -9,7 +9,7 @@ const Desktop = (): React.JSX.Element => {
             <NavItems href="/about">Sobre Mim</NavItems>
             <NavItems href="/contact">Contato</NavItems>
         </ul>
-    )
-}
+    );
+};
 
-export default Desktop
+export default Desktop;

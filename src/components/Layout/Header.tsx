@@ -1,14 +1,14 @@
-"use client"
-import { useState } from "react"
-import Desktop from "../Menu/Desktop"
-import Mobile from "../Menu/Mobile"
-import Logo from "../Menu/Logo"
+"use client";
+import { useState } from "react";
+import Desktop from "../Menu/Desktop";
+import Mobile from "../Menu/Mobile";
+import Logo from "../Menu/Logo";
 
 const Header = (): React.JSX.Element => {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     function handleMenu() {
-        setIsOpen((prev) => !prev)
+        setIsOpen((prev) => !prev);
     }
 
     return (
@@ -35,7 +35,7 @@ const Header = (): React.JSX.Element => {
                 <Desktop />
             </nav>
         </header>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

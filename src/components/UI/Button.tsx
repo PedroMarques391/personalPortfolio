@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";
@@ -52,9 +52,9 @@ function Footer({ children, duration, href }: IButtonFooterProps): React.JSX.Ele
                 transition={{ duration: duration, }}
                 className="py-2 text-xl font-mono  text-gray-dark hover:text-gray-soft duration-300 transition-all hover:-translate-x-5 text-center px-2">{children}</motion.li>
         </Link>
-    )
+    );
 }
 
-Button.Footer = Footer
+Button.Footer = Footer;
 
 export { Button };

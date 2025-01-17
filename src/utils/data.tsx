@@ -69,8 +69,4 @@ export const projects: IProjectInterface[] = [
     ),
     new Project(15, "/assets/thumbnail/imc.png", "IMC Calculator", "Web", "Aplicação web interativa e moderna para calcular o Índice de Massa Corporal (IMC), com design responsivo e foco na experiência mobile.", ["HTML", "CSS", "JavaScript", "Mobile First"], "https://myimc2025.netlify.app/"
     ),
-
-
-
-
-]
+];

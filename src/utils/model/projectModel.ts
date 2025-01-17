@@ -9,7 +9,7 @@ export interface IProjectInterface {
 }
 
 export class Project {
-    readonly #id: number
+    readonly #id: number;
     readonly #src: string;
     readonly #title: string;
     readonly #type: string;
@@ -26,7 +26,7 @@ export class Project {
         tags: string[],
         url?: string
     ) {
-        this.#id = id
+        this.#id = id;
         this.#src = src;
         this.#title = title;
         this.#type = type;

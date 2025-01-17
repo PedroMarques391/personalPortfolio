@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+"use client";
+import React, { useEffect, useState } from 'react';
 
 interface ITypewriterProps {
     color?: string
@@ -14,19 +14,19 @@ const Typewriter = ({ writing, delay, hiddenCursor, color = "text-white" }: ITyp
 
     function writeOnScreen(text: string, i: number = 0) {
         if (i < text.length) {
-            setShowCursor(true)
-            setText(text.slice(0, i + 1))
-            setTimeout(() => writeOnScreen(text, i + 1), 100)
-            return
+            setShowCursor(true);
+            setText(text.slice(0, i + 1));
+            setTimeout(() => writeOnScreen(text, i + 1), 100);
+            return;
         }
         if (i >= text.length && hiddenCursor) {
-            setShowCursor(false)
+            setShowCursor(false);
         }
     }
 
     useEffect(() => {
-        setTimeout(() => writeOnScreen(writing), delay ?? 200)
-    }, [])
+        setTimeout(() => writeOnScreen(writing), delay ?? 200);
+    }, []);
 
     return (
         <div className={`${color}`}>
@@ -35,7 +35,7 @@ const Typewriter = ({ writing, delay, hiddenCursor, color = "text-white" }: ITyp
                 <span className="animate-pulse text-xl md:text-2xl  font-medium">|</span>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default Typewriter
+export default Typewriter;

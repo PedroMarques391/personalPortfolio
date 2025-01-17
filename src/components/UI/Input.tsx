@@ -1,5 +1,5 @@
-import React from 'react'
-import { motion } from "motion/react"
+import React from 'react';
+import { motion } from "motion/react";
 
 interface IInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     label: string
@@ -47,7 +47,7 @@ function Input({ label, error, duration, ...props }: IInputProps): React.JSX.Ele
             {error && <p className='m-2 text-red-600'>{error}</p>}
         </div>
 
-    )
+    );
 }
 
 function TextArea({ label, error, duration, ...props }: ITextAreaProps): React.JSX.Element {
@@ -83,9 +83,9 @@ function TextArea({ label, error, duration, ...props }: ITextAreaProps): React.J
             </motion.div>
             {error && <p className='m-2 text-red-600'>{error}</p>}
         </div>
-    )
+    );
 }
 
-Input.TextArea = TextArea
+Input.TextArea = TextArea;
 
-export { Input }
+export { Input };

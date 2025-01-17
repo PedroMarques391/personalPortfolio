@@ -1,5 +1,5 @@
-import { motion, useInView } from "motion/react"
-import { useRef } from "react"
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 interface ISectionHeaderProps {
     title: string
@@ -25,7 +25,7 @@ const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.
                 transition={{ type: 'spring', stiffness: 100, damping: 25, duration: 2 }}
                 className="mx-auto font-bold text-2xl md:text-3xl lg:text-4xl font-mono tracking-wider text-gray-soft">{title}</motion.h1>
         </>
-    )
-}
+    );
+};
 
-export default SectionHeader
+export default SectionHeader;

@@ -1,8 +1,8 @@
-"use client"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { DetailedHTMLProps, LiHTMLAttributes, useRef } from "react"
-import { motion, useInView } from "motion/react"
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { DetailedHTMLProps, LiHTMLAttributes, useRef } from "react";
+import { motion, useInView } from "motion/react";
 
 interface INavItemsProps extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
   href: string
@@ -16,8 +16,8 @@ interface INavItemsFooterProps {
 }
 
 const NavItems = ({ children, href, ...props }: INavItemsProps): React.JSX.Element => {
-  const pathName: string = usePathname()
-  const isCurrentPath: boolean = pathName === href
+  const pathName: string = usePathname();
+  const isCurrentPath: boolean = pathName === href;
 
   return (
     <Link
@@ -31,8 +31,8 @@ const NavItems = ({ children, href, ...props }: INavItemsProps): React.JSX.Eleme
         <p className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? 'w-full group-hover:bg-orange-500' : 'w-0'}`} />
       </li>
     </Link>
-  )
-}
+  );
+};
 
 const Footer = ({ children, href, onClick, duration }: INavItemsFooterProps) => {
   const pathName: string = usePathname();
@@ -64,8 +64,8 @@ const Footer = ({ children, href, onClick, duration }: INavItemsFooterProps) => 
       </motion.li>
     </button>
   );
-}
+};
 
-NavItems.Footer = Footer
+NavItems.Footer = Footer;
 
-export { NavItems }
+export { NavItems };

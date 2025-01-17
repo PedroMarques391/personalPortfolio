@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { motion, useTime, useTransform } from "motion/react"
+import { motion, useTime, useTransform } from "motion/react";
 
 export default function UseTime() {
-    const time = useTime()
+    const time = useTime();
     const rotate = useTransform(
         time,
         [0, 4000],
         [0, 360],
         { clamp: false }
-    )
+    );
 
     const tinyBox = {
         width: 40,
@@ -17,7 +17,7 @@ export default function UseTime() {
         backgroundColor: "#a0a0a0",
         borderRadius: 5,
         rotate: useTransform(() => rotate.get() * 2),
-    }
+    };
 
     const smallBox = {
         width: 80,
@@ -25,7 +25,7 @@ export default function UseTime() {
         backgroundColor: "#a0a0a04e",
         borderRadius: 5,
         rotate: useTransform(() => rotate.get() * 1.5),
-    }
+    };
 
     const box = {
         width: 100,
@@ -33,7 +33,7 @@ export default function UseTime() {
         backgroundColor: "#a0a0a08c",
         borderRadius: 5,
         rotate,
-    }
+    };
 
     return (
         <>
@@ -75,6 +75,6 @@ export default function UseTime() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 

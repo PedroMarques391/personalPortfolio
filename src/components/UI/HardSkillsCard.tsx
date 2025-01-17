@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from 'react';
 
 interface IHardSkillsCard {
     technology: string
@@ -11,7 +11,7 @@ const HardSkillsCard = ({ icon, technology }: IHardSkillsCard): React.JSX.Elemen
             <div >{icon}</div>
             <span className="text-sm font-medium">{technology}</span>
         </div>
-    )
-}
+    );
+};
 
-export default HardSkillsCard
+export default HardSkillsCard;

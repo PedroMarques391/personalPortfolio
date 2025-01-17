@@ -1,16 +1,16 @@
-"use client"
-import { useForm } from "react-hook-form"
+"use client";
+import { useForm } from "react-hook-form";
 
-import { Button } from '@/components/UI/Button'
-import { Input } from '@/components/UI/Input'
-import React, { useEffect, useState } from 'react'
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import UseTime from "@/components/Motions/ContactMotion"
-import UseAnimationFrame from "@/components/Motions/AnimationFrame"
-import { FaSpinner } from "react-icons/fa"
-import Modal from "@/components/UI/Modal"
-import SectionHeader from "@/components/UI/SectionHeader"
+import { Button } from '@/components/UI/Button';
+import { Input } from '@/components/UI/Input';
+import React, { useEffect, useState } from 'react';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import UseTime from "@/components/Motions/ContactMotion";
+import UseAnimationFrame from "@/components/Motions/AnimationFrame";
+import { FaSpinner } from "react-icons/fa";
+import Modal from "@/components/UI/Modal";
+import SectionHeader from "@/components/UI/SectionHeader";
 
 const schema = z.object({
     name: z.string().min(1, "O nome é obrigatório."),
@@ -31,13 +31,13 @@ interface IMessageInterface {
 }
 
 const Contact = (): React.JSX.Element => {
-    const [pending, setPending] = useState<boolean>(false)
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const [pending, setPending] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
     const [message, setMessage] = useState({
-    } as IMessageInterface)
+    } as IMessageInterface);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
         resolver: zodResolver(schema)
-    })
+    });
 
     function handleContact(data: FormData) {
         setPending(true);
@@ -49,16 +49,16 @@ const Contact = (): React.JSX.Element => {
             body: JSON.stringify(data),
         })
             .then(() => {
-                setShowModal(true)
+                setShowModal(true);
                 setMessage({
                     title: "Mensagem Enviada com Sucesso!",
                     subtitle: "Obrigado por entrar em contato conosco.",
                     content: "Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.",
                     success: true,
-                })
+                });
             })
             .catch(() => {
-                setShowModal(true)
+                setShowModal(true);
                 setMessage({
                     title: "Erro ao Enviar Mensagem",
                     subtitle: "Ocorreu um problema ao enviar sua mensagem.",
@@ -68,14 +68,14 @@ const Contact = (): React.JSX.Element => {
             })
             .finally(() => {
                 setPending(false);
-                reset()
+                reset();
             });
 
     }
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setShowModal(false)
+            setShowModal(false);
         }, 3000);
 
         return () => clearTimeout(timer);
@@ -137,7 +137,7 @@ const Contact = (): React.JSX.Element => {
                 </div>
             </section >
         </section>
-    )
-}
+    );
+};
 
-export default Contact
+export default Contact;

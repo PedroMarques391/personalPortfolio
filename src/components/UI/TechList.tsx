@@ -1,4 +1,4 @@
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 interface ITechListProps {
     children: React.ReactNode
@@ -14,7 +14,7 @@ const TechList = ({ children }: ITechListProps): React.JSX.Element => {
         >
             {children}
         </motion.li>
-    )
-}
+    );
+};
 
-export default TechList
+export default TechList;

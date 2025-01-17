@@ -1,14 +1,14 @@
-"use client"
-import { Button } from "@/components/UI/Button"
-import ProjectCard from "@/components/UI/ProjectCard"
-import SectionHeader from "@/components/UI/SectionHeader"
-import { projects } from "@/utils/data"
-import { IProjectInterface } from "@/utils/model/projectModel"
-import { useState } from "react"
+"use client";
+import { Button } from "@/components/UI/Button";
+import ProjectCard from "@/components/UI/ProjectCard";
+import SectionHeader from "@/components/UI/SectionHeader";
+import { projects } from "@/utils/data";
+import { IProjectInterface } from "@/utils/model/projectModel";
+import { useState } from "react";
 
 
 const ProjectsPage = (): React.JSX.Element => {
-    const [active, setActive] = useState<number>(0)
+    const [active, setActive] = useState<number>(0);
     const [allProjects] = useState<IProjectInterface[]>(projects as IProjectInterface[]);
     const [getProjects, setGetProjects] = useState<IProjectInterface[]>(allProjects);
 
@@ -18,7 +18,7 @@ const ProjectsPage = (): React.JSX.Element => {
         { duration: 1.0, title: "Web" },
         { duration: 1.5, title: "Mobile" },
         { duration: 2.0, title: "Automações" },
-    ]
+    ];
 
     function handleFilter(rule: string, index: number) {
         setActive(index);
@@ -31,7 +31,7 @@ const ProjectsPage = (): React.JSX.Element => {
         }
     }
 
-    console.log(getProjects)
+    console.log(getProjects);
 
     return (
         <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
@@ -62,7 +62,7 @@ const ProjectsPage = (): React.JSX.Element => {
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ProjectsPage
+export default ProjectsPage;

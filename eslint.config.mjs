@@ -14,6 +14,7 @@ const eslintConfig = [
   {
     rules: {
       "react-hooks/exhaustive-deps": "off",
+      "semi": ["error", "always"]
     },
   },
 ];

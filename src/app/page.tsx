@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/UI/Button";
 import { motion, useInView } from "motion/react";
 import MarqueeEffect from "@/components/Motions/Marquee";
@@ -30,17 +30,17 @@ import SectionHeader from "@/components/UI/SectionHeader";
 
 export default function Home() {
 
-  const stacks: string[] = ["Front-end", "Mobile"]
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const stacks: string[] = ["Front-end", "Mobile"];
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.6 });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevState) => (prevState + 1) % stacks.length)
+      setCurrentIndex((prevState) => (prevState + 1) % stacks.length);
     }, 3000);
-    return () => clearInterval(interval)
-  }, [currentIndex])
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   return (
     <div className="text-gray-soft flex h-full flex-col">

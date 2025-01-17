@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import { usePathname, useRouter } from "next/navigation";
-import { NavItems } from "../Menu/NavItems"
-import { Button } from "../UI/Button"
+import { NavItems } from "../Menu/NavItems";
+import { Button } from "../UI/Button";
 import { handleScroll } from "@/utils/functions/handleScroll";
 
 interface ISocialItemsInterface {
@@ -18,7 +18,7 @@ interface INavItemsInterface {
 
 const Footer = (): React.JSX.Element => {
     const pathName: string = usePathname();
-    const router = useRouter()
+    const router = useRouter();
 
 
     const socialItems: ISocialItemsInterface[] = [
@@ -26,21 +26,21 @@ const Footer = (): React.JSX.Element => {
         { text: "GitHub", href: "https://github.com/PedroMarques391", duration: 1.0 },
         { text: "Instagram", href: "https://www.instagram.com/pedromarques.py/", duration: 1.5 },
         { text: "X", href: "https://x.com/PedroMarques391", duration: 2.0 },
-    ]
+    ];
 
     const navLinkItems: INavItemsInterface[] = [
         { text: "Home", href: "/", duration: 0.5 },
         { text: "Projetos", href: "/projects", duration: 1.0 },
         { text: "Sobre mim", href: "/about", duration: 1.5 },
         { text: "Contato", href: "/contact", duration: 2.0 },
-    ]
+    ];
 
     function handleClick(href: string) {
         if (href === pathName) {
-            handleScroll(0)
+            handleScroll(0);
         }
         if (href !== pathName) {
-            router.push(href, { scroll: true })
+            router.push(href, { scroll: true });
         }
     }
 
@@ -82,8 +82,8 @@ const Footer = (): React.JSX.Element => {
 
             </section>
         </footer>
-    )
-}
+    );
+};
 
 
-export default Footer
+export default Footer;

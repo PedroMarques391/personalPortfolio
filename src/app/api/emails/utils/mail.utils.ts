@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
-const formatPhoneNumber = (phone: string) => {
+const formatPhonenumber = (phone: string) => {
     const cleaned = phone.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
     if (match) {
@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 
 export async function sendEmail(email: string, name: string, phone: string, message: string) {
 
-    const formattedPhone = formatPhoneNumber(phone);
+    const formattedPhone = formatPhonenumber(phone);
     return await transporter.sendMail({
         from: `"${name}" <${email}>`,
         to: process.env.ADDRESSEE,
@@ -44,4 +44,4 @@ export async function sendEmail(email: string, name: string, phone: string, mess
     });
 
 
-}
+};

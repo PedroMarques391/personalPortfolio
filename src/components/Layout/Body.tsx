@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { handleScroll } from "@/utils/functions/handleScroll";
 import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
@@ -10,14 +10,14 @@ interface IBodyProps {
 
 
 const Body = ({ children }: IBodyProps): React.JSX.Element => {
-    const [scrollY, setScrollY] = useState<boolean>(false)
+    const [scrollY, setScrollY] = useState<boolean>(false);
 
     useEffect(() => {
         const handleScroll = (): void => {
-            setScrollY(window.scrollY > 150)
-        }
-        return window.addEventListener("scroll", handleScroll)
-    }, [])
+            setScrollY(window.scrollY > 150);
+        };
+        return window.addEventListener("scroll", handleScroll);
+    }, []);
 
     return (
         <main className="w-full min-h-[90vh] bg-black relative">
@@ -32,7 +32,7 @@ const Body = ({ children }: IBodyProps): React.JSX.Element => {
 
             </button>
         </main>
-    )
-}
+    );
+};
 
 export default Body;
