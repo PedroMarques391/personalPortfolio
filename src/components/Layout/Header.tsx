@@ -19,7 +19,7 @@ const Header = (): React.JSX.Element => {
             <nav className="w-full max-w-6xl  flex justify-end items-center md:justify-end lg:justify-center 
              relative">
                 <Logo />
-                <button onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">
+                <button aria-label="Abrir/fechar Menu" onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">
                     <div className={`bg-white h-1 mb-1.5 transition-transform block 
                         ${isOpen ? "rotate-45 translate-y-2.5" : "rotate-0"}`} />
                     <div className={`bg-white h-1 mb-1.5 transition-transform block 

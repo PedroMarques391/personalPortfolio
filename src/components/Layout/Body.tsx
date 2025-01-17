@@ -26,6 +26,7 @@ const Body = ({ children }: IBodyProps): React.JSX.Element => {
             </div>
             <button className={`w-10 h-10 sm:h-12 sm:w-12 bg-white/30 justify-center items-center flex fixed bottom-10 right-5 md:right-10 rounded-xl duration-500 transition-opacity ${scrollY ? "opacity-1" : "opacity-0"}`}>
                 <MdKeyboardDoubleArrowUp
+                    aria-label="Scroll To Top"
                     className="text-4xl md:text-6xl"
                     color="#1c1c1c"
                     onClick={() => handleScroll(0)} />

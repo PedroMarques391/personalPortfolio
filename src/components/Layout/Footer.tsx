@@ -57,12 +57,13 @@ const Footer = (): React.JSX.Element => {
                             <h2 className="text-2xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3 ">Navegação</h2>
                             <ul className="space-y-2 flex flex-col">
                                 {navLinkItems.map((navItem, index) => (
-                                    <NavItems.Footer
-                                        onClick={() => handleClick(navItem.href)}
-                                        key={index}
-                                        duration={navItem.duration}
-                                        href={navItem.href}>{navItem.text}
-                                    </NavItems.Footer>
+                                    <li key={index}>
+                                        <NavItems.Footer
+                                            onClick={() => handleClick(navItem.href)}
+                                            duration={navItem.duration}
+                                            href={navItem.href}>{navItem.text}
+                                        </NavItems.Footer>
+                                    </li>
                                 ))}
                             </ul>
                         </nav>
@@ -70,10 +71,12 @@ const Footer = (): React.JSX.Element => {
                         <nav className="w-full flex flex-col justify-start items-center">
                             <h2 className="text-2xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">Redes Sociais</h2>
                             <ul className="space-y-2">
-                                {socialItems.map((socialItem, i) => (
-                                    <Button.Footer duration={socialItem.duration} key={i} href={socialItem.href}>
-                                        {socialItem.text}
-                                    </Button.Footer>
+                                {socialItems.map((socialItem, index) => (
+                                    <li key={index}>
+                                        <Button.Footer duration={socialItem.duration} href={socialItem.href}>
+                                            {socialItem.text}
+                                        </Button.Footer>
+                                    </li>
                                 ))}
                             </ul>
                         </nav>

@@ -63,14 +63,18 @@ export default function Home() {
             className="text-justify leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações front-end, enquanto também encaro de forma proativa os desafios do desenvolvimento mobile.
           </motion.p>
-          <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4 ">
-            <Button>
+          <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4">
+            <Button aria-label="Entrar em Contato" styles="m-2 md:m-4">
               <Link className="flex gap-2" href={"/contact"} prefetch>
                 <FiMessageCircle size={20} />
                 <p>Contato</p>
               </Link>
             </Button>
-            <Button styles="w-auto" onClick={handleDownload}>
+            <Button
+
+              aria-label="Baixar Curriculo"
+              styles="w-auto m-2 md:m-4"
+              onClick={handleDownload}>
               <MdFileDownload size={20} />
               <p>CV</p>
             </Button>
@@ -105,27 +109,39 @@ export default function Home() {
           </motion.div>
 
           <div className="flex gap-3 justify-center lg:mx-3 w-full">
-            <Button styles={"w-auto p-3 rounded-full"}>
+            <Button
+
+              aria-label="Link para o GitHub"
+              styles={"w-auto p-3 rounded-full mx-3"}>
               <Link
                 prefetch
+                aria-label="Perfil no GitHub"
                 target="_blank"
                 rel="noopener noreferrer"
                 href={"https://github.com/PedroMarques391"}>
                 <FaGithub size={25} />
               </Link>
             </Button>
-            <Button styles={"w-auto p-3 rounded-full"}>
+            <Button
+
+              aria-label="Link para o X - Antigo Twitter"
+              styles={"w-auto p-3 rounded-full mx-3"}>
               <Link
+
                 prefetch
+                aria-label="Perfil no Twitter"
                 target="_black"
                 rel="noopener noreferrer"
                 href={"https://x.com/PedroMarques391"}>
                 <BsTwitterX size={25} />
               </Link>
             </Button>
-            <Button styles={"w-auto p-3 rounded-full"}>
+            <Button
+              aria-label="Link para o Instagram"
+              styles={"w-auto p-3 rounded-full mx-3"}>
               <Link
                 prefetch
+                aria-label="Perfil no Instagram"
                 target="_blank"
                 rel="noopener noreferrer"
                 href={"https://www.linkedin.com/in/pedromarques391/"}>
