@@ -11,6 +11,7 @@ import UseAnimationFrame from "@/components/Motions/AnimationFrame";
 import { FaSpinner } from "react-icons/fa";
 import Modal from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
+import { insertMaskInPhone } from "@/utils/functions/phoneMask";
 
 const schema = z.object({
     name: z.string().min(1, "O nome é obrigatório."),
@@ -35,7 +36,7 @@ const Contact = (): React.JSX.Element => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [message, setMessage] = useState({
     } as IMessageInterface);
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({
         resolver: zodResolver(schema)
     });
 
@@ -71,6 +72,11 @@ const Contact = (): React.JSX.Element => {
                 reset();
             });
 
+    }
+
+    function handleMask(e: React.ChangeEvent<HTMLInputElement>): void {
+        const formattedPhone: string = insertMaskInPhone(e.target.value);
+        setValue('phone', formattedPhone);
     }
 
     useEffect(() => {
@@ -117,7 +123,9 @@ const Contact = (): React.JSX.Element => {
                             duration={1.5}
                             {...register('phone')}
                             error={errors.phone?.message}
-                            label='Telefone' />
+                            label='Telefone'
+                            onChange={handleMask}
+                        />
                         <Input.TextArea
                             duration={2.0}
                             {...register('message')} label='Mensagem' />

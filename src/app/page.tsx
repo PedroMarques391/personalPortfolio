@@ -3,7 +3,6 @@ import { Button } from "@/components/UI/Button";
 import { motion, useInView } from "motion/react";
 import MarqueeEffect from "@/components/Motions/Marquee";
 import ServicesCards from "@/components/Motions/ServicesCards";
-import { Download, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import {
 
@@ -11,7 +10,7 @@ import {
   FaRobot,
 } from "react-icons/fa";
 import { IoIosPhonePortrait } from "react-icons/io";
-import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
+import { MdFileDownload, MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 
 import { TbWorldWww } from "react-icons/tb";
 import HardSkillsCard from "@/components/UI/HardSkillsCard";
@@ -25,6 +24,7 @@ import { handleScroll } from "@/utils/functions/handleScroll";
 import { ImLinkedin } from "react-icons/im";
 import { BsTwitterX } from "react-icons/bs";
 import SectionHeader from "@/components/UI/SectionHeader";
+import { FiMessageCircle } from "react-icons/fi";
 
 
 
@@ -66,12 +66,12 @@ export default function Home() {
           <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4 ">
             <Button>
               <Link className="flex gap-2" href={"/contact"} prefetch>
-                <MessageCircle size={20} />
+                <FiMessageCircle size={20} />
                 <p>Contato</p>
               </Link>
             </Button>
             <Button styles="w-auto" onClick={handleDownload}>
-              <Download size={20} />
+              <MdFileDownload size={20} />
               <p>CV</p>
             </Button>
           </div>

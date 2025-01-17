@@ -1,14 +1,6 @@
+import { insertMaskInPhone } from "@/utils/functions/phoneMask";
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
-
-const formatPhonenumber = (phone: string) => {
-    const cleaned = phone.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
-    if (match) {
-        return `(${match[1]}) ${match[2]}-${match[3]}`;
-    }
-    return phone;
-};
 
 const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
@@ -22,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 export async function sendEmail(email: string, name: string, phone: string, message: string) {
 
-    const formattedPhone = formatPhonenumber(phone);
+    const formattedPhone = insertMaskInPhone(phone);
     return await transporter.sendMail({
         from: `"${name}" <${email}>`,
         to: process.env.ADDRESSEE,
