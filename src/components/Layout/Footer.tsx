@@ -72,11 +72,9 @@ const Footer = (): React.JSX.Element => {
                             <h2 className="text-2xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">Redes Sociais</h2>
                             <ul className="space-y-2">
                                 {socialItems.map((socialItem, index) => (
-                                    <li key={index}>
-                                        <Button.Footer duration={socialItem.duration} href={socialItem.href}>
-                                            {socialItem.text}
-                                        </Button.Footer>
-                                    </li>
+                                    <Button.Footer key={index} duration={socialItem.duration} href={socialItem.href}>
+                                        {socialItem.text}
+                                    </Button.Footer>
                                 ))}
                             </ul>
                         </nav>

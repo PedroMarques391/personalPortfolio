@@ -64,14 +64,13 @@ export default function Home() {
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações front-end, enquanto também encaro de forma proativa os desafios do desenvolvimento mobile.
           </motion.p>
           <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4">
-            <Button aria-label="Entrar em Contato" styles="m-2 md:m-4">
-              <Link className="flex gap-2" href={"/contact"} prefetch>
+            <Link className="flex gap-2" href={"/contact"} prefetch>
+              <Button aria-label="Entrar em Contato" styles="m-2 md:m-4">
                 <FiMessageCircle size={20} />
                 <p>Contato</p>
-              </Link>
-            </Button>
+              </Button>
+            </Link>
             <Button
-
               aria-label="Baixar Curriculo"
               styles="w-auto m-2 md:m-4"
               onClick={handleDownload}>
@@ -109,45 +108,46 @@ export default function Home() {
           </motion.div>
 
           <div className="flex gap-3 justify-center lg:mx-3 w-full">
-            <Button
+            <Link
+              className="mx-3"
+              prefetch
+              aria-label="Perfil no GitHub"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={"https://github.com/PedroMarques391"}>
+              <Button
+                aria-label="Link para o GitHub"
+                styles={"w-auto p-3 rounded-full"}>
 
-              aria-label="Link para o GitHub"
-              styles={"w-auto p-3 rounded-full mx-3"}>
-              <Link
-                prefetch
-                aria-label="Perfil no GitHub"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={"https://github.com/PedroMarques391"}>
                 <FaGithub size={25} />
-              </Link>
-            </Button>
-            <Button
-
-              aria-label="Link para o X - Antigo Twitter"
-              styles={"w-auto p-3 rounded-full mx-3"}>
-              <Link
-
-                prefetch
-                aria-label="Perfil no Twitter"
-                target="_black"
-                rel="noopener noreferrer"
-                href={"https://x.com/PedroMarques391"}>
+              </Button>
+            </Link>
+            <Link
+              className="mx-3"
+              prefetch
+              aria-label="Perfil no Twitter"
+              target="_black"
+              rel="noopener noreferrer"
+              href={"https://x.com/PedroMarques391"}>
+              <Button
+                aria-label="Link para o X - Antigo Twitter"
+                styles={"w-auto p-3 rounded-full"}>
                 <BsTwitterX size={25} />
-              </Link>
-            </Button>
-            <Button
-              aria-label="Link para o Instagram"
-              styles={"w-auto p-3 rounded-full mx-3"}>
-              <Link
-                prefetch
-                aria-label="Perfil no Instagram"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={"https://www.linkedin.com/in/pedromarques391/"}>
+              </Button>
+            </Link>
+            <Link
+              className="mx-3"
+              prefetch
+              aria-label="Perfil no Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={"https://www.linkedin.com/in/pedromarques391/"}>
+              <Button
+                aria-label="Link para o Instagram"
+                styles={"w-auto p-3 rounded-full"}>
                 <ImLinkedin size={25} />
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
 
           <div className="w-full md:w-4/5 bg-gray-light rounded-lg py-2">
@@ -172,7 +172,7 @@ export default function Home() {
 
 
 
-      </section>
+      </section >
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
@@ -225,7 +225,7 @@ export default function Home() {
         </Link>
 
       </section>
-    </div>
+    </div >
 
   );
 }
