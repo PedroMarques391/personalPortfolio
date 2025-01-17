@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/UI/Button"
 import ProjectCard from "@/components/UI/ProjectCard"
+import SectionHeader from "@/components/UI/SectionHeader"
 import { projects } from "@/utils/data"
 import { IProjectInterface } from "@/utils/model/projectModel"
 import { useState } from "react"
@@ -34,8 +35,8 @@ const ProjectsPage = (): React.JSX.Element => {
 
     return (
         <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
-            <p className="mx-auto font-mono tracking-wider text-gray-dark text-base md:text-lg">Um pouco do meu trabalho</p>
-            <h1 className="mx-auto font-bold text-3xl md:text-4xl font-mono tracking-wider text-gray-soft">Projetos</h1>
+            <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
+
             <div className="flex flex-wrap justify-center gap-5 mt-10 w-[90%] mx-auto ">
                 {buttonsValues.map((button, index) => (
                     <Button

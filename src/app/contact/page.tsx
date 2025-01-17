@@ -10,6 +10,7 @@ import UseTime from "@/components/Motions/ContactMotion"
 import UseAnimationFrame from "@/components/Motions/AnimationFrame"
 import { FaSpinner } from "react-icons/fa"
 import Modal from "@/components/UI/Modal"
+import SectionHeader from "@/components/UI/SectionHeader"
 
 const schema = z.object({
     name: z.string().min(1, "O nome é obrigatório."),
@@ -73,9 +74,9 @@ const Contact = (): React.JSX.Element => {
     }
 
     useEffect(() => {
-        const timer: NodeJS.Timeout = setTimeout(() => {
+        const timer = setTimeout(() => {
             setShowModal(false)
-        }, 4000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [showModal]);
@@ -88,8 +89,13 @@ const Contact = (): React.JSX.Element => {
                 title={message.title}
                 subtitle={message.subtitle}
                 success={message.success}>{message.content}</Modal>}
-            <p className="mx-auto font-mono tracking-wider text-gray-dark text-lg mt-40">Gostou do que viu?</p>
-            <h1 className="mx-auto font-bold text-2xl md:text-3xl lg:text-4xl font-mono tracking-wider text-gray-soft">Entre em contato</h1>
+
+            <SectionHeader
+                title="Entre em Contato"
+                subtitle="Gostou do que viu?"
+                styles="mt-40"
+            />
+
             <section className='w-full grid grid-cols-1 md:grid-cols-2 mt-10'>
                 <div className="hidden md:flex w-full justify-center items-center">
                     <UseAnimationFrame />

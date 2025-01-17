@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/UI/Button";
-import * as motion from "motion/react-client";
+import { motion, useInView } from "motion/react";
 import MarqueeEffect from "@/components/Motions/Marquee";
 import ServicesCards from "@/components/Motions/ServicesCards";
 import { Download, MessageCircle } from "lucide-react";
@@ -19,11 +19,12 @@ import MotionPath from "@/components/Motions/MotionPath";
 import { skills } from "@/utils/data";
 import Image from "next/image";
 import Typewriter from "@/components/UI/Typewriter";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { handleDownload } from "@/utils/functions/handleDownload";
 import { handleScroll } from "@/utils/functions/handleScroll";
 import { ImLinkedin } from "react-icons/im";
 import { BsTwitterX } from "react-icons/bs";
+import SectionHeader from "@/components/UI/SectionHeader";
 
 
 
@@ -31,8 +32,8 @@ export default function Home() {
 
   const stacks: string[] = ["Front-end", "Mobile"]
   const [currentIndex, setCurrentIndex] = useState<number>(0)
-
-
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.6 });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,8 +41,6 @@ export default function Home() {
     }, 3000);
     return () => clearInterval(interval)
   }, [currentIndex])
-
-
 
   return (
     <div className="text-gray-soft flex h-full flex-col">
@@ -56,9 +55,14 @@ export default function Home() {
               <Typewriter key={currentIndex} writing={stacks[currentIndex]} color="text-orange-500" />
             </h2>
           </div>
-          <p className="text-justify leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
+          <motion.p
+            ref={ref}
+            initial={{ x: '-100%' }}
+            animate={{ x: isInView ? 0 : "-100%" }}
+            transition={{ type: 'spring', stiffness: 100, damping: 25 }}
+            className="text-justify leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações front-end, enquanto também encaro de forma proativa os desafios do desenvolvimento mobile.
-          </p>
+          </motion.p>
           <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4 ">
             <Button>
               <Link className="flex gap-2" href={"/contact"} prefetch>
@@ -78,7 +82,18 @@ export default function Home() {
 
         </div>
         <div className="flex flex-col md:justify-start items-center  pt-20 h-full p-3 w-full order-1 md:order-2 gap-5">
-          <div className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden">
+          <motion.div
+            animate={{
+              scale: [0.8, 1.2, 1.2, 0.8, 1],
+              rotate: [0, 0, 180, 180, 0],
+              borderRadius: ["50%", "50%", "0%", "00%", " 50%"]
+            }}
+            transition={{
+              duration: 2,
+              ease: "easeOut",
+              times: [0, 0.2, 0.5, 0.8, 1]
+            }}
+            className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden">
             <Image
               src="/assets/profile.jpeg"
               alt="Perfil"
@@ -87,7 +102,7 @@ export default function Home() {
               priority
               className="object-cover"
             />
-          </div>
+          </motion.div>
 
           <div className="flex gap-3 justify-center lg:mx-3 w-full">
             <Button styles={"w-auto p-3 rounded-full"}>
@@ -149,11 +164,10 @@ export default function Home() {
           className="mx-auto text-center p-6 animate-bounce "
 
         ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>
-        <p className="mx-auto w-full font-mono tracking-wider text-gray-dark text-base md:text-lg ">Veja o que posso fazer por você...</p>
-        <h1 className="mx-auto font-bold text-3xl md:text-4xl font-mono tracking-wider text-gray-softF">Seviços</h1>
+        <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
         <div className="flex gap-6 mt-10 flex-wrap justify-center">
           <ServicesCards icon={<TbWorldWww size={50} />} title="Desenvolvimento Web">
-            Construo de sites modernos, responsivos e de alta performance, criados sob medida para atender às suas necessidades. Utilizo tecnologias como <code className="text-orange-500">Node.js, Next.js, React e Tailwind</code> para oferecer soluções eficientes e personalizadas.
+            Construo sites modernos, responsivos e de alta performance, criados sob medida para atender às suas necessidades. Utilizo tecnologias como <code className="text-orange-500">Node.js, Next.js, React e Tailwind</code> para oferecer soluções eficientes e personalizadas.
           </ServicesCards>
 
           <ServicesCards icon={<IoIosPhonePortrait size={50} />} title="Desenvolvimento Mobile">
