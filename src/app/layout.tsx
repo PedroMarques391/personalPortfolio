@@ -21,8 +21,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pedro Marques | Front-End",
-  description: "Portifolio Web ",
+  description: "Portfólio Web de Pedro Marques, desenvolvedor Front-End. Conheça meus projetos e habilidades.",
+  robots: "index, follow",
+  keywords: "Pedro Marques, Front-End, desenvolvedor, portfólio web, projetos front-end, HTML, CSS, JavaScript, React, Next.js, desenvolvimento web",
+  creator: "Pedro Marques",
+
 };
+
+
+
 
 export default function RootLayout({
   children,
@@ -31,6 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
+      <link rel="shortcut icon" href="/assets/icon.png" type="image/x-icon" sizes="40x40" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
