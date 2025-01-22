@@ -4,14 +4,9 @@ import { motion, useInView } from "motion/react";
 import MarqueeEffect from "@/components/Motions/Marquee";
 import ServicesCards from "@/components/Motions/ServicesCards";
 import Link from "next/link";
-import {
-
-  FaGithub,
-  FaRobot,
-} from "react-icons/fa";
+import { FaGithub, FaRobot } from "react-icons/fa";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { MdFileDownload, MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
-
 import { TbWorldWww } from "react-icons/tb";
 import HardSkillsCard from "@/components/UI/HardSkillsCard";
 import MotionPath from "@/components/Motions/MotionPath";
@@ -169,16 +164,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-
-
       </section >
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
           onClick={() => handleScroll(900)}
           className="mx-auto text-center p-6 animate-bounce "
-
         ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>
         <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
         <div className="flex gap-6 mt-10 flex-wrap justify-center">
@@ -223,7 +214,6 @@ export default function Home() {
             />
           </motion.svg>
         </Link>
-
       </section>
     </div >
 

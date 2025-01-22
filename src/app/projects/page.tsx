@@ -31,12 +31,9 @@ const ProjectsPage = (): React.JSX.Element => {
         }
     }
 
-    console.log(getProjects);
-
     return (
         <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
             <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
-
             <div className="flex flex-wrap justify-center gap-5 mt-10 w-[90%] mx-auto ">
                 {buttonsValues.map((button, index) => (
                     <Button
