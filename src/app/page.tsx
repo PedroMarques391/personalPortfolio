@@ -168,7 +168,7 @@ export default function Home() {
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
-          onClick={() => handleScroll(900)}
+          onClick={() => handleScroll(500)}
           className="mx-auto text-center p-6 animate-bounce "
         ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>
         <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
