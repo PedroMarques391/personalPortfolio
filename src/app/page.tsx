@@ -27,6 +27,7 @@ export default function Home() {
 
   const stacks: string[] = ["Front-end", "Mobile"];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [screenScroll, setScreenScroll] = useState<number>(0);
   const ref = useRef(null);
   const isInView = useInView(ref);
 
@@ -36,6 +37,19 @@ export default function Home() {
     }, 3000);
     return () => clearInterval(interval);
   }, [currentIndex]);
+
+  useEffect(() => {
+    const resize = () => {
+      setScreenScroll(window.innerWidth > 720 ? 600 : 1200);
+    };
+
+    resize();
+
+    window.addEventListener("resize", resize);
+
+    return () => removeEventListener("resize", resize);
+
+  }, []);
 
   return (
     <div className="text-gray-soft flex h-full flex-col">
@@ -168,7 +182,7 @@ export default function Home() {
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
-          onClick={() => handleScroll(500)}
+          onClick={() => handleScroll(screenScroll)}
           className="mx-auto text-center p-6 animate-bounce "
         ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>
         <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
