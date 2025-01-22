@@ -33,7 +33,7 @@ export default function Home() {
   const stacks: string[] = ["Front-end", "Mobile"];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.6 });
+  const isInView = useInView(ref);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <motion.p
             ref={ref}
-            initial={{ x: '-100%' }}
+            initial={{ x: "-100%" }}
             animate={{ x: isInView ? 0 : "-100%" }}
             transition={{ type: 'spring', stiffness: 100, damping: 25 }}
             className="text-justify leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">

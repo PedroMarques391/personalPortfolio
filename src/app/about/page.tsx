@@ -12,7 +12,7 @@ const About = (): React.JSX.Element => {
 
     const frontend: string[] = ["HTML", "CSS", "Bootstrap", "TypeScript", "TailwindCSS", "Bootstrap", "React.js", "Next.js"];
     const backend: string[] = ["Node.js", "Nest.js", "Express.js", "Java"];
-    const database: string[] = ["Postgres", "MongoDB", "Firebase", "TypeScript"];
+    const database: string[] = ["Postgres", "MongoDB", "Firebase"];
     const mobile: string[] = ["React Native", "Flutter"];
 
     return (

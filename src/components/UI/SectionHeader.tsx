@@ -8,7 +8,7 @@ interface ISectionHeaderProps {
 }
 const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.JSX.Element => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { amount: 0.6 });
+    const isInView = useInView(ref);
     return (
         <>
             <motion.h2
