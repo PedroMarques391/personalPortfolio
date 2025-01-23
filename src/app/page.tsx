@@ -105,12 +105,12 @@ export default function Home() {
               ease: "easeOut",
               times: [0, 0.2, 0.5, 0.8, 1]
             }}
-            className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden">
+            className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden bg-gray-light">
             <Image
-              src="/assets/profile.jpeg"
+              src="/assets/profile.png"
               alt="Perfil"
-              width={300}
-              height={200}
+              width={600}
+              height={600}
               priority
               className="object-cover"
             />
