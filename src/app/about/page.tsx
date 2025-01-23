@@ -66,14 +66,14 @@ const About = (): React.JSX.Element => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, type: "spring" }}
                     className='lg:col-span-1 flex justify-center items-center order-1 md:order-2'>
-                    <div className='w-[90%] mx-auto'>
+                    <div className='w-[90%] h-auto mx-auto'>
                         <Image
                             src="/assets/profile2.jpeg"
                             alt="Perfil"
-                            width={300}
-                            height={300}
+                            width={"300"}
+                            height={"300"}
                             priority
-                            className="object-cover mx-auto"
+                            className="object-cover mx-auto w-auto h-auto"
                         />
                     </div>
                 </motion.section>
