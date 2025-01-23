@@ -1,7 +1,5 @@
 "use client";
-import { useSpring, useScroll, motion } from "motion/react";
-
-
+import { useSpring, useScroll, motion } from "framer-motion";
 
 const ScrollLinked = (): React.JSX.Element => {
     const { scrollYProgress } = useScroll();
