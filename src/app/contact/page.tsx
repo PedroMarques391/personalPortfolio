@@ -16,7 +16,7 @@ import { insertMaskInPhone } from "@/utils/functions/phoneMask";
 const schema = z.object({
     name: z.string().min(1, "O nome é obrigatório."),
     email: z.string().email("Digite um email válido."),
-    phone: z.string().min(1, "O telefone é obrigatório").refine((value) => /^(\d{11,12})$/.test(value), {
+    phone: z.string().min(1, "O telefone é obrigatório").refine((value) => /^[\d\(\)\-\s]{14,15}$/.test(value), {
         message: "Numero de telefone invalido"
     }),
     message: z.string().min(1, "A mensagem é obrigatória."),
@@ -36,7 +36,7 @@ const Contact = (): React.JSX.Element => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [message, setMessage] = useState({
     } as IMessageInterface);
-    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({
+    const { register, handleSubmit, formState: { errors }, reset, setValue, clearErrors } = useForm<FormData>({
         resolver: zodResolver(schema)
     });
 
@@ -77,6 +77,7 @@ const Contact = (): React.JSX.Element => {
     function handleMask(e: React.ChangeEvent<HTMLInputElement>): void {
         const formattedPhone: string = insertMaskInPhone(e.target.value);
         setValue('phone', formattedPhone);
+        clearErrors("phone");
     }
 
     useEffect(() => {
@@ -88,7 +89,7 @@ const Contact = (): React.JSX.Element => {
     }, [showModal]);
 
     return (
-        <section className="w-full flex flex-col justify-center items-center relative">
+        <section className="w-full flex flex-col justify-center items-center relative overflow-hidden">
             <UseTime />
             {showModal && <Modal
                 onClose={() => setShowModal(false)}
@@ -124,6 +125,7 @@ const Contact = (): React.JSX.Element => {
                             {...register('phone')}
                             error={errors.phone?.message}
                             label='Telefone'
+                            maxLength={15}
                             onChange={handleMask}
                         />
                         <Input.TextArea
