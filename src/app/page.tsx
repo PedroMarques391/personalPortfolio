@@ -54,9 +54,9 @@ export default function Home() {
   return (
     <div className="text-gray-soft flex h-full flex-col">
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
-        <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1  pt-0 md:pt-20">
+        <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1 pt-0 md:pt-20">
           <div>
-            <h1 className="text-base sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap">
+            <h1 className="text-lg sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap">
               Olá, meu nome é <Typewriter writing="Pedro Marques" hiddenCursor color="text-orange-500" />
             </h1>
             <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start h-10 items-center">
@@ -101,7 +101,7 @@ export default function Home() {
           </div>
 
         </div>
-        <div className="flex flex-col md:justify-start items-center  pt-20 h-full p-3 w-full order-1 md:order-2 gap-5 overflow-hidden">
+        <div className="flex flex-col md:justify-start items-center  pt-20 p-3 w-full order-1 md:order-2 gap-5 ">
           <motion.div
             animate={{
               scale: [0.8, 1.2, 1.2, 0.8, 1],
@@ -114,7 +114,7 @@ export default function Home() {
               times: [0, 0.2, 0.5, 0.8, 1],
               delay: 0.5
             }}
-            className=" w-64 h-64 rounded-full flex justify-center items-center  bg-gray-light">
+            className="w-64 h-64 rounded-full flex justify-center items-center  bg-gray-light">
             <Image
               src="/assets/profile.webp"
               alt="Perfil"
