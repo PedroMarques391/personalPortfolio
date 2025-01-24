@@ -10,7 +10,7 @@ const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.
     const ref = useRef(null);
     const isInView = useInView(ref);
     return (
-        <div className="overflow-hidden md:overflow-visible">
+        <div className="overflow-hidden lg:overflow-visible">
             <motion.h2
                 ref={ref}
                 initial={{ x: '-100%' }}
