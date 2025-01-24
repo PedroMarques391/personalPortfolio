@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fira_Code, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import { LoadingPage } from "@/components/UI/LoadingPage";
 import Main from "@/components/Layout/Main";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-montserrat'
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+  variable: '--font-fira-code'
 });
 
 export const metadata: Metadata = {
@@ -35,7 +40,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <link rel="shortcut icon" href="/assets/icon.webp" type="image/x-icon" sizes="40x40" />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${firaCode.variable} ${montserrat.variable} antialiased`}
       >
         <Suspense fallback={<LoadingPage />} >
           <Main>

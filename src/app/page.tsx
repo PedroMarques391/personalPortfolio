@@ -69,7 +69,7 @@ export default function Home() {
             initial={{ x: "-100%" }}
             animate={{ x: isInView ? 0 : "-100%" }}
             transition={{ type: 'spring', stiffness: 100, damping: 25 }}
-            className="text-justify leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
+            className="text-justify text-lg leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações front-end, enquanto também encaro de forma proativa os desafios do desenvolvimento mobile.
           </motion.p>
           <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4">

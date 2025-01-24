@@ -26,7 +26,7 @@ const NavItems = ({ children, href, ...props }: INavItemsProps): React.JSX.Eleme
       href={href}>
       <li
         {...props}
-        className={`text-center p-5 w-32 md:w-[120px] lg:w-32 relative group text-base md:text-sm lg:text-base px-2`}>
+        className={`text-center font-sans p-5 w-32 md:w-[120px] lg:w-32 relative group text-base md:text-sm lg:text-base px-2`}>
         {children}
         <p className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? 'w-full group-hover:bg-orange-500' : 'w-0'}`} />
       </li>

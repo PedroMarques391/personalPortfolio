@@ -14,10 +14,10 @@ export default {
         'gray-soft': '#d1d1d1',
       },
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
+        sans: ['var(--font-montserrat)', 'sans-serif'],
+        mono: ['var(--font-fira-code)', 'monospace'],
         serif: ['Merriweather', 'serif'],
-        mono: ['Fira Code', 'monospace'],
-      },
+      }
     },
   },
   plugins: [],
