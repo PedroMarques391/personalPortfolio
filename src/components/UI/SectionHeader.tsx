@@ -17,7 +17,7 @@ const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.
                 animate={{ x: isInView ? 0 : "-100%" }}
                 transition={{ type: 'spring', stiffness: 100, damping: 10, duration: 1 }}
                 className={`mx-auto w-full 
-                font-mono tracking-wider text-gray-dark text-base md:text-lg lg:text-xl text-center ${styles}`}>{subtitle}</motion.h2>
+                font-mono tracking-wider text-gray-dark font-medium text-base md:text-lg lg:text-xl text-center ${styles}`}>{subtitle}</motion.h2>
             <motion.h1
                 ref={ref}
                 initial={{ x: '-100%' }}

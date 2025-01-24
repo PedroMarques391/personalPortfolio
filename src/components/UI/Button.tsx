@@ -34,7 +34,7 @@ function Button({ children, styles, duration = 0.5, ...props }: IButtonProps): R
 };
 
 function Footer({ children, duration, href }: IButtonFooterProps): React.JSX.Element {
-    const ref = useRef<HTMLLIElement>(null);
+    const ref = useRef<HTMLParagraphElement>(null);
     const isInView = useInView(ref, { amount: 0.1 });
 
     const itemVariant = {
@@ -43,14 +43,20 @@ function Footer({ children, duration, href }: IButtonFooterProps): React.JSX.Ele
     };
 
     return (
-        <Link href={href} prefetch target="_blank">
-            <motion.li
+        <Link
+            href={href}
+            prefetch
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Abrir link ${children} em uma nova aba`}
+        >
+            <motion.p
                 ref={ref}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
                 variants={itemVariant}
                 transition={{ duration: duration, }}
-                className="py-2 text-xl font-mono  text-gray-dark hover:text-gray-soft duration-300 transition-all hover:-translate-x-5 text-center px-2">{children}</motion.li>
+                className="py-2 text-xl font-mono  text-gray-dark hover:text-gray-soft text-center px-2">{children}</motion.p>
         </Link>
     );
 }

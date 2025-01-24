@@ -72,17 +72,26 @@ export default function Home() {
             className="text-justify text-lg leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações front-end, enquanto também encaro de forma proativa os desafios do desenvolvimento mobile.
           </motion.p>
-          <div className="flex w-full lg:mx-4 justify-center md:justify-start gap-x-4">
-            <Link className="flex gap-2" href={"/contact"} prefetch>
-              <Button aria-label="Entrar em Contato" styles="m-2 md:m-4">
+          <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5 ">
+            <Link
+              className="flex items-center gap-3 p-3 md:gap-4 transition font-sans"
+              href="/contact"
+              prefetch
+              aria-label="Ir para a página de contato"
+            >
+              <Button
+                aria-label="Entrar em Contato"
+                styles="flex items-center gap-2 text-white"
+              >
                 <FiMessageCircle size={20} />
                 <p>Contato</p>
               </Button>
             </Link>
             <Button
-              aria-label="Baixar Curriculo"
-              styles="w-auto m-2 md:m-4"
-              onClick={handleDownload}>
+              aria-label="Baixar Currículo"
+              styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light font-sans"
+              onClick={handleDownload}
+            >
               <MdFileDownload size={20} />
               <p>CV</p>
             </Button>
@@ -103,14 +112,15 @@ export default function Home() {
             transition={{
               duration: 2,
               ease: "easeOut",
-              times: [0, 0.2, 0.5, 0.8, 1]
+              times: [0, 0.2, 0.5, 0.8, 1],
+              delay: 0.5
             }}
             className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden bg-gray-light">
             <Image
               src="/assets/profile.webp"
               alt="Perfil"
-              width={600}
-              height={600}
+              width={"600"}
+              height={"600"}
               priority
               className="object-cover"
             />
@@ -182,9 +192,12 @@ export default function Home() {
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
+          aria-label="Botão que leva até os cards de serviços."
           onClick={() => handleScroll(screenScroll)}
           className="mx-auto text-center p-6 animate-bounce "
-        ><MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" /></button>
+        >
+          <MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" />
+        </button>
         <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
         <div className="flex gap-6 mt-10 flex-wrap justify-center">
           <ServicesCards icon={<TbWorldWww size={50} />} title="Desenvolvimento Web">
