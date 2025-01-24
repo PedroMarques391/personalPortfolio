@@ -68,7 +68,7 @@ const About = (): React.JSX.Element => {
                     className='lg:col-span-1 flex justify-center items-center order-1 md:order-2'>
                     <div className='w-[90%] h-auto mx-auto'>
                         <Image
-                            src="/assets/profile2.jpeg"
+                            src="/assets/profile2.webp"
                             alt="Perfil"
                             width={"300"}
                             height={"300"}

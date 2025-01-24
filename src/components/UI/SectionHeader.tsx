@@ -10,7 +10,7 @@ const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.
     const ref = useRef(null);
     const isInView = useInView(ref);
     return (
-        <>
+        <div className="overflow-hidden md:overflow-visible">
             <motion.h2
                 ref={ref}
                 initial={{ x: '-100%' }}
@@ -23,8 +23,8 @@ const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.
                 initial={{ x: '-100%' }}
                 animate={{ x: isInView ? 0 : "-100%" }}
                 transition={{ type: 'spring', stiffness: 100, damping: 25, duration: 2 }}
-                className="mx-auto font-bold text-2xl md:text-3xl lg:text-4xl font-mono tracking-wider text-gray-soft">{title}</motion.h1>
-        </>
+                className="mx-auto font-bold text-2xl md:text-3xl lg:text-4xl font-mono tracking-wider text-gray-soft text-center">{title}</motion.h1>
+        </div>
     );
 };
 

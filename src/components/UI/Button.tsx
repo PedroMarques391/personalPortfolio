@@ -48,6 +48,7 @@ function Footer({ children, duration, href }: IButtonFooterProps): React.JSX.Ele
             prefetch
             target="_blank"
             rel="noopener noreferrer"
+            className="block py-2 text-base md:text-xl font-mono  text-gray-dark hover:text-gray-soft text-center px-2 hover:-translate-x-10 transition-transform duration-200"
             aria-label={`Abrir link ${children} em uma nova aba`}
         >
             <motion.p
@@ -56,7 +57,7 @@ function Footer({ children, duration, href }: IButtonFooterProps): React.JSX.Ele
                 animate={isInView ? "visible" : "hidden"}
                 variants={itemVariant}
                 transition={{ duration: duration, }}
-                className="py-2 text-xl font-mono  text-gray-dark hover:text-gray-soft text-center px-2">{children}</motion.p>
+            >{children}</motion.p>
         </Link>
     );
 }

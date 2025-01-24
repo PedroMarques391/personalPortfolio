@@ -72,7 +72,7 @@ export default function Home() {
             className="text-justify text-lg leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5">
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações front-end, enquanto também encaro de forma proativa os desafios do desenvolvimento mobile.
           </motion.p>
-          <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5 ">
+          <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5">
             <Link
               className="flex items-center gap-3 p-3 md:gap-4 transition font-sans"
               href="/contact"
@@ -89,7 +89,7 @@ export default function Home() {
             </Link>
             <Button
               aria-label="Baixar Currículo"
-              styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light font-sans"
+              styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light font-sans        "
               onClick={handleDownload}
             >
               <MdFileDownload size={20} />
@@ -102,7 +102,7 @@ export default function Home() {
           </div>
 
         </div>
-        <div className="flex flex-col md:justify-start items-center  pt-20 h-full p-3 w-full order-1 md:order-2 gap-5">
+        <div className="flex flex-col md:justify-start items-center  pt-20 h-full p-3 w-full order-1 md:order-2 gap-5 overflow-hidden">
           <motion.div
             animate={{
               scale: [0.8, 1.2, 1.2, 0.8, 1],
@@ -115,7 +115,7 @@ export default function Home() {
               times: [0, 0.2, 0.5, 0.8, 1],
               delay: 0.5
             }}
-            className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden bg-gray-light">
+            className=" w-64 h-64 rounded-full flex justify-center items-center  bg-gray-light">
             <Image
               src="/assets/profile.webp"
               alt="Perfil"
@@ -199,7 +199,7 @@ export default function Home() {
           <MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" />
         </button>
         <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
-        <div className="flex gap-6 mt-10 flex-wrap justify-center">
+        <div className="flex gap-6 mt-10 flex-wrap justify-center overflow-hidden md:overflow-visible">
           <ServicesCards icon={<TbWorldWww size={50} />} title="Desenvolvimento Web">
             Construo sites modernos, responsivos e de alta performance, criados sob medida para atender às suas necessidades. Utilizo tecnologias como <code className="text-orange-500">Node.js, Next.js, React e Tailwind</code> para oferecer soluções eficientes e personalizadas.
           </ServicesCards>

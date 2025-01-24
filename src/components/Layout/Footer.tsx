@@ -51,26 +51,26 @@ const Footer = (): React.JSX.Element => {
                     <h1 className="text-gray-dark font-mono text-2xl text-center md:text-left md:text-3xl tracking-wider ">Pedro Marques</h1>
                     <p className="text-gray-soft text-mono text-xl text-justify md:text-left lg:text-justify shrink-0 hyphens-none lg:w-[80%] ">Desenvolvedor apaixonado por transformar ideias em experiências digitais interativas, responsivas e cativantes. Sempre em busca de inovação e soluções que unam criatividade e funcionalidade.</p>
                 </div>
+                <hr className=" mt-2 md:hidden" />
                 <div className="flex flex-col gap-5 text-white w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-2  mt-10 md:mt-0">
-                        <nav className="w-full flex flex-col justify-start items-center ">
-                            <h2 className="text-2xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3 ">Navegação</h2>
+                    <div className="grid grid-cols-2 mt-10 md:mt-0">
+                        <nav className="w-full flex flex-col justify-start items-center">
+                            <h2 className="text-xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">Navegação</h2>
                             <ul className="space-y-2 flex flex-col">
                                 {navLinkItems.map((navItem, index) => (
-                                    <li key={index}>
-                                        <NavItems.Footer
-                                            onClick={() => handleClick(navItem.href)}
-                                            duration={navItem.duration}
-                                            href={navItem.href}>{navItem.text}
-                                        </NavItems.Footer>
-                                    </li>
+                                    <NavItems.Footer
+                                        key={index}
+                                        onClick={() => handleClick(navItem.href)}
+                                        duration={navItem.duration}
+                                        href={navItem.href}>{navItem.text}
+                                    </NavItems.Footer>
                                 ))}
                             </ul>
                         </nav>
-                        <hr className="p-3 mt-2 md:hidden" />
+
                         <nav className="w-full flex flex-col justify-start items-center">
-                            <h2 className="text-2xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">Redes Sociais</h2>
-                            <div className="space-y-5">
+                            <h2 className="text-xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">Redes Sociais</h2>
+                            <div className="space-y-2 md:space-y-5">
                                 {socialItems.map((socialItem, index) => (
                                     <Button.Footer key={index} duration={socialItem.duration} href={socialItem.href}>
                                         {socialItem.text}

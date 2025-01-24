@@ -20,17 +20,20 @@ const NavItems = ({ children, href, ...props }: INavItemsProps): React.JSX.Eleme
   const isCurrentPath: boolean = pathName === href;
 
   return (
-    <Link
-      prefetch={true}
-      replace
-      href={href}>
-      <li
-        {...props}
-        className={`text-center font-sans p-5 w-32 md:w-[120px] lg:w-32 relative group text-base md:text-sm lg:text-base px-2`}>
+
+    <li
+      {...props}
+      className={`text-center font-sans w-32 md:w-[120px] lg:w-32 relative group text-base md:text-sm lg:text-base px-2 `}>
+      <Link
+        className=" w-full h-full block py-4"
+        prefetch={true}
+        replace
+        href={href}>
         {children}
         <p className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? 'w-full group-hover:bg-orange-500' : 'w-0'}`} />
-      </li>
-    </Link>
+      </Link >
+    </li>
+
   );
 };
 
@@ -47,22 +50,24 @@ const Footer = ({ children, href, onClick, duration }: INavItemsFooterProps) => 
   };
 
   return (
-    <button onClick={onClick}>
-      <motion.li
-        ref={ref}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        variants={itemVariant}
-        transition={{ duration: duration, }}
-        className={`text-center p-5 w-32 md:w-[120px] lg:w-32 relative group text-base md:text-sm lg:text-base px-2`}
-      >
+
+    <motion.li
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={itemVariant}
+      transition={{ duration: duration, }}
+      className={`text-center w-32 md:w-[120px] lg:w-36 relative group text-base md:text-xl lg:text-lg lg:px-2 `}
+    >
+      <button onClick={onClick} aria-label={`Navegação para ${children}`} className=" block p-2 lg:p-3 w-full">
         {children}
         <p
-          className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? "w-full group-hover:bg-orange-500" : "w-0"
+          className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-[2px] md:h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? "w-full group-hover:bg-orange-500" : "w-0"
             }`}
         />
-      </motion.li>
-    </button>
+      </button>
+
+    </motion.li>
   );
 };
 
