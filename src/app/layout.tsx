@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <link rel="shortcut icon" href="/assets/icon.png" type="image/x-icon" sizes="40x40" />
+      <link rel="shortcut icon" href="/assets/icon.webp" type="image/x-icon" sizes="40x40" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

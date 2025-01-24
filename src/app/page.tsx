@@ -107,7 +107,7 @@ export default function Home() {
             }}
             className=" w-64 h-64 rounded-full flex justify-center items-center overflow-hidden bg-gray-light">
             <Image
-              src="/assets/profile.png"
+              src="/assets/profile.webp"
               alt="Perfil"
               width={600}
               height={600}
