@@ -32,7 +32,7 @@ const Typewriter = ({ writing, delay, hiddenCursor, color = "text-white" }: ITyp
         <div className={`${color}`}>
             {text}
             {showCursor && (
-                <span className="animate-pulse text-xl md:text-2xl  font-medium">|</span>
+                <span className="animate-pulse text-xl md:text-2xl font-medium">|</span>
             )}
         </div>
     );

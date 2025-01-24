@@ -39,7 +39,7 @@ const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectC
                 </h2>
 
 
-                <p className="text-gray-soft text-sm leading-relaxed">
+                <p className="text-gray-soft text-sm leading-relaxed font-sans">
                     {children}
                 </p>
 

@@ -59,9 +59,8 @@ export default function Home() {
             <h1 className="text-base sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap">
               Olá, meu nome é <Typewriter writing="Pedro Marques" hiddenCursor color="text-orange-500" />
             </h1>
-            <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start">
-              Desenvolvedor
-              <Typewriter key={currentIndex} writing={stacks[currentIndex]} color="text-orange-500" />
+            <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start h-10 items-center">
+              Desenvolvedor <Typewriter key={currentIndex} writing={stacks[currentIndex]} color="text-orange-500" />
             </h2>
           </div>
           <motion.p
