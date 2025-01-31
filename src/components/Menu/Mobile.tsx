@@ -31,7 +31,7 @@ const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
                 <motion.ul
                     className={`
                         border-l-2 border-gray-dark rounded-ss-3xl
-                        md:hidden w-3/4 sm:w-1/2 md:w-1/5 bg-black h-screen z-10
+                        md:hidden w-full sm:w-2/3 md:w-1/5 bg-black h-screen z-10
                         fixed top-0 right-0
                         flex flex-col justify-center items-center
                         ease-in-out transform

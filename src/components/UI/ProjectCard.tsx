@@ -26,7 +26,7 @@ const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectC
                     fill
                     sizes="auto"
                     priority
-                    className="rounded-t-lg group-hover:scale-105 transform transition duration-300 bg-cover"
+                    className="rounded-t-lg group-hover:scale-105 transform transition duration-300 bg-cover object-cover"
                 />
                 <span className="absolute top-3 left-3 bg-gray-light text-gray-soft text-xs font-semibold py-1 px-3 rounded-md shadow-md">
                     {type}
@@ -39,7 +39,7 @@ const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectC
                 </h2>
 
 
-                <p className="text-gray-soft text-sm leading-relaxed font-sans">
+                <p className="text-gray-soft text-sm leading-relaxed">
                     {children}
                 </p>
 

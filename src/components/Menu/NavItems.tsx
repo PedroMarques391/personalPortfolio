@@ -23,7 +23,7 @@ const NavItems = ({ children, href, ...props }: INavItemsProps): React.JSX.Eleme
 
     <li
       {...props}
-      className={`text-center font-sans w-32 md:w-[120px] lg:w-32 relative group text-base md:text-sm lg:text-base px-2 `}>
+      className={`text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2 `}>
       <Link
         className=" w-full h-full block py-4"
         prefetch={true}

@@ -10,7 +10,7 @@ const TechList = ({ children }: ITechListProps): React.JSX.Element => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="bg-gray-light p-2 text-gray-soft rounded-lg text-center font-sans"
+            className="bg-gray-light p-2 text-gray-soft rounded-lg text-center "
         >
             {children}
         </motion.li>

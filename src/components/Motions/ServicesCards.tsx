@@ -55,7 +55,7 @@ const ServicesCards = ({
                     {icon}
                 </motion.div>
             </motion.div>
-            <h1 className="text-gray-soft tracking-wider font-mono text-xl">{title}</h1>
+            <h1 className="text-gray-soft tracking-wider  text-xl">{title}</h1>
             <p className="text-justify hyphens-auto break-words">{children}</p>
         </motion.div>
     );

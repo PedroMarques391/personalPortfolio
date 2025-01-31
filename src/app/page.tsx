@@ -73,7 +73,7 @@ export default function Home() {
           </motion.p>
           <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5">
             <Link
-              className="flex items-center gap-3 p-3 md:gap-4 transition font-sans"
+              className="flex items-center gap-3 p-3 md:gap-4 transition"
               href="/contact"
               prefetch
               aria-label="Ir para a página de contato"
@@ -88,7 +88,7 @@ export default function Home() {
             </Link>
             <Button
               aria-label="Baixar Currículo"
-              styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light font-sans        "
+              styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light"
               onClick={handleDownload}
             >
               <MdFileDownload size={20} />

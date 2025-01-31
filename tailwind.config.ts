@@ -13,11 +13,6 @@ export default {
         'gray-dark': '#a0a0a0',
         'gray-soft': '#d1d1d1',
       },
-      fontFamily: {
-        sans: ['var(--font-montserrat)', 'sans-serif'],
-        mono: ['var(--font-fira-code)', 'monospace'],
-        serif: ['Merriweather', 'serif'],
-      }
     },
   },
   plugins: [],

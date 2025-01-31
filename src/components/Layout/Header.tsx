@@ -16,7 +16,7 @@ const Header = (): React.JSX.Element => {
         bg-black text-white w-full 
         sticky top-0 left-0 min-h-[10vh] z-20">
 
-            <nav className="w-full max-w-6xl  flex justify-end items-center md:justify-end lg:justify-center 
+            <nav className="w-full max-w-6xl  flex justify-end items-center md:justify-end md:mx-5 lg:mx-0 lg:justify-center 
              relative">
                 <Logo />
                 <button aria-label="Abrir/fechar Menu" onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">

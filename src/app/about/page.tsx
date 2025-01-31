@@ -23,7 +23,7 @@ const About = (): React.JSX.Element => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, type: "spring" }}
                     className='lg:col-span-2 order-2 md:order-1 '>
-                    <div className="p-0 md:p-4 text-gray-soft w-full lg:w-[90%] font-mono text-center  mx-auto md:mx-0">
+                    <div className="p-0 md:p-4 text-gray-soft w-full lg:w-[90%] text-center  mx-auto md:mx-0">
                         <h1 className="text-xl lg:text-2xl font-bold font-serif w-full  md:text-left">
                             Olá, me chamo Pedro Marques
                         </h1>
