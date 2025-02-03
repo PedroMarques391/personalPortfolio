@@ -73,7 +73,11 @@ const ProjectCard = ({ src, title, children, tags, url, type, index }: IProjectC
                 }`}
         >
             {url ? (
-                <Link href={url} prefetch className="block w-full h-full">
+                <Link href={url} 
+                    prefetch 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full">
                     <CardContent />
                 </Link>
             ) : (
