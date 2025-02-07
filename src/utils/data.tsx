@@ -45,6 +45,7 @@ export const skills: ISkillsInterface[] = [
 
 
 export const projects: IProjectInterface[] = [
+    new Project(31, "/assets/thumbnail/sweetShop.webp", "SweetShopLP", "web", "Modelo de landing page desenvolvido para confeitaria, com foco em um design elegante e cores suaves que refletem delicadeza.", ["TypeScript", "React.js", "Next 15", "TailwindCSS", "AOS Animation"], "https://sweet-shoplp.vercel.app/"),
     new Project(30, "/assets/thumbnail/myMoney.webp", "MyMoneyLP", "web", "Landing Page moderna e responsiva para o aplicativo MyMoney, focada em apresentação clara e interativa das funcionalidades financeiras.", ["TypeScript", "Svelte", "TailwindCSS", "AOS Animation"], "https://mymoneylp.vercel.app/"),
     new Project(29, "/assets/thumbnail/carStore.webp", "CarStore", "web", "Modelo de site avançado para revendedoras de veículos, inspirado no design da WebMotors, com funcionalidades de busca e apresentação de carros otimizadas.", ["React.js", "Next.js 14", "TypeScript", "TailwindCSS", "Firebase", "React Hook Form", "Zod", "Swiper.js", "React Toastify"], "https://carstorepa.vercel.app/"),
     new Project(28, "/assets/thumbnail/dranabeatrizmendes.webp", "DR. Ana Beatriz LP", "web", "Landing Page elegante e minimalista criada para psicólogos, com foco em atração e retenção de pacientes.", ["React.js", "Next.js 14", "TypeScript", "TailwindCSS", "AOS Animation"], "https://dranabeatrizmendes.vercel.app/"),
