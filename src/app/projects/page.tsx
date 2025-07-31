@@ -7,6 +7,7 @@ import { IProjectInterface } from "@/utils/model/projectModel";
 import { useState } from "react";
 
 
+
 const ProjectsPage = (): React.JSX.Element => {
     const [active, setActive] = useState<number>(0);
     const [allProjects] = useState<IProjectInterface[]>(projects as IProjectInterface[]);

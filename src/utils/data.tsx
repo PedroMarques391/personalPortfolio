@@ -45,6 +45,8 @@ export const skills: ISkillsInterface[] = [
 
 
 export const projects: IProjectInterface[] = [
+    new Project(33, "/assets/thumbnail/senpaiLP.webp", "Botdosenpai", "web", "Landing page responsiva para apresentar o botdosenpai, com animações suaves e foco em interações no WhatsApp.", ["TypeScript", "React.js", "Next.js", "TailwindCSS", "Framer Motion", "Nodemailer"], 'botdosenpai.com.br/'),
+    new Project(32, "/assets/thumbnail/arcusApp.webp", "Arcus", "mobile", "Aplicatico Android para registro de hábitos.", ["TypeScript", "React Native", "Expo Go", "Expo Router", "AppWrite"]),
     new Project(31, "/assets/thumbnail/sweetShop.webp", "SweetShopLP", "web", "Modelo de landing page desenvolvido para confeitaria, com foco em um design elegante e cores suaves que refletem delicadeza.", ["TypeScript", "React.js", "Next 15", "TailwindCSS", "AOS Animation"], "https://sweet-shoplp.vercel.app/"),
     new Project(30, "/assets/thumbnail/myMoney.webp", "MyMoneyLP", "web", "Landing Page moderna e responsiva para o aplicativo MyMoney, focada em apresentação clara e interativa das funcionalidades financeiras.", ["TypeScript", "Svelte", "TailwindCSS", "AOS Animation"], "https://mymoneylp.vercel.app/"),
     new Project(29, "/assets/thumbnail/carStore.webp", "CarStore", "web", "Modelo de site avançado para revendedoras de veículos, inspirado no design da WebMotors, com funcionalidades de busca e apresentação de carros otimizadas.", ["React.js", "Next.js 14", "TypeScript", "TailwindCSS", "Firebase", "React Hook Form", "Zod", "Swiper.js", "React Toastify"], "https://carstorepa.vercel.app/"),
@@ -63,7 +65,7 @@ export const projects: IProjectInterface[] = [
     ),
     new Project(18, "/assets/thumbnail/smartSearch.webp", "Smart Search", "mobile", "Aplicativo para buscas rápidas e eficientes de informações.", ["React Native", "Expo Go", "TypeScript", "Stylesheets"]
     ),
-    new Project(17, "/assets/thumbnail/whatsbot.webp", "HasturBot", "automações", "Bot para WhatsApp com funcionalidades para gerenciamento de grupos, como moderação e envio  mensagens automáticas.", ["JavaScript", "Puppeteer", "whatsapp-web.js", "Bot"], "https://github.com/PedroMarques391/whatsbot"
+    new Project(17, "/assets/thumbnail/whatsbot.webp", "AdaBot", "automações", "Bot para WhatsApp com funcionalidades para gerenciamento de grupos, como moderação e envio  mensagens automáticas.", ["TypeScript", "Puppeteer", "whatsapp-web.js", "Bot", "IA", "Gemini"], "https://github.com/PedroMarques391/whatsbot"
     ),
     new Project(16, "/assets/thumbnail/LR.webp", "LastReleases", "automações", "Aplicação de web scraping que coleta os últimos lançamentos de filmes em exibição nos cinemas e envia essas informações por email.", ["TypeScript", "Puppeteer", "Nodemailer", "Nodemon"],
         "https://github.com/PedroMarques391/lastReleases"
