@@ -24,8 +24,8 @@ const Footer = (): React.JSX.Element => {
     const socialItems: ISocialItemsInterface[] = [
         { text: "LinkedIn", href: "https://www.linkedin.com/in/pedromarques391/", duration: 0.5 },
         { text: "GitHub", href: "https://github.com/PedroMarques391", duration: 1.0 },
-        { text: "Instagram", href: "https://www.instagram.com/pedromarques.py/", duration: 1.5 },
-        { text: "X", href: "https://x.com/PedroMarques391", duration: 2.0 },
+        { text: "Instagram", href: "https://www.instagram.com/pedromarques.dev/", duration: 1.5 },
+        { text: "X", href: "https://x.com/opeedrodev", duration: 2.0 },
     ];
 
     const navLinkItems: INavItemsInterface[] = [
