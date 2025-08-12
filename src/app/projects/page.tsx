@@ -2,8 +2,8 @@
 import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
 import SectionHeader from "@/components/UI/SectionHeader";
-import { projects } from "@/utils/data";
 import { IProjectInterface } from "@/utils/model/projectModel";
+import { projects } from "@/utils/projects";
 import { useState } from "react";
 
 

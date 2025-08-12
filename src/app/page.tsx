@@ -10,7 +10,6 @@ import { MdFileDownload, MdOutlineKeyboardDoubleArrowDown } from "react-icons/md
 import { TbWorldWww } from "react-icons/tb";
 import HardSkillsCard from "@/components/UI/HardSkillsCard";
 import MotionPath from "@/components/Motions/MotionPath";
-import { skills } from "@/utils/data";
 import Image from "next/image";
 import Typewriter from "@/components/UI/Typewriter";
 import { useEffect, useRef, useState } from "react";
@@ -20,6 +19,7 @@ import { ImLinkedin } from "react-icons/im";
 import { BsTwitterX } from "react-icons/bs";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { FiMessageCircle } from "react-icons/fi";
+import { skills } from "@/utils/projects";
 
 
 
