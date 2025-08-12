@@ -4,6 +4,8 @@ import "./globals.css";
 import { Suspense } from "react";
 import { LoadingPage } from "@/components/UI/LoadingPage";
 import Main from "@/components/Layout/Main";
+import Script from "next/script";
+import { jsonLD } from "@/utils/scheme.org/schme";
 
 
 const roboto = Roboto({
@@ -35,6 +37,13 @@ export default function RootLayout({
       <body
         className={`${roboto.className} antialiased`}
       >
+        <Script
+          id="faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLD),
+          }}
+        />
         <Suspense fallback={<LoadingPage />} >
           <Main>
             {children}
