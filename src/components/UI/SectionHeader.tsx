@@ -5,12 +5,13 @@ interface ISectionHeaderProps {
     title: string
     subtitle: string
     styles?: string
+    id?: string
 }
-const SectionHeader = ({ title, subtitle, styles }: ISectionHeaderProps): React.JSX.Element => {
+const SectionHeader = ({ title, subtitle, styles, id }: ISectionHeaderProps): React.JSX.Element => {
     const ref = useRef(null);
     const isInView = useInView(ref);
     return (
-        <div className="overflow-hidden lg:overflow-visible">
+        <div id={id} className="overflow-hidden lg:overflow-visible">
             <motion.h2
                 ref={ref}
                 initial={{ x: '-100%' }}
