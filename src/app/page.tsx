@@ -27,7 +27,6 @@ export default function Home() {
 
   const stacks: string[] = ["Front-end", "Mobile"];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [screenScroll, setScreenScroll] = useState<number>(0);
   const ref = useRef(null);
   const isInView = useInView(ref);
 
@@ -38,18 +37,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-  useEffect(() => {
-    const resize = () => {
-      setScreenScroll(window.innerWidth > 720 ? 600 : 1200);
-    };
 
-    resize();
-
-    window.addEventListener("resize", resize);
-
-    return () => removeEventListener("resize", resize);
-
-  }, []);
 
   return (
     <div className="text-gray-soft flex h-full flex-col">
@@ -192,12 +180,13 @@ export default function Home() {
       <section className=" w-full flex flex-col gap-y-2">
         <button
           aria-label="Botão que leva até os cards de serviços."
-          onClick={() => handleScroll(screenScroll)}
+          onClick={() => handleScroll('service')}
+
           className="mx-auto text-center p-6 animate-bounce "
         >
           <MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" />
         </button>
-        <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." />
+        <SectionHeader title="Serviços" subtitle="Veja o que posso fazer por você..." id="service" />
         <div className="flex gap-6 mt-10 flex-wrap justify-center overflow-hidden md:overflow-visible">
           <ServicesCards icon={<TbWorldWww size={50} />} title="Desenvolvimento Web">
             Construo sites modernos, responsivos e de alta performance, criados sob medida para atender às suas necessidades. Utilizo tecnologias como <code className="text-orange-500">Node.js, Next.js, React e Tailwind</code> para oferecer soluções eficientes e personalizadas.
