@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
@@ -22,7 +23,6 @@ export const metadata: Metadata = {
   robots: "index, follow",
   keywords: "Pedro Marques, Front-End, desenvolvedor, portfólio web, projetos front-end, HTML, CSS, JavaScript, React, Next.js, desenvolvimento web",
   creator: "Pedro Marques",
-
 };
 
 
@@ -48,7 +48,7 @@ export default function RootLayout({
             {children}
           </Main>
         </Suspense>
-
+        <Analytics />
       </body>
     </html>
   );
