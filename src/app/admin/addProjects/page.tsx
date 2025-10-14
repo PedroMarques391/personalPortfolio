@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FiLoader } from "react-icons/fi";
 import z from "zod";
 
 const projectScheme = z.object({
@@ -31,11 +32,13 @@ type ProjectData = z.infer<typeof projectScheme>;
 const Page = (): React.JSX.Element => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ProjectData>({
     resolver: zodResolver(projectScheme),
   });
@@ -55,19 +58,21 @@ const Page = (): React.JSX.Element => {
     if (!image) {
       return alert("Por favor, selecione uma imagem");
     }
-    const base64 = await imageToBase64(image);
-
-    console.log(base64);
-
-    await fetch("/api/project/add-project", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, imageURL: base64 }),
-    });
-
     try {
+      setLoading(true);
+      const base64 = await imageToBase64(image);
+
+      await fetch("/api/project/add-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, imageURL: base64 }),
+      });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
+      setPreview(null);
+      reset();
     }
   }
 
@@ -83,7 +88,7 @@ const Page = (): React.JSX.Element => {
         onSubmit={handleSubmit(handleNewProject)}
         className="flex flex-col mt-5 max-w-xl mx-auto items-center"
       >
-        <section className="w-72 h-64 mx-auto my-5 flex flex-col items-center justify-center bg-slate-200 rounded-lg border-2 border-dashed border-gray-400 overflow-hidden relative">
+        <section className="w-72 h-64 mx-auto my-5 flex flex-col items-center justify-center bg-slate-200 rounded-lg border-2 border-dashed border-orange-500 overflow-hidden relative">
           {preview ? (
             <Image
               width={500}
@@ -93,7 +98,7 @@ const Page = (): React.JSX.Element => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center text-gray-500">
+            <div className="flex flex-col items-center justify-center text-orange-500">
               <svg
                 className="w-12 h-12 mb-2"
                 fill="none"
@@ -134,14 +139,45 @@ const Page = (): React.JSX.Element => {
           duration={1.0}
           {...register("description")}
           error={errors.description?.message}
-          label="Descricao do projeto"
+          label="Descrição"
         />
-        <Input
-          duration={1.0}
-          {...register("type")}
-          error={errors.type?.message}
-          label="Tipo"
-        />
+        <div className="relative w-[90%] sm:w-[90%]  md:w-[90%] lg:w-[70%] my-3">
+          <select
+            {...register("type")}
+            id="select"
+            required
+            className={`peer text-white border-2 bg-transparent 
+                    rounded-md w-full h-12 px-4 outline-none 
+                    transition duration-300 focus:border-orange-500 
+                    appearance-none ${
+                      errors.type
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-soft"
+                    }`}
+          >
+            <option value="" disabled>
+              Selecionar
+            </option>
+            <option value="web">Web</option>
+            <option value="mobile">Mobile</option>
+            <option value="automações">Automações</option>
+          </select>
+          <label
+            htmlFor={"select"}
+            className={`
+          absolute left-4 top-[50%] -translate-y-[50%] text-accent 
+          bg-transparent pointer-events-none transition-all duration-300 
+          peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
+          peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-accent 
+          peer-focus:top-0 peer-focus:text-sm peer-focus:bg-black text-white px-2 
+          peer-valid:top-0 peer-valid:bg-black peer-valid:text-sm`}
+          >
+            Tipo{" "}
+          </label>
+          {errors.type?.message && (
+            <span className="text-red-500 text-sm">{errors.type.message}</span>
+          )}
+        </div>
         <Input
           duration={1.0}
           {...register("tags")}
@@ -152,14 +188,19 @@ const Page = (): React.JSX.Element => {
           duration={1.0}
           {...register("url")}
           error={errors.url?.message}
-          label="Url"
+          label="URL"
         />
 
         <button
-          className="p-3 bg-red-700 text-white rounded hover:bg-red-600 transition my-5"
+          disabled={loading}
+          className="p-3  bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-300 my-5 w-52 text-center disabled:bg-orange-500/60 disabled:cursor-not-allowed rounded-xl"
           type="submit"
         >
-          Adicionar
+          {loading ? (
+            <FiLoader className="animate-spin text-black w-full text-center text-xl" />
+          ) : (
+            "Adicionar Projeto"
+          )}
         </button>
       </form>
     </section>
