@@ -7,8 +7,6 @@ export async function POST(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
 
-    console.log(token);
-
     if (!token)
       return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
 
@@ -18,19 +16,22 @@ export async function POST(req: NextRequest) {
     const { title, description, type, tags, url, imageURL } = await req.json();
 
     const query = `INSERT INTO projects (title, content, type, tags, url, imageURL, user_id) VALUES (?, ?, ?, ?, ?, ?, ?);`;
-    const [rows]: any[] = await mysql.execute(query, [
+    await mysql.execute(query, [
       title,
       description,
       type,
       tags,
       url,
-      imageURL.split(",")[0],
+      imageURL,
       payload.id,
     ]);
 
     await mysql.end();
 
-    return NextResponse.json({ rows }, { status: 200 });
+    return NextResponse.json(
+      { message: "Project created successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
   }
