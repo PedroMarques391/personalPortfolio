@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     await mysql.end();
 
-    const token = await new jose.SignJWT({ email: rows[0].email })
+    const token = await new jose.SignJWT({ id: rows[0].id })
       .setExpirationTime("7d")
       .setProtectedHeader({ alg })
       .sign(secret);
