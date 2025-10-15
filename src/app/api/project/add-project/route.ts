@@ -2,6 +2,16 @@ import { MySQL } from "@/utils/database/connection";
 import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
+export interface IProjectInterface {
+  id: number;
+  imageURL: string;
+  title: string;
+  type: string;
+  content: React.ReactNode;
+  tags: string;
+  url?: string;
+}
+
 export async function POST(req: NextRequest) {
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
   try {
@@ -13,12 +23,13 @@ export async function POST(req: NextRequest) {
     const { payload } = await jwtVerify(token, secret);
     const mysql = await MySQL();
 
-    const { title, description, type, tags, url, imageURL } = await req.json();
+    const { title, content, type, tags, url, imageURL }: IProjectInterface =
+      await req.json();
 
     const query = `INSERT INTO projects (title, content, type, tags, url, imageURL, user_id) VALUES (?, ?, ?, ?, ?, ?, ?);`;
     await mysql.execute(query, [
       title,
-      description,
+      content,
       type,
       tags,
       url,
