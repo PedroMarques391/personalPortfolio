@@ -2,20 +2,30 @@
 import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
 import SectionHeader from "@/components/UI/SectionHeader";
-import { IProjectInterface } from "@/utils/model/projectModel";
 import { useEffect, useState } from "react";
+
+export interface IProjectInterface {
+  id: number;
+  imageURL: string;
+  title: string;
+  type: string;
+  content: React.ReactNode;
+  tags: string;
+  url: string;
+}
 
 const ProjectsPage = (): React.JSX.Element => {
   const [active, setActive] = useState<number>(0);
   const [getProjects, setGetProjects] = useState<IProjectInterface[]>([]);
-  const [allProjects, setAllProjects] = useState<IProjectInterface[]>([]);
+  const [allProjects] = useState<IProjectInterface[]>(
+    getProjects as IProjectInterface[]
+  );
 
   useEffect(() => {
     async function fetchProjects() {
       const response = await fetch("/api/project/get-project");
       const data = await response.json();
       setGetProjects(data.projects);
-      setAllProjects(data.projects);
     }
 
     fetchProjects();
