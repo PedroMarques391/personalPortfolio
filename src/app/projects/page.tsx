@@ -2,7 +2,8 @@
 import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
 import SectionHeader from "@/components/UI/SectionHeader";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useMemo, useState } from "react";
 
 export interface IProjectInterface {
   id: number;
@@ -15,21 +16,10 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
-  const [active, setActive] = useState<number>(0);
-  const [getProjects, setGetProjects] = useState<IProjectInterface[]>([]);
-  const [allProjects] = useState<IProjectInterface[]>(
-    getProjects as IProjectInterface[]
-  );
-
-  useEffect(() => {
-    async function fetchProjects() {
-      const response = await fetch("/api/project/get-project");
-      const data = await response.json();
-      setGetProjects(data.projects);
-    }
-
-    fetchProjects();
-  }, []);
+  const [activeButton, setActiveButton] = useState<number>(0);
+  const [projects, setProjects] = useState<IProjectInterface[]>([]);
+  const [filter, setFilter] = useState<string>("Todos");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const buttonsValues = [
     { duration: 0.5, title: "Todos" },
@@ -38,17 +28,33 @@ const ProjectsPage = (): React.JSX.Element => {
     { duration: 2.0, title: "Automações" },
   ];
 
-  function handleFilter(rule: string, index: number) {
-    setActive(index);
-    if (rule === "Todos") {
-      setGetProjects(allProjects);
-    } else {
-      const filter = allProjects.filter(
-        (project) => project.type.toLowerCase() === rule.toLowerCase()
-      );
-      setGetProjects(filter);
-    }
-  }
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/api/project/get-project");
+        const data = await response.json();
+        setProjects(data.projects);
+      } catch (err) {
+        console.error("[fetchProjects] error to get projects", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const filteredProjects = useMemo(() => {
+    if (filter === "Todos") return projects;
+    const filterProjects = projects.filter(
+      (project) => project.type.toLowerCase() === filter.toLowerCase()
+    );
+    return filterProjects;
+  }, [projects, filter]);
+
+  const handleFilter = (rule: string, index: number) => {
+    setActiveButton(index);
+    setFilter(rule);
+  };
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
@@ -60,7 +66,7 @@ const ProjectsPage = (): React.JSX.Element => {
             onClick={() => handleFilter(button.title, index)}
             styles={`uppercase bg-gray-light rounded-md w-auto border 
                     ${
-                      active === index
+                      activeButton === index
                         ? "scale-110 font-bold text-white"
                         : "border-transparent text-gray-dark"
                     } 
@@ -71,21 +77,39 @@ const ProjectsPage = (): React.JSX.Element => {
           </Button>
         ))}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
-        {getProjects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            src={project.imageURL}
-            tags={project.tags}
-            type={project.type}
-            title={project.title}
-            url={project.url}
-            index={index}
-          >
-            {project.content}
-          </ProjectCard>
-        ))}
-      </div>
+      <AnimatePresence mode="wait">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
+          {loading ? (
+            <>
+              {[...Array(8)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="bg-zinc-900 rounded-xl h-72 animate-pulse"
+                  initial={{ scale: 0.95 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {filteredProjects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  src={project.imageURL}
+                  tags={project.tags}
+                  type={project.type}
+                  title={project.title}
+                  url={project.url}
+                  index={index}
+                >
+                  {project.content}
+                </ProjectCard>
+              ))}
+            </>
+          )}
+        </div>
+      </AnimatePresence>
     </div>
   );
 };
