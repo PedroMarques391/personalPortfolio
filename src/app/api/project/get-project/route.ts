@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const mysql = await MySQL();
 
-    const query = `SELECT * FROM projects;`;
+    const query = `SELECT * FROM projects ORDER BY title ASC;`;
     const [rows]: any[] = await mysql.execute(query);
 
     await mysql.end();

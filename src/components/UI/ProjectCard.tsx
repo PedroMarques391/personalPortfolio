@@ -74,7 +74,7 @@ const ProjectCard = ({
                 key={index}
                 className="text-xs bg-gray-soft text-gray-light py-1 px-3 rounded-full shadow-sm"
               >
-                #{tag}
+                #{tag.trim()}
               </span>
             ))}
           </div>
