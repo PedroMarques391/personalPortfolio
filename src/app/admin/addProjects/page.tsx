@@ -199,12 +199,28 @@ const Page = (): React.JSX.Element => {
                         : "border-gray-soft"
                     }`}
           >
-            <option value="" disabled>
+            <option
+              className="bg-gray-light text-gray-dark text-center"
+              value=""
+              disabled
+            >
               Selecionar
             </option>
-            <option value="web">Web</option>
-            <option value="mobile">Mobile</option>
-            <option value="automações">Automações</option>
+
+            <option className="bg-gray-light text-gray-dark" value="web">
+              Web
+            </option>
+
+            <option className="bg-gray-light text-gray-dark" value="mobile">
+              Mobile
+            </option>
+
+            <option
+              className="bg-gray-light text-gray-dark "
+              value="automações"
+            >
+              Automações
+            </option>
           </select>
           <label
             htmlFor={"select"}
