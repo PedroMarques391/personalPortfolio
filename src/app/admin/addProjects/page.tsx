@@ -1,6 +1,8 @@
 "use client";
 
+import { IMessageInterface } from "@/app/contact/page";
 import { Input } from "@/components/UI/Input";
+import Modal from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
 import imageToBase64 from "@/utils/functions/imageToBase64";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +14,7 @@ import z from "zod";
 
 const projectScheme = z.object({
   title: z.string().min(1, "O nome é obrigatório."),
-  description: z.string().min(1, "A descrição é obrigatória."),
+  content: z.string().min(1, "A descrição é obrigatória."),
   type: z.enum(["web", "mobile", "automações"], {
     errorMap: () => ({
       message: "Permitido apenas (web, mobile, automações)",
@@ -33,6 +35,8 @@ const Page = (): React.JSX.Element => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [message, setMessage] = useState({} as IMessageInterface);
 
   const {
     register,
@@ -56,7 +60,18 @@ const Page = (): React.JSX.Element => {
 
   async function handleNewProject(data: ProjectData) {
     if (!image) {
-      return alert("Por favor, selecione uma imagem");
+      setShowModal(true);
+      setMessage({
+        title: "Selecione uma Imagem",
+        subtitle: "É nescessario selecionar uma imagem para o projeto.",
+        content: "Tenta Novamente",
+        success: false,
+      });
+
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
+      return;
     }
     try {
       setLoading(true);
@@ -67,11 +82,29 @@ const Page = (): React.JSX.Element => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, imageURL: base64 }),
       });
+
+      setShowModal(true);
+      setMessage({
+        title: "Projeto Adicionado com Sucesso",
+        subtitle: "Obrigado por adicionar um novo projeto.",
+        content: "Obrigado por adicionar um novo projeto.",
+        success: true,
+      });
     } catch (error) {
-      console.log(error);
+      setShowModal(true);
+      console.error("[handleNewProject] error to add project:", error);
+      setMessage({
+        title: "Algo deu errado",
+        subtitle: "Ocorreu um erro ao adicionar o projeto.",
+        content: "Tenta Novamente",
+        success: false,
+      });
     } finally {
       setLoading(false);
       setPreview(null);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
       reset();
     }
   }
@@ -83,6 +116,17 @@ const Page = (): React.JSX.Element => {
         subtitle="Adicionar um"
         id="newProject"
       />
+
+      {showModal && (
+        <Modal
+          onClose={() => setShowModal(false)}
+          title={message.title}
+          subtitle={message.subtitle}
+          success={message.success}
+        >
+          {message.content}
+        </Modal>
+      )}
 
       <form
         onSubmit={handleSubmit(handleNewProject)}
@@ -137,8 +181,8 @@ const Page = (): React.JSX.Element => {
         />
         <Input
           duration={1.0}
-          {...register("description")}
-          error={errors.description?.message}
+          {...register("content")}
+          error={errors.content?.message}
           label="Descrição"
         />
         <div className="relative w-[90%] sm:w-[90%]  md:w-[90%] lg:w-[70%] my-3">
