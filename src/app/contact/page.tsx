@@ -27,7 +27,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-interface IMessageInterface {
+export interface IMessageInterface {
   title: string;
   subtitle: string;
   content: string;
