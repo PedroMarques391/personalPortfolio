@@ -96,7 +96,7 @@ const Page = (): React.JSX.Element => {
       setMessage({
         title: "Algo deu errado",
         subtitle: "Ocorreu um erro ao adicionar o projeto.",
-        content: "Tenta Novamente",
+        content: "Tente Novamente",
         success: false,
       });
     } finally {
@@ -236,6 +236,7 @@ const Page = (): React.JSX.Element => {
         />
 
         <button
+          title="Prosseguir"
           disabled={loading}
           className="p-3  bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-300 my-5 w-52 text-center disabled:bg-orange-500/60 disabled:cursor-not-allowed rounded-xl"
           type="submit"
