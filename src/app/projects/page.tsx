@@ -100,7 +100,6 @@ const ProjectsPage = (): React.JSX.Element => {
               type={project.type}
               title={project.title}
               url={project.url}
-              index={index}
             >
               {project.content}
             </ProjectCard>
