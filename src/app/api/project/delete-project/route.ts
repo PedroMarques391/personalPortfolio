@@ -18,13 +18,14 @@ export async function DELETE(req: NextRequest) {
     await mysql.end();
 
     return NextResponse.json(
-      { message: "Projeto deletado com sucesso." },
+      { success: true, message: "Projeto deletado com sucesso." },
       { status: 200 }
     );
   } catch (error: any) {
     console.error("[delete-project] Error to delete project", error.message);
     return NextResponse.json(
       {
+        success: false,
         message: error.message
           ? error.message
           : "Erro ao deletar projeto, tente novemente.",
