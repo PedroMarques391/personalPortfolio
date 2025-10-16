@@ -1,5 +1,5 @@
 
-# **Portfólio - Pedro Marques**
+# **Portfólio**
 
 ![Preview do Portfólio](./public/assets/readme.png)
 
@@ -9,7 +9,8 @@ Este é o meu portfólio atualizado, desenvolvido para destacar meus projetos e 
 - **Frontend:** TailwindCSS, ReactJS, Next.js (v15)  
 - **Animações:** Framer Motion  
 - **Formulários:** React Hook Form com validação utilizando Zod  
-- **Hospedagem:** Vercel  
+- **Hospedagem:** Vercel, Railway
+- **Banco de Dados:** MySQL
 - **SEO:** Configurações otimizadas para melhorar a indexação nos mecanismos de busca  
 
 ## **Recursos do Portfólio**  
