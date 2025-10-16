@@ -90,7 +90,7 @@ const ProjectsPage = (): React.JSX.Element => {
               ))}
             </>
           )}
-          {projects.length === 0 && <ProjectsNotFound />}
+          {!loading && projects.length === 0 && <ProjectsNotFound />}
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={index}
