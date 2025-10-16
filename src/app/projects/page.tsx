@@ -94,6 +94,7 @@ const ProjectsPage = (): React.JSX.Element => {
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={index}
+              id={project.id}
               src={project.imageURL}
               tags={project.tags}
               type={project.type}
