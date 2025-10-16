@@ -84,10 +84,11 @@ const Page = (): React.JSX.Element => {
         {error && <p className="text-red-500">{error}</p>}
 
         <button
+          disabled={loading}
           type="submit"
-          className="mt-3 bg-orange-500 hover:bg-orange-600 text-black font-medium rounded-xl transition p-2 w-full md:w-[70%] tracking-widest"
+          className="mt-3 bg-orange-500 hover:bg-orange-600 text-black font-medium rounded-xl transition p-2 w-full md:w-[70%] tracking-widest disabled:bg-orange-500/80 disabled:cursor-not-allowed"
         >
-          Acessar
+          {loading ? "Entrando..." : "Acessando..."}
         </button>
       </form>
     </section>
