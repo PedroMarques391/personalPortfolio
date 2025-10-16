@@ -6,5 +6,6 @@ declare namespace NodeJS {
     MAIL_HOST: string;
     MAIL_PORT: string;
     JWT_SECRET: string;
+    DATABASE_PORT: number;
   }
 }
