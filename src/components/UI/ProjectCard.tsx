@@ -2,18 +2,22 @@ import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface IProjectCardProps {
   index: number;
+  id: number;
   src: string;
   title: string;
   type: string;
   children: React.ReactNode;
   tags: string;
   url: string;
+  onDelete?: (id: number) => Promise<void>;
 }
 
 const ProjectCard = ({
+  id,
   src,
   title,
   children,
@@ -21,6 +25,7 @@ const ProjectCard = ({
   url,
   type,
   index,
+  onDelete,
 }: IProjectCardProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.2 });
@@ -59,6 +64,18 @@ const ProjectCard = ({
           <span className="absolute top-3 left-3 bg-gray-light text-gray-soft text-xs font-semibold py-1 px-3 rounded-md shadow-md">
             {type}
           </span>
+
+          {onDelete && (
+            <button
+              onClick={async (e) => {
+                e.stopPropagation();
+                await onDelete(id);
+              }}
+              className="absolute top-3 right-3 bg-red-600 text-gray-soft text-xs font-semibold py-1 px-3 rounded-md shadow-md"
+            >
+              <MdDeleteOutline color="white" size={18} />
+            </button>
+          )}
         </section>
 
         <section className="p-6 flex flex-col gap-2 justify-start">
