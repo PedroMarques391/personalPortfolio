@@ -88,7 +88,7 @@ const Page = (): React.JSX.Element => {
           type="submit"
           className="mt-3 bg-orange-500 hover:bg-orange-600 text-black font-medium rounded-xl transition p-2 w-full md:w-[70%] tracking-widest disabled:bg-orange-500/80 disabled:cursor-not-allowed"
         >
-          {loading ? "Entrando..." : "Acessando..."}
+          {loading ? "Acessando..." : "Acessar"}
         </button>
       </form>
     </section>
