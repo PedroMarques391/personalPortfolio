@@ -1,4 +1,4 @@
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
@@ -28,17 +28,23 @@ const ProjectCard = ({
   isDeleting,
 }: IProjectCardProps) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.2 });
 
   return (
     <motion.section
       title={title}
       ref={ref}
-      initial={{ opacity: 0.2 }}
-      animate={isInView ? { opacity: 1 } : { opacity: 0.2 }}
-      transition={{
-        staggerChildren: 0.2,
-        duration: 1.5,
+      initial={{ opacity: 0, y: 20, scale: 0.98 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.4, ease: "easeOut" },
+      }}
+      exit={{
+        opacity: 0,
+        y: 20,
+        scale: 0.9,
+        transition: { duration: 0.3, ease: "easeIn" },
       }}
       className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all  ease-in-out group duration-700 ${
         isDeleting
