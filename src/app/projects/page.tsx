@@ -1,8 +1,10 @@
 "use client";
+import Skeleton from "@/components/Motions/Skeleton";
 import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
+import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
 export interface IProjectInterface {
@@ -33,6 +35,7 @@ const ProjectsPage = (): React.JSX.Element => {
       try {
         const response = await fetch("/api/project/get-project");
         const data = await response.json();
+        if (!data.success) return setProjects([] as IProjectInterface[]);
         setProjects(data.projects);
       } catch (err) {
         console.error("[fetchProjects] error to get projects", err);
@@ -77,37 +80,30 @@ const ProjectsPage = (): React.JSX.Element => {
           </Button>
         ))}
       </div>
+
       <AnimatePresence mode="wait">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
-          {loading ? (
+          {loading && (
             <>
               {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="bg-zinc-900 rounded-xl h-72 animate-pulse"
-                  initial={{ scale: 0.95 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                />
-              ))}
-            </>
-          ) : (
-            <>
-              {filteredProjects.map((project, index) => (
-                <ProjectCard
-                  key={index}
-                  src={project.imageURL}
-                  tags={project.tags}
-                  type={project.type}
-                  title={project.title}
-                  url={project.url}
-                  index={index}
-                >
-                  {project.content}
-                </ProjectCard>
+                <Skeleton key={i} index={i} />
               ))}
             </>
           )}
+          {projects.length === 0 && <ProjectsNotFound />}
+          {filteredProjects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              src={project.imageURL}
+              tags={project.tags}
+              type={project.type}
+              title={project.title}
+              url={project.url}
+              index={index}
+            >
+              {project.content}
+            </ProjectCard>
+          ))}
         </div>
       </AnimatePresence>
     </div>

@@ -10,8 +10,16 @@ export async function GET() {
 
     await mysql.end();
 
-    return NextResponse.json({ projects: rows }, { status: 200 });
-  } catch (error) {
-    console.log(error);
+    return NextResponse.json(
+      { success: true, projects: rows },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("[get-projects] Error to get projects", error.message);
+
+    return NextResponse.json(
+      { success: false, projects: [], message: "Erro ao carregar projetos." },
+      { status: 500 }
+    );
   }
 }
