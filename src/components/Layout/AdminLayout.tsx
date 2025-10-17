@@ -8,8 +8,11 @@ interface IAdminLayoutProps {
 const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
   const pathname = usePathname();
   async function handleLogout() {
-    await fetch("/api/auth/logout", { method: "POST" });
-    window.location.href = "/";
+    const response = await fetch("/api/auth/logout", { method: "POST" });
+    const data = await response.json();
+    if (data.success) {
+      return (window.location.href = "/");
+    }
   }
 
   return (
