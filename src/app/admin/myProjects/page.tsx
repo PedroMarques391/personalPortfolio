@@ -35,33 +35,29 @@ const ProjectsPage = (): React.JSX.Element => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
         {loading ? (
-          <>
-            <AnimatePresence>
-              {[...Array(4)].map((_, i) => (
-                <Skeleton key={i} index={i} />
-              ))}
-            </AnimatePresence>
-          </>
+          <AnimatePresence>
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} index={i} />
+            ))}
+          </AnimatePresence>
         ) : (
-          <>
-            <AnimatePresence>
-              {projects.map((project, index) => (
-                <ProjectCard
-                  key={index}
-                  id={project.id}
-                  src={project.imageURL}
-                  tags={project.tags}
-                  type={project.type}
-                  title={project.title}
-                  url={project.url}
-                  onDelete={() => handleDelete(project.id)}
-                  isDeleting={deletingId === project.id}
-                >
-                  {project.content}
-                </ProjectCard>
-              ))}
-            </AnimatePresence>
-          </>
+          <AnimatePresence>
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                id={project.id}
+                src={project.imageURL}
+                tags={project.tags}
+                type={project.type}
+                title={project.title}
+                url={project.url}
+                onDelete={() => handleDelete(project.id)}
+                isDeleting={deletingId === project.id}
+              >
+                {project.content}
+              </ProjectCard>
+            ))}
+          </AnimatePresence>
         )}
         {!loading && projects.length === 0 && <ProjectsNotFound />}
       </div>
