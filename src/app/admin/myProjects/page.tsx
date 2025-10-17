@@ -32,7 +32,7 @@ const ProjectsPage = (): React.JSX.Element => {
 
   return (
     <AdminLayout>
-      <SectionHeader title="Projetos Cadastrados" subtitle="" />
+      <SectionHeader title="Cadastros" subtitle="" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
         {loading ? (

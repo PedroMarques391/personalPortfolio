@@ -10,7 +10,7 @@ const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
   const pathname = usePathname();
   return (
     <section className="md:max-w-7xl mx-auto w-full">
-      <ul className="p-3 rounded-2xl w-fit mx-auto mb-3 border-2 border-orange-500">
+      <ul className="p-3 rounded-2xl w-fit mx-auto mb-5 border-2 border-orange-500">
         <li className="space-x-4 text-gray-dark font-medium">
           <Link
             href="/admin/addProjects"
