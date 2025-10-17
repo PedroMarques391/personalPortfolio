@@ -25,7 +25,7 @@ function useProjects() {
   const handleDelete = async (id: number) => {
     try {
       setDeletingId(id);
-      console.log(projects);
+      setProjects((prev) => prev.filter((project) => project.id !== id));
       const response = await fetch(`/api/project/delete-project?id=${id}`, {
         method: "DELETE",
         headers: {
