@@ -25,6 +25,7 @@ export const config = {
     "/admin/addProjects/:path*",
     "/admin/myProjects/:path*",
     "/api/project/add-project/:path*",
+    "/api/project/get-project/user-projects/:path*",
     "/api/project/delete-project/:path*",
   ],
 };
