@@ -81,7 +81,7 @@ const ProjectsPage = (): React.JSX.Element => {
             ))}
           </AnimatePresence>
         ) : (
-          <AnimatePresence mode="wait">
+          <>
             {filteredProjects.map((project, index) => (
               <ProjectCard
                 key={index}
@@ -95,7 +95,7 @@ const ProjectsPage = (): React.JSX.Element => {
                 {project.content}
               </ProjectCard>
             ))}
-          </AnimatePresence>
+          </>
         )}
         {!loading && projects.length === 0 && <ProjectsNotFound />}
       </div>
