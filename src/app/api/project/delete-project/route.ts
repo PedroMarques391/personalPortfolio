@@ -7,6 +7,11 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get("id");
     const mysql = await MySQL();
 
+    const token = req.cookies.get("token")?.value;
+
+    if (!token)
+      return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+
     const query = "DELETE FROM projects WHERE id = ?";
 
     const [rows]: any[] = await mysql.execute(query, [id]);
