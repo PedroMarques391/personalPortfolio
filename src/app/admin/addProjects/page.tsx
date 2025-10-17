@@ -158,12 +158,18 @@ const Page = (): React.JSX.Element => {
                   d="M7 16V4m0 0L3 8m4-4l4 4m6 4h4m0 0l-4 4m4-4l-4-4"
                 ></path>
               </svg>
-              <span>Selecionar imagem</span>
+              <span>Arraste ou selecione uma imagem</span>
             </div>
           )}
 
           <input
             type="file"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                setImage(e.dataTransfer.files[0]);
+              }
+            }}
             accept="image/*"
             className="absolute w-full h-full opacity-0 cursor-pointer"
             onChange={(e) => {
