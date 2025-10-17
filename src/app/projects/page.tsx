@@ -4,8 +4,9 @@ import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
+import useProjects from "@/hooks/useProjects";
 import { AnimatePresence } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export interface IProjectInterface {
   id: number;
@@ -18,10 +19,9 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
+  const { projects, loading, fetchProjects } = useProjects();
   const [activeButton, setActiveButton] = useState<number>(0);
-  const [projects, setProjects] = useState<IProjectInterface[]>([]);
   const [filter, setFilter] = useState<string>("Todos");
-  const [loading, setLoading] = useState<boolean>(true);
 
   const buttonsValues = [
     { duration: 0.5, title: "Todos" },
@@ -30,19 +30,11 @@ const ProjectsPage = (): React.JSX.Element => {
     { duration: 2.0, title: "Automações" },
   ];
 
+  const fetched = useRef(false);
+
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("/api/project/get-project");
-        const data = await response.json();
-        if (!data.success) return setProjects([] as IProjectInterface[]);
-        setProjects(data.projects);
-      } catch (err) {
-        console.error("[fetchProjects] error to get projects", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (fetched.current) return;
+    fetched.current = true;
     fetchProjects();
   }, []);
 
@@ -81,31 +73,32 @@ const ProjectsPage = (): React.JSX.Element => {
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
-          {loading && (
-            <>
-              {[...Array(8)].map((_, i) => (
-                <Skeleton key={i} index={i} />
-              ))}
-            </>
-          )}
-          {!loading && projects.length === 0 && <ProjectsNotFound />}
-          {filteredProjects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              id={project.id}
-              src={project.imageURL}
-              tags={project.tags}
-              type={project.type}
-              title={project.title}
-              url={project.url}
-            >
-              {project.content}
-            </ProjectCard>
-          ))}
-        </div>
-      </AnimatePresence>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
+        {loading ? (
+          <AnimatePresence mode="wait">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} index={i} />
+            ))}
+          </AnimatePresence>
+        ) : (
+          <AnimatePresence mode="wait">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                id={project.id}
+                src={project.imageURL}
+                tags={project.tags}
+                type={project.type}
+                title={project.title}
+                url={project.url}
+              >
+                {project.content}
+              </ProjectCard>
+            ))}
+          </AnimatePresence>
+        )}
+        {!loading && projects.length === 0 && <ProjectsNotFound />}
+      </div>
     </div>
   );
 };
