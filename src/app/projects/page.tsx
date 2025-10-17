@@ -35,7 +35,7 @@ const ProjectsPage = (): React.JSX.Element => {
   useEffect(() => {
     if (fetched.current) return;
     fetched.current = true;
-    fetchProjects();
+    fetchProjects("/api/project/get-project/all");
   }, []);
 
   const filteredProjects = useMemo(() => {

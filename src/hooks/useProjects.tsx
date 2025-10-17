@@ -8,10 +8,10 @@ function useProjects() {
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (url: string) => {
     try {
       setError(null);
-      const response = await fetch("/api/project/get-project");
+      const response = await fetch(url);
       const data = await response.json();
 
       setProjects(data.projects);
@@ -35,7 +35,7 @@ function useProjects() {
       const data = await response.json();
       console.log(data);
       if (!data.success) {
-        return await fetchProjects();
+        return await fetchProjects("/api/project/get-project/user-projects");
       }
     } catch (error) {
       console.error("[fetchProjects] error to get projects", error);
