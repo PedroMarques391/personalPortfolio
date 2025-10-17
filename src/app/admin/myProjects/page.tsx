@@ -1,4 +1,5 @@
 "use client";
+import AdminLayout from "@/components/Layout/AdminLayout";
 import Skeleton from "@/components/Motions/Skeleton";
 import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
@@ -30,7 +31,7 @@ const ProjectsPage = (): React.JSX.Element => {
   }, []);
 
   return (
-    <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
+    <AdminLayout>
       <SectionHeader title="Projetos Cadastrados" subtitle="" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
@@ -61,7 +62,7 @@ const ProjectsPage = (): React.JSX.Element => {
         )}
         {!loading && projects.length === 0 && <ProjectsNotFound />}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

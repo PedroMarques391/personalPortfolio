@@ -1,6 +1,7 @@
 "use client";
 
 import { IMessageInterface } from "@/app/contact/page";
+import AdminLayout from "@/components/Layout/AdminLayout";
 import { Input } from "@/components/UI/Input";
 import Modal from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
@@ -110,7 +111,7 @@ const Page = (): React.JSX.Element => {
   }
 
   return (
-    <section className="max-w-5xl mx-auto w-full">
+    <AdminLayout>
       <SectionHeader
         title="Novo Projeto"
         subtitle="Adicionar um"
@@ -264,7 +265,7 @@ const Page = (): React.JSX.Element => {
           )}
         </button>
       </form>
-    </section>
+    </AdminLayout>
   );
 };
 
