@@ -32,7 +32,7 @@ const Page = (): React.JSX.Element => {
   async function handleLogin(data: FormData) {
     try {
       setLoading(true);
-      const res = await fetch("/api/login", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
