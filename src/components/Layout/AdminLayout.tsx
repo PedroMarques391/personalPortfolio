@@ -1,17 +1,21 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LuLogOut } from "react-icons/lu";
 
 interface IAdminLayoutProps {
   children: React.ReactNode;
 }
 const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
   const pathname = usePathname();
+  async function handleLogout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/";
+  }
+
   return (
     <section className="md:max-w-7xl mx-auto w-full">
-      <ul className="p-3 rounded-2xl w-fit mx-auto mb-5 border-2 border-orange-500">
-        <li className="space-x-4 text-gray-dark font-medium">
+      <ul className=" rounded-2xl w-fit mx-auto mb-5 border-2 border-orange-500">
+        <li className="gap-x-4 text-gray-dark font-medium flex flex-row p-3 justify-center items-center">
           <Link
             href="/admin/addProjects"
             className={
@@ -28,6 +32,9 @@ const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
           >
             Meus Projetos
           </Link>
+          <button onClick={handleLogout} title="sair" className="w-fit p-2">
+            <LuLogOut color="#fff" size={20} />
+          </button>
         </li>
       </ul>
       {children}
