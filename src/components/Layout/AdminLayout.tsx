@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
 
 interface IAdminLayoutProps {
@@ -7,11 +7,12 @@ interface IAdminLayoutProps {
 }
 const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
   const pathname = usePathname();
+  const router = useRouter();
   async function handleLogout() {
     const response = await fetch("/api/auth/logout", { method: "POST" });
     const data = await response.json();
     if (data.success) {
-      return (window.location.href = "/");
+      return router.push("/");
     }
   }
 
