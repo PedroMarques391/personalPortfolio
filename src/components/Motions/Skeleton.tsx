@@ -16,7 +16,7 @@ function Skeleton({ index }: ISkeletonProps) {
         transition: { delay: index * 0.05, ease: "easeOut" },
       }}
       exit={{
-        scale: 0.6,
+        scale: 0.1,
         transition: { delay: index * 0.05, ease: "easeIn" },
       }}
     />
