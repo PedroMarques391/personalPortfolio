@@ -33,7 +33,6 @@ function useProjects() {
         },
       });
       const data = await response.json();
-      console.log(data);
       if (!data.success) {
         return await fetchProjects("/api/project/get-project/user-projects");
       }

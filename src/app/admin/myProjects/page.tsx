@@ -43,9 +43,9 @@ const ProjectsPage = (): React.JSX.Element => {
           </AnimatePresence>
         ) : (
           <AnimatePresence>
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <ProjectCard
-                key={index}
+                key={project.id}
                 id={project.id}
                 src={project.imageURL}
                 tags={project.tags}

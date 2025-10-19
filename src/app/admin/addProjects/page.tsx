@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { BiTrashAlt } from "react-icons/bi";
 import { FiLoader } from "react-icons/fi";
 import z from "zod";
 
@@ -135,13 +136,25 @@ const Page = (): React.JSX.Element => {
       >
         <section className="w-72 h-64 mx-auto my-5 flex flex-col items-center justify-center bg-slate-200 rounded-lg border-2 border-dashed border-orange-500 overflow-hidden relative">
           {preview ? (
-            <Image
-              width={500}
-              height={500}
-              src={preview}
-              alt="preview"
-              className="w-full h-full object-cover"
-            />
+            <>
+              <Image
+                width={500}
+                height={500}
+                src={preview}
+                alt="preview"
+                className="w-full h-full object-cover"
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImage(null);
+                }}
+                className="absolute top-2 right-2 bg-red-500/50 hover:bg-red-500/100 transition-colors duration-300 text-white p-2 rounded z-20"
+              >
+                <BiTrashAlt size={20} color="white" />
+              </button>
+            </>
           ) : (
             <div className="flex flex-col items-center justify-center text-orange-500">
               <svg
