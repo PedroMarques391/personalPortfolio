@@ -1,27 +1,14 @@
-import { MySQL } from "@/utils/database/connection";
-import { jwtVerify } from "jose";
+import projectRepository from "@/core/repository/ProjectRepository";
+import { AuthTokenService } from "@/core/services/AuthTokenService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
   try {
-    const token = req.cookies.get("token")?.value;
+    const payload = await AuthTokenService.verifyToken(req);
 
-    if (!token) {
-      throw new Error("Erro ao carregar projetos, usuário não autenticado.", {
-        cause: 401,
-      });
-    }
-
-    const { payload } = await jwtVerify(token, secret);
-
-    const mysql = await MySQL();
-
-    const query = `SELECT * FROM projects WHERE user_id = '${payload.id}' ORDER BY title ASC;`;
-
-    const [rows]: any[] = await mysql.execute(query);
-
-    await mysql.end();
+    const rows = await projectRepository.getProjectsByUserId(
+      payload.id as string
+    );
 
     return NextResponse.json(
       { success: true, projects: rows },

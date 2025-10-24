@@ -1,17 +1,9 @@
-import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
-
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+import { AuthTokenService } from "./core/services/AuthTokenService";
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
-
-  if (!token) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
   try {
-    await jwtVerify(token, secret);
+    await AuthTokenService.verifyToken(req);
     return NextResponse.next();
   } catch (err) {
     console.log("[middleware] Error verifying token", err);

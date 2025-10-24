@@ -1,49 +1,31 @@
-import { MySQL } from "@/utils/database/connection";
-import { jwtVerify } from "jose";
+import projectRepository from "@/core/repository/ProjectRepository";
+import { AuthTokenService } from "@/core/services/AuthTokenService";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface IProjectInterface {
-  id: number;
   imageURL: string;
   title: string;
   type: string;
   content: React.ReactNode;
   tags: string;
-  url?: string;
+  url: string;
+  user_id: string;
 }
 
 export async function POST(req: NextRequest) {
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
   try {
-    const token = req.cookies.get("token")?.value;
+    const payload = await AuthTokenService.verifyToken(req);
+    const body: IProjectInterface = await req.json();
+    const data = {
+      ...body,
+      user_id: payload.id as string,
+    };
 
-    if (!token)
-      return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+    const rows = await projectRepository.addProject(data);
 
-    const { payload } = await jwtVerify(token, secret);
-    const mysql = await MySQL();
-
-    const { title, content, type, tags, url, imageURL }: IProjectInterface =
-      await req.json();
-
-    const query = `INSERT INTO projects (title, content, type, tags, url, imageURL, user_id) VALUES (?, ?, ?, ?, ?, ?, ?);`;
-    await mysql.execute(query, [
-      title,
-      content,
-      type,
-      tags,
-      url,
-      imageURL,
-      payload.id,
-    ]);
-
-    await mysql.end();
-
-    return NextResponse.json(
-      { message: "Project created successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({ success: true, rows }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error("[add-project] Error to add project", error);
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }

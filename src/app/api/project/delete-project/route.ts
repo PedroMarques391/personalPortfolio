@@ -1,26 +1,12 @@
-import { MySQL } from "@/utils/database/connection";
+import projectRepository from "@/core/repository/ProjectRepository";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(req: NextRequest) {
   try {
-    const searchParams = req.nextUrl.searchParams;
+    const { searchParams } = req.nextUrl;
     const id = searchParams.get("id");
-    const mysql = await MySQL();
 
-    const token = req.cookies.get("token")?.value;
-
-    if (!token)
-      return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
-
-    const query = "DELETE FROM projects WHERE id = ?";
-
-    const [rows]: any[] = await mysql.execute(query, [id]);
-
-    if (!rows.affectedRows) {
-      throw new Error(`Não existe um projeto com o id ${id}.`);
-    }
-
-    await mysql.end();
+    await projectRepository.deleteProject(id);
 
     return NextResponse.json(
       { success: true, message: "Projeto deletado com sucesso." },
@@ -35,7 +21,7 @@ export async function DELETE(req: NextRequest) {
           ? error.message
           : "Erro ao deletar projeto, tente novemente.",
       },
-      { status: 500 }
+      { status: 400 }
     );
   }
 }

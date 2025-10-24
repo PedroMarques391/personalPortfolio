@@ -79,11 +79,15 @@ const Page = (): React.JSX.Element => {
       setLoading(true);
       const base64 = await imageToBase64(image);
 
-      await fetch("/api/project/add-project", {
+      const res = await fetch("/api/project/add-project", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, imageURL: base64 }),
       });
+
+      if (!res.ok) {
+        throw new Error("Erro ao adicionar o projeto, tente novamente.");
+      }
 
       setShowModal(true);
       setMessage({
@@ -92,18 +96,18 @@ const Page = (): React.JSX.Element => {
         content: "Obrigado por adicionar um novo projeto.",
         success: true,
       });
-    } catch (error) {
+    } catch (error: any) {
       setShowModal(true);
-      console.error("[handleNewProject] error to add project:", error);
       setMessage({
         title: "Algo deu errado",
-        subtitle: "Ocorreu um erro ao adicionar o projeto.",
+        subtitle: error.message,
         content: "Tente Novamente",
         success: false,
       });
     } finally {
       setLoading(false);
       setPreview(null);
+      setImage(null);
       setTimeout(() => {
         setShowModal(false);
       }, 2000);

@@ -41,19 +41,19 @@ const Page = (): React.JSX.Element => {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error);
+        const error = await res.json();
+        throw new Error(error.message);
       }
 
       route.push("/admin/addProjects");
     } catch (err: any) {
       setError(err.message);
-    } finally {
-      setLoading(false);
-      reset();
       setTimeout(() => {
         setError("");
       }, 2000);
+    } finally {
+      setLoading(false);
+      reset();
     }
   }
 
