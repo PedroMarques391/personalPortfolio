@@ -3,13 +3,7 @@ import Encrypt from "../shared/encrypt";
 
 class UserRepository {
   async login(email: string, password: string): Promise<any> {
-    const query = "SELECT * FROM users WHERE email = ?";
-    const [rows]: any[] = await MySQL.execute(query, [email]);
-
-    if (!rows || rows.length === 0) {
-      throw new Error("Credenciais inválidas");
-    }
-    const user = rows[0];
+    const user = await this.findUserByEmail(email);
 
     const isValidPassword = await Encrypt.compare(password, user.password);
 
@@ -18,6 +12,17 @@ class UserRepository {
     }
 
     return user;
+  }
+
+  async findUserByEmail(email: string) {
+    const query = "SELECT * FROM users WHERE email = ?";
+    const [rows]: any[] = await MySQL.execute(query, [email]);
+
+    if (!rows || rows.length === 0) {
+      throw new Error("Credenciais inválidas");
+    }
+
+    return rows[0];
   }
 }
 
