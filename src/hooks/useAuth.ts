@@ -1,33 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { AuthData } from "@/validations/auth.scheme";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-
-const schema = z.object({
-  email: z
-    .string()
-    .min(1, "O campo não pode ficar vazio.")
-    .email("Insira um email válido"),
-  password: z.string().min(1, "Qual é a sua senha?"),
-});
-
-type FormData = z.infer<typeof schema>;
 
 function useAuth() {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const route = useRouter();
 
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-  async function handleLogin(data: FormData) {
+  async function handleLogin(data: AuthData) {
     try {
       setLoading(true);
       const res = await fetch("/api/auth/login", {
@@ -43,7 +23,6 @@ function useAuth() {
         throw new Error(error.message);
       }
 
-      reset();
       route.push("/admin/addProjects");
     } catch (err: any) {
       setError(err.message);
@@ -55,14 +34,10 @@ function useAuth() {
     }
   }
 
-  const onSubmit = handleSubmit(handleLogin);
-
   return {
     error,
     loading,
-    register,
-    onSubmit,
-    errors,
+    handleLogin,
   };
 }
 
