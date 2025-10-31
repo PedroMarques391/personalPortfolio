@@ -5,40 +5,22 @@ import AdminLayout from "@/components/Layout/AdminLayout";
 import { Input } from "@/components/UI/Input";
 import Modal from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
-import imageToBase64 from "@/utils/functions/imageToBase64";
+import useProjects from "@/hooks/useProjects";
+import { ProjectData, projectScheme } from "@/validations/project.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiTrashAlt } from "react-icons/bi";
 import { FiLoader } from "react-icons/fi";
-import z from "zod";
-
-const projectScheme = z.object({
-  title: z.string().min(1, "O nome é obrigatório."),
-  content: z.string().min(1, "A descrição é obrigatória."),
-  type: z.enum(["web", "mobile", "automações"], {
-    errorMap: () => ({
-      message: "Permitido apenas (web, mobile, automações)",
-    }),
-  }),
-  tags: z
-    .string()
-    .min(1, "A tag é obrigatória e deve ser separada por vírgula."),
-  url: z
-    .string()
-    .min(1, "A url é obrigatória do projeto é obrigatória.")
-    .url("Insira uma url valida."),
-});
-
-type ProjectData = z.infer<typeof projectScheme>;
 
 const Page = (): React.JSX.Element => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [message, setMessage] = useState({} as IMessageInterface);
+  const { createProject } = useProjects();
 
   const {
     register,
@@ -77,17 +59,7 @@ const Page = (): React.JSX.Element => {
     }
     try {
       setLoading(true);
-      const base64 = await imageToBase64(image);
-
-      const res = await fetch("/api/project/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, imageURL: base64 }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Erro ao adicionar o projeto, tente novamente.");
-      }
+      await createProject(data, image);
 
       setShowModal(true);
       setMessage({

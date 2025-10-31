@@ -8,24 +8,10 @@ import { Input } from "@/components/UI/Input";
 import Modal from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { insertMaskInPhone } from "@/utils/functions/phoneMask";
+import { ContactData, contactScheme } from "@/validations/contact.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { z } from "zod";
-
-const schema = z.object({
-  name: z.string().min(1, "O nome é obrigatório."),
-  email: z.string().email("Digite um email válido."),
-  phone: z
-    .string()
-    .min(1, "O telefone é obrigatório")
-    .refine((value) => /^[\d\(\)\-\s]{14,15}$/.test(value), {
-      message: "Numero de telefone invalido",
-    }),
-  message: z.string().min(1, "A mensagem é obrigatória."),
-});
-
-type FormData = z.infer<typeof schema>;
 
 export interface IMessageInterface {
   title: string;
@@ -45,11 +31,11 @@ const Contact = (): React.JSX.Element => {
     reset,
     setValue,
     clearErrors,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<ContactData>({
+    resolver: zodResolver(contactScheme),
   });
 
-  function handleContact(data: FormData) {
+  function handleContact(data: ContactData) {
     setPending(true);
     fetch("/api/emails", {
       method: "POST",

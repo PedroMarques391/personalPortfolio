@@ -6,7 +6,7 @@ import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
 import useProjects from "@/hooks/useProjects";
 import { AnimatePresence } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export interface IProjectInterface {
   id: number;
@@ -19,9 +19,14 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
-  const { projects, loading, fetchProjects } = useProjects();
-  const [activeButton, setActiveButton] = useState<number>(0);
-  const [filter, setFilter] = useState<string>("Todos");
+  const {
+    projects,
+    loading,
+    fetchProjects,
+    activeButton,
+    handleFilter,
+    filteredProjects,
+  } = useProjects();
 
   const buttonsValues = [
     { duration: 0.5, title: "Todos" },
@@ -37,19 +42,6 @@ const ProjectsPage = (): React.JSX.Element => {
     fetched.current = true;
     fetchProjects("/api/project?role=all");
   }, []);
-
-  const filteredProjects = useMemo(() => {
-    if (filter === "Todos") return projects;
-    const filterProjects = projects.filter(
-      (project) => project.type.toLowerCase() === filter.toLowerCase()
-    );
-    return filterProjects;
-  }, [projects, filter]);
-
-  const handleFilter = (rule: string, index: number) => {
-    setActiveButton(index);
-    setFilter(rule);
-  };
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">

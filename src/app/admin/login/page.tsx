@@ -1,9 +1,20 @@
 "use client";
 import { Input } from "@/components/UI/Input";
 import useAuth from "@/hooks/useAuth";
+import { AuthData, authScheme } from "@/validations/auth.scheme";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const Page = (): React.JSX.Element => {
-  const { register, errors, loading, error, onSubmit } = useAuth();
+  const { loading, error, handleLogin } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthData>({
+    resolver: zodResolver(authScheme),
+  });
 
   return (
     <section className="w-full h-auto max-w-xl bg-gray-light  rounded-2xl  p-8 mx-auto my-20 text-gray-soft">
@@ -12,7 +23,7 @@ const Page = (): React.JSX.Element => {
       </h1>
 
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(handleLogin)}
         className="flex flex-col mx-auto justify-center items-center"
       >
         <Input
