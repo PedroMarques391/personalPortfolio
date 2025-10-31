@@ -1,4 +1,4 @@
-import { IProjectInterface } from "@/app/api/project/add-project/route";
+import { IProjectInterface } from "@/app/api/project/route";
 import MySQL from "@/database/connection";
 
 class ProjectRepository {
