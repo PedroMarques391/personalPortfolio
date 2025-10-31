@@ -25,7 +25,7 @@ function useProjects() {
     try {
       setDeletingId(id);
       setProjects((prev) => prev.filter((project) => project.id !== id));
-      const response = await fetch(`/api/project/delete-project?id=${id}`, {
+      const response = await fetch(`/api/project?id=${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

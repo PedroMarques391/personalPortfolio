@@ -27,7 +27,7 @@ const ProjectsPage = (): React.JSX.Element => {
   useEffect(() => {
     if (fetched.current) return;
     fetched.current = true;
-    fetchProjects("/api/project/get-project/user-projects");
+    fetchProjects("/api/project?role=user-projects");
   }, []);
 
   return (

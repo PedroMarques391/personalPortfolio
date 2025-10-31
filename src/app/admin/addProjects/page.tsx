@@ -79,7 +79,7 @@ const Page = (): React.JSX.Element => {
       setLoading(true);
       const base64 = await imageToBase64(image);
 
-      const res = await fetch("/api/project/add-project", {
+      const res = await fetch("/api/project/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, imageURL: base64 }),
