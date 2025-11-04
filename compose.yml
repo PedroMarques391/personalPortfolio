@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-portfolio
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASS}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASS}
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - TZ="America/Sao_Paulo"
+    ports:
+      - 3306:3306
+    volumes:
+      - backup_mysql:/var/lib/mysql
+
+
+volumes:
+  backup_mysql:
+    external: true
