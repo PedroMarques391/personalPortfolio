@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "compose": "docker compose --env-file .env.development.local up -d",
+    "dev": "yarn run compose && next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
