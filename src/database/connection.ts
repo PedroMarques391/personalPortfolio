@@ -7,6 +7,9 @@ const MySQL = mysql
     database: process.env.DATABASE_NAME,
     password: process.env.DATABASE_PASS,
     port: process.env.DATABASE_PORT,
+    ssl: {
+      rejectUnauthorized: true,
+    },
   })
   .promise();
 
