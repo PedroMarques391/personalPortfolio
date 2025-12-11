@@ -30,14 +30,24 @@ export async function GET(req: NextRequest) {
     }
     return NextResponse.json(
       { success: true, projects: rows },
-      { status: 200 }
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=59",
+        },
+      }
     );
   } catch (error: any) {
     console.error("[get-projects] Error to get projects", error.message);
 
     return NextResponse.json(
       { success: false, projects: [], message: "Erro ao carregar projetos." },
-      { status: 500 }
+      {
+        status: 500,
+        headers: {
+          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=59",
+        },
+      }
     );
   }
 }
