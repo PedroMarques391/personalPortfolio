@@ -4,9 +4,10 @@ import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
-import useProjects from "@/hooks/useProjects";
+import { useAllProjects } from "@/services/projects/queries";
+import { buttonsValues } from "@/utils/projects";
 import { AnimatePresence } from "motion/react";
-import { useEffect, useRef } from "react";
+import { useMemo, useState } from "react";
 
 export interface IProjectInterface {
   id: number;
@@ -19,29 +20,26 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
-  const {
-    projects,
-    loading,
-    fetchProjects,
-    activeButton,
-    handleFilter,
-    filteredProjects,
-  } = useProjects();
+  const [activeButton, setActiveButton] = useState<number>(0);
+  const [filter, setFilter] = useState<string>("Todos");
 
-  const buttonsValues = [
-    { duration: 0.5, title: "Todos" },
-    { duration: 1.0, title: "Web" },
-    { duration: 1.5, title: "Mobile" },
-    { duration: 2.0, title: "Automações" },
-  ];
+  const { data, isLoading: loading } = useAllProjects();
 
-  const fetched = useRef(false);
+  const projects = data?.projects;
 
-  useEffect(() => {
-    if (fetched.current) return;
-    fetched.current = true;
-    fetchProjects("/api/project?role=all");
-  }, []);
+  const filteredProjects = useMemo(() => {
+    if (filter === "Todos") return projects;
+    const filterProjects = projects.filter(
+      (project: IProjectInterface) =>
+        project.type.toLowerCase() === filter.toLowerCase()
+    );
+    return filterProjects;
+  }, [projects, filter]);
+
+  const handleFilter = (rule: string, index: number) => {
+    setActiveButton(index);
+    setFilter(rule);
+  };
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
@@ -74,7 +72,7 @@ const ProjectsPage = (): React.JSX.Element => {
           </AnimatePresence>
         ) : (
           <>
-            {filteredProjects.map((project) => (
+            {filteredProjects.map((project: IProjectInterface) => (
               <ProjectCard
                 key={project.id}
                 id={project.id}
