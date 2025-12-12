@@ -1,3 +1,4 @@
+import { buttonsValues } from "./buttonValues";
 import { skills } from "./skills";
 
-export { skills };
+export { buttonsValues, skills };
