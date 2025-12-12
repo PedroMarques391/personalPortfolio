@@ -5,7 +5,7 @@ import AdminLayout from "@/components/Layout/AdminLayout";
 import { Input } from "@/components/UI/Input";
 import Modal from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
-import useProjects from "@/hooks/useProjects";
+import { useMutationProjects } from "@/services/projects/mutations";
 import { ProjectData, projectScheme } from "@/validations/project.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -20,7 +20,7 @@ const Page = (): React.JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [message, setMessage] = useState({} as IMessageInterface);
-  const { createProject } = useProjects();
+  const { createProject } = useMutationProjects();
 
   const {
     register,
@@ -59,7 +59,8 @@ const Page = (): React.JSX.Element => {
     }
     try {
       setLoading(true);
-      await createProject(data, image);
+
+      createProject.mutate({ data, image });
 
       setShowModal(true);
       setMessage({
