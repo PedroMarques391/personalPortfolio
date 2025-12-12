@@ -12,12 +12,11 @@ interface IProjectCardProps {
   children: React.ReactNode;
   tags: string;
   url: string;
-  onDelete?: (id: number) => Promise<void>;
+  onDelete?: () => void;
   isDeleting?: boolean;
 }
 
 const ProjectCard = ({
-  id,
   src,
   title,
   children,
@@ -25,7 +24,6 @@ const ProjectCard = ({
   url,
   type,
   onDelete,
-  isDeleting,
 }: IProjectCardProps) => {
   const ref = useRef(null);
 
@@ -46,11 +44,7 @@ const ProjectCard = ({
         scale: 0.9,
         transition: { duration: 0.3, ease: "easeIn" },
       }}
-      className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all  ease-in-out group duration-700 ${
-        isDeleting
-          ? "animate-pulse opacity-0 scale-95"
-          : "opacity-100 scale-100"
-      }`}
+      className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all  ease-in-out group duration-700 `}
     >
       <section className="relative w-full h-64 cursor-pointer">
         <Image
@@ -70,7 +64,7 @@ const ProjectCard = ({
             title="Deletar Projeto"
             onClick={async (e) => {
               e.stopPropagation();
-              await onDelete(id);
+              await onDelete();
             }}
             className="absolute top-3 right-3 bg-red-600 text-gray-soft text-xs font-semibold py-1 px-3 rounded-md shadow-md z-10"
           >

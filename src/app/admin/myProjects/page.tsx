@@ -4,9 +4,9 @@ import Skeleton from "@/components/Motions/Skeleton";
 import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
-import useProjects from "@/hooks/useProjects";
+import { useMutationProjects } from "@/services/projects/mutations";
+import { useUserProjects } from "@/services/projects/queries";
 import { AnimatePresence } from "motion/react";
-import { useEffect, useRef } from "react";
 
 export interface IProjectInterface {
   id: number;
@@ -19,16 +19,10 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
-  const { projects, loading, handleDelete, deletingId, fetchProjects } =
-    useProjects();
+  const { deleteProject } = useMutationProjects();
+  const { data, isLoading: loading } = useUserProjects();
 
-  const fetched = useRef(false);
-
-  useEffect(() => {
-    if (fetched.current) return;
-    fetched.current = true;
-    fetchProjects("/api/project?role=user-projects");
-  }, []);
+  const projects = data?.projects;
 
   return (
     <AdminLayout>
@@ -43,7 +37,7 @@ const ProjectsPage = (): React.JSX.Element => {
           </AnimatePresence>
         ) : (
           <AnimatePresence>
-            {projects.map((project) => (
+            {projects.map((project: IProjectInterface) => (
               <ProjectCard
                 key={project.id}
                 id={project.id}
@@ -52,8 +46,7 @@ const ProjectsPage = (): React.JSX.Element => {
                 type={project.type}
                 title={project.title}
                 url={project.url}
-                onDelete={() => handleDelete(project.id)}
-                isDeleting={deletingId === project.id}
+                onDelete={() => deleteProject.mutate(project.id)}
               >
                 {project.content}
               </ProjectCard>
