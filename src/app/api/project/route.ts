@@ -32,9 +32,6 @@ export async function GET(req: NextRequest) {
       { success: true, projects: rows },
       {
         status: 200,
-        headers: {
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=59",
-        },
       }
     );
   } catch (error: any) {
@@ -44,9 +41,6 @@ export async function GET(req: NextRequest) {
       { success: false, projects: [], message: "Erro ao carregar projetos." },
       {
         status: 500,
-        headers: {
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=59",
-        },
       }
     );
   }
