@@ -6,9 +6,11 @@ import { Button } from "@/components/UI/Button";
 import HardSkillsCard from "@/components/UI/HardSkillsCard";
 import SectionHeader from "@/components/UI/SectionHeader";
 import Typewriter from "@/components/UI/Typewriter";
+import { Requests } from "@/services/requests";
 import { handleDownload } from "@/utils/functions/handleDownload";
 import { handleScroll } from "@/utils/functions/handleScroll";
 import { skills } from "@/utils/projects";
+import { usePrefetchQuery } from "@tanstack/react-query";
 import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +31,11 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const ref = useRef(null);
   const isInView = useInView(ref);
+  usePrefetchQuery({
+    queryKey: ["projects"],
+    queryFn: async () => await Requests.getProject("/api/project?role=all"),
+    staleTime: 1000 * 60 * 60,
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
