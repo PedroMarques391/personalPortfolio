@@ -5,7 +5,7 @@ import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { useMutationProjects } from "@/services/projects/mutations";
-import { useUserProjects } from "@/services/projects/queries";
+import { useProjects } from "@/services/projects/queries";
 import { AnimatePresence } from "motion/react";
 
 export interface IProjectInterface {
@@ -20,7 +20,7 @@ export interface IProjectInterface {
 
 const ProjectsPage = (): React.JSX.Element => {
   const { deleteProject } = useMutationProjects();
-  const { data, isLoading: loading } = useUserProjects();
+  const { data, isLoading: loading } = useProjects("user-projects");
 
   const projects = data?.projects;
 

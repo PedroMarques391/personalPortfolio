@@ -4,7 +4,7 @@ import { Button } from "@/components/UI/Button";
 import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
-import { useAllProjects } from "@/services/projects/queries";
+import { useProjects } from "@/services/projects/queries";
 import { buttonsValues } from "@/utils/projects";
 import { AnimatePresence } from "motion/react";
 import { useMemo, useState } from "react";
@@ -23,7 +23,7 @@ const ProjectsPage = (): React.JSX.Element => {
   const [activeButton, setActiveButton] = useState<number>(0);
   const [filter, setFilter] = useState<string>("Todos");
 
-  const { data, isLoading: loading } = useAllProjects();
+  const { data, isLoading: loading } = useProjects("all");
 
   const projects = data?.projects;
 

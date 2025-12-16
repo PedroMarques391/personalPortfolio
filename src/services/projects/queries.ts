@@ -1,22 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Requests } from "../requests";
 
-export function useAllProjects() {
+export function useProjects(filter: "all" | "user-projects") {
   return useQuery({
-    queryKey: ["projects"],
-    queryFn: async () => {
-      return await Requests.getProject("/api/project?role=all");
-    },
-    staleTime: 1000 * 60 * 60,
-    refetchOnWindowFocus: false,
-  });
-}
+    queryKey: ["projects", filter],
 
-export function useUserProjects() {
-  return useQuery({
-    queryKey: ["userProjects"],
     queryFn: async () => {
-      return await Requests.getProject("/api/project?role=user-projects");
+      return await Requests.getProject(`/api/project?role=${filter}`);
     },
     staleTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
