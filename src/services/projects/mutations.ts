@@ -8,9 +8,8 @@ export function useMutationProjects() {
   const deleteProject = useMutation({
     mutationFn: async (id: number) => await Requests.deleteProject(id),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["userProjects"],
-      });
+      await queryClient.invalidateQueries({ queryKey: ["projects"] });
+      return;
     },
   });
 
@@ -21,10 +20,8 @@ export function useMutationProjects() {
       return res.rows;
     },
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["userProjects"] }),
-        queryClient.invalidateQueries({ queryKey: ["projects"] }),
-      ]);
+      await queryClient.invalidateQueries({ queryKey: ["projects"] });
+      return;
     },
   });
 
