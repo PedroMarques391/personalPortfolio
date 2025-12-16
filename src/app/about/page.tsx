@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import React from "react";
 import { BiDownload } from "react-icons/bi";
+import cat from "../../../public/assets/profile2.webp";
 
 const About = (): React.JSX.Element => {
   const frontend: string[] = [
@@ -79,12 +80,13 @@ const About = (): React.JSX.Element => {
         >
           <div className="w-[90%] h-auto mx-auto">
             <Image
-              src="/assets/profile2.webp"
+              src={cat}
               alt="Perfil"
               width={"300"}
               height={"300"}
               priority
               className="object-cover mx-auto w-auto h-auto"
+              placeholder="blur"
             />
           </div>
         </motion.section>
