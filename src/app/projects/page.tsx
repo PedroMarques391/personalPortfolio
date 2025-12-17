@@ -60,9 +60,12 @@ const ProjectsPage = (): React.JSX.Element => {
 
   useEffect(() => {
     const nextPage = currentPage + 1;
+    const nextQuery = ["projects", "all", nextPage];
     if (nextPage > totalPages) return;
+    if (queryClient.getQueryData(nextQuery)) return;
     queryClient.prefetchQuery({
-      queryKey: ["projects", "all", nextPage],
+      queryKey: nextQuery,
+      staleTime: 1000 * 60 * 5,
       queryFn: async () => {
         return await Requests.getProject(
           `/api/project?role=all&page=${nextPage}`
