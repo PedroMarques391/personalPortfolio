@@ -2,11 +2,14 @@ import { IProjectInterface } from "@/app/api/project/route";
 import MySQL from "@/database/connection";
 
 class ProjectRepository {
-  async getProjects() {
-    const query = `SELECT * FROM projects ORDER BY title ASC;`;
-    const [rows]: any[] = await MySQL.execute(query);
+  async getProjects(page: number = 1) {
+    const offset = (page - 1) * 8;
+    const query = `SELECT *, COUNT(*) OVER() AS total FROM projects ORDER BY title ASC 
+    LIMIT 8 OFFSET ${offset}`;
 
-    return rows;
+    const [rows]: any[] = await MySQL.execute(query);
+    const total = rows.length > 0 ? rows[0].total : 0;
+    return { rows, total };
   }
 
   async getProjectsByUserId(userId: string) {
