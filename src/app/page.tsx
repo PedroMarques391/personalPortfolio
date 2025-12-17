@@ -32,8 +32,9 @@ export default function Home() {
   const ref = useRef(null);
   const isInView = useInView(ref);
   usePrefetchQuery({
-    queryKey: ["projects", "all"],
-    queryFn: async () => await Requests.getProject("/api/project?role=all"),
+    queryKey: ["projects", "all", 1],
+    queryFn: async () =>
+      await Requests.getProject("/api/project?role=all&page=1"),
     staleTime: 1000 * 60 * 60,
   });
 
