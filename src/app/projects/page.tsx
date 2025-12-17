@@ -7,6 +7,7 @@ import SectionHeader from "@/components/UI/SectionHeader";
 import { useProjects } from "@/services/projects/queries";
 import { buttonsValues } from "@/utils/projects";
 import { AnimatePresence } from "motion/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 export interface IProjectInterface {
@@ -20,12 +21,18 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
+  const params = useSearchParams().get("page");
+  const router = useRouter();
   const [activeButton, setActiveButton] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(
+    params ? Number(params) : 1
+  );
   const [filter, setFilter] = useState<string>("Todos");
 
-  const { data, isLoading: loading } = useProjects("all");
+  const { data, isLoading: loading } = useProjects("all", currentPage);
 
   const projects = data?.projects;
+  const total = data?.total;
 
   const filteredProjects = useMemo(() => {
     if (filter === "Todos") return projects;
@@ -39,6 +46,11 @@ const ProjectsPage = (): React.JSX.Element => {
   const handleFilter = (rule: string, index: number) => {
     setActiveButton(index);
     setFilter(rule);
+  };
+
+  const handlePage = (page: number) => {
+    router.push(`/projects?page=${page}`, { scroll: false });
+    setCurrentPage(page);
   };
 
   return (
@@ -88,6 +100,22 @@ const ProjectsPage = (): React.JSX.Element => {
           </>
         )}
         {!loading && projects.length === 0 && <ProjectsNotFound />}
+      </div>
+      <div className="mt-10 p-5 space-x-2">
+        {total > 0 &&
+          [...Array(Math.ceil(total / 8))].map((_, index) => (
+            <button
+              key={index}
+              className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
+                currentPage === index + 1
+                  ? "border border-orange-500 text-orange-500"
+                  : ""
+              }`}
+              onClick={() => handlePage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
       </div>
     </div>
   );
