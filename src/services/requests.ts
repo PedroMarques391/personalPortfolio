@@ -8,9 +8,17 @@ export class Requests {
     try {
       const response = await fetch(url);
       const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message);
+      }
       return data;
     } catch (error) {
       console.log("[fetchProjects] error to get projects", error);
+      return {
+        success: false,
+        message: "Erro ao buscar os projetos. Tente novamente.",
+        projects: [],
+      };
     }
   }
 
