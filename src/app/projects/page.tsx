@@ -47,6 +47,8 @@ const ProjectsPage = (): React.JSX.Element => {
   };
 
   const handlePage = (page: number) => {
+    setFilter("Todos");
+    setActiveButton(0);
     if (page === currentPage) return;
     router.push(`/projects?page=${page}`, { scroll: false });
     setCurrentPage(page);
@@ -98,9 +100,12 @@ const ProjectsPage = (): React.JSX.Element => {
             ))}
           </>
         )}
-        {!loading && projects.length === 0 && <ProjectsNotFound />}
+        {!loading &&
+          (projects.length === 0 || filteredProjects.length === 0) && (
+            <ProjectsNotFound />
+          )}
       </div>
-      <div className="mt-10 p-5 space-x-2">
+      <div className="my-14 p-5 space-x-2">
         {total > 0 ? (
           [...Array(Math.ceil(total / 8))].map((_, index) => (
             <button

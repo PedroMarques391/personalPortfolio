@@ -31,18 +31,23 @@ const ProjectCard = ({
     <motion.section
       title={title}
       ref={ref}
-      initial={{ opacity: 0, scale: 0.98 }}
+      layout
+      initial={{ opacity: 0.9, y: 12, scale: 0.97 }}
       animate={{
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: { duration: 0.4, ease: "easeOut" },
+        transition: {
+          type: "spring",
+          stiffness: 260,
+          damping: 22,
+        },
       }}
       exit={{
         opacity: 0,
-        y: 20,
-        scale: 0.9,
-        transition: { duration: 0.3, ease: "easeIn" },
+        y: 16,
+        scale: 0.96,
+        transition: { duration: 0.2 },
       }}
       className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all  ease-in-out group duration-700 `}
     >
