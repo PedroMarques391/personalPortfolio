@@ -32,8 +32,6 @@ const ProjectsPage = (): React.JSX.Element => {
   const projects = data?.projects;
   const total = data?.total;
 
-  console.log(total);
-
   const filteredProjects = useMemo(() => {
     if (filter === "Todos") return projects;
     const filterProjects = projects.filter(

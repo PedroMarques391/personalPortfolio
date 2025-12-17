@@ -11,7 +11,7 @@ interface ISocialItemsInterface {
 }
 interface INavItemsInterface {
   text: string;
-  href: string;
+  href: string | { pathname: string; query: { page: number } };
   duration: number;
 }
 
@@ -42,19 +42,23 @@ const Footer = (): React.JSX.Element => {
     { text: "Home", href: "/", duration: 0.5 },
     {
       text: "Projetos",
-      href: "/projects?page=1",
+      href: { pathname: "/projects", query: { page: 1 } },
       duration: 1.0,
     },
     { text: "Sobre mim", href: "/about", duration: 1.5 },
     { text: "Contato", href: "/contact", duration: 2.0 },
   ];
 
-  function handleClick(href: string) {
-    if (href === pathName) {
+  function handleClick(
+    href: string | { pathname: string; query: { page: number } }
+  ) {
+    const url = typeof href === "string" ? href : href.pathname;
+
+    if (url === pathName) {
       handleScroll(0);
     }
     if (href !== pathName) {
-      router.push(href, { scroll: true });
+      router.push(url, { scroll: true });
     }
   }
 
