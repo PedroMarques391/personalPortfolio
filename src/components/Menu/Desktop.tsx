@@ -6,7 +6,8 @@ const Desktop = (): React.JSX.Element => {
     <ul className="hidden md:flex justify-center items-center gap-x-3">
       <NavItems href="/">Home</NavItems>
       <NavItems
-        href={{ pathname: "/projects", query: { page: 1 }, scroll: false }}
+        href={{ pathname: "/projects", query: { page: 1 } }}
+        scroll={false}
       >
         Projetos
       </NavItems>
