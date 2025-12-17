@@ -5,10 +5,12 @@ import ProjectCard from "@/components/UI/ProjectCard";
 import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { useProjects } from "@/services/projects/queries";
+import { Requests } from "@/services/requests";
 import { buttonsValues } from "@/utils/projects";
+import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export interface IProjectInterface {
   id: number;
@@ -26,11 +28,13 @@ const ProjectsPage = (): React.JSX.Element => {
   const [activeButton, setActiveButton] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(params);
   const [filter, setFilter] = useState<string>("Todos");
+  const queryClient = useQueryClient();
 
   const { data, isLoading: loading } = useProjects("all", currentPage);
 
   const projects = data?.projects;
   const total = data?.total;
+  const totalPages = Math.ceil(total / 8);
 
   const filteredProjects = useMemo(() => {
     if (filter === "Todos") return projects;
@@ -53,6 +57,19 @@ const ProjectsPage = (): React.JSX.Element => {
     router.push(`/projects?page=${page}`, { scroll: false });
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    const nextPage = currentPage + 1;
+    if (nextPage > totalPages) return;
+    queryClient.prefetchQuery({
+      queryKey: ["projects", "all", nextPage],
+      queryFn: async () => {
+        return await Requests.getProject(
+          `/api/project?role=all&page=${nextPage}`
+        );
+      },
+    });
+  }, [currentPage, queryClient]);
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
@@ -107,7 +124,7 @@ const ProjectsPage = (): React.JSX.Element => {
       </div>
       <div className="my-14 p-5 space-x-2">
         {total > 0 ? (
-          [...Array(Math.ceil(total / 8))].map((_, index) => (
+          [...Array(totalPages)].map((_, index) => (
             <button
               key={index}
               className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
