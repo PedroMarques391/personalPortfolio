@@ -17,31 +17,45 @@ export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
 
     const role = searchParams.get("role");
+    const page = Number(searchParams.get("page")) || 1;
 
-    let rows;
+    if (!role || role === "all") {
+      const { rows, total } = await projectRepository.getProjects(page);
 
-    if (role === "all") {
-      rows = await projectRepository.getProjects();
+      return NextResponse.json(
+        { success: true, projects: rows, total },
+        { status: 200 }
+      );
     }
 
     if (role === "user-projects") {
       const payload = await AuthTokenService.verifyToken(req);
-      rows = await projectRepository.getProjectsByUserId(payload.id as string);
+
+      const projects = await projectRepository.getProjectsByUserId(
+        payload.id as string
+      );
+
+      return NextResponse.json(
+        {
+          success: true,
+          projects,
+          total: projects.length,
+        },
+        { status: 200 }
+      );
     }
-    return NextResponse.json(
-      { success: true, projects: rows },
-      {
-        status: 200,
-      }
-    );
+
+    throw new Error("Invalid role parameter.");
   } catch (error: any) {
-    console.error("[get-projects] Error to get projects", error.message);
+    console.error("[get-projects] Error to get projects:", error.message);
 
     return NextResponse.json(
-      { success: false, projects: [], message: "Erro ao carregar projetos." },
       {
-        status: 500,
-      }
+        success: false,
+        projects: [],
+        message: "Erro ao carregar projetos.",
+      },
+      { status: 500 }
     );
   }
 }
