@@ -1,43 +1,57 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { DetailedHTMLProps, LiHTMLAttributes, useRef } from "react";
 import { motion, useInView } from "motion/react";
+import Link, { LinkProps } from "next/link";
+import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
-interface INavItemsProps extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-  href: string
+interface INavItemsProps extends LinkProps {
+  children: React.ReactNode;
 }
 
 interface INavItemsFooterProps {
-  href: string
-  children: React.ReactNode
-  onClick: () => void
-  duration: number
+  href: string;
+  children: React.ReactNode;
+  onClick: () => void;
+  duration: number;
 }
 
-const NavItems = ({ children, href, ...props }: INavItemsProps): React.JSX.Element => {
+const NavItems = ({
+  children,
+  href,
+  ...props
+}: INavItemsProps): React.JSX.Element => {
   const pathName: string = usePathname();
-  const isCurrentPath: boolean = pathName === href;
+  const hrefPathname = typeof href === "string" ? href : href?.pathname;
+  const isCurrentPath: boolean = pathName === hrefPathname;
 
   return (
-
     <li
-      {...props}
-      className={`text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2 `}>
+      className={`text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2 `}
+    >
       <Link
+        {...props}
+        href={href}
         className=" w-full h-full block py-4"
         prefetch={true}
         replace
-        href={href}>
+      >
         {children}
-        <p className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? 'w-full group-hover:bg-orange-500' : 'w-0'}`} />
-      </Link >
+        <p
+          className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${
+            isCurrentPath ? "w-full group-hover:bg-orange-500" : "w-0"
+          }`}
+        />
+      </Link>
     </li>
-
   );
 };
 
-const Footer = ({ children, href, onClick, duration }: INavItemsFooterProps) => {
+const Footer = ({
+  children,
+  href,
+  onClick,
+  duration,
+}: INavItemsFooterProps) => {
   const pathName: string = usePathname();
   const isCurrentPath: boolean = pathName === href;
 
@@ -50,23 +64,26 @@ const Footer = ({ children, href, onClick, duration }: INavItemsFooterProps) => 
   };
 
   return (
-
     <motion.li
       ref={ref}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={itemVariant}
-      transition={{ duration: duration, }}
+      transition={{ duration: duration }}
       className={`text-center w-32 md:w-[120px] lg:w-36 relative group text-base md:text-xl lg:text-lg lg:px-2 `}
     >
-      <button onClick={onClick} aria-label={`Navegação para ${children}`} className=" block p-2 lg:p-3 w-full">
+      <button
+        onClick={onClick}
+        aria-label={`Navegação para ${children}`}
+        className=" block p-2 lg:p-3 w-full"
+      >
         {children}
         <p
-          className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-[2px] md:h-1 bg-orange-500 transition-all duration-300 ${isCurrentPath ? "w-full group-hover:bg-orange-500" : "w-0"
-            }`}
+          className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-[2px] md:h-1 bg-orange-500 transition-all duration-300 ${
+            isCurrentPath ? "w-full group-hover:bg-orange-500" : "w-0"
+          }`}
         />
       </button>
-
     </motion.li>
   );
 };
