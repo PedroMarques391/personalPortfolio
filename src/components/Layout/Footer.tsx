@@ -40,7 +40,11 @@ const Footer = (): React.JSX.Element => {
 
   const navLinkItems: INavItemsInterface[] = [
     { text: "Home", href: "/", duration: 0.5 },
-    { text: "Projetos", href: "/projects", duration: 1.0 },
+    {
+      text: "Projetos",
+      href: "/projects?page=1",
+      duration: 1.0,
+    },
     { text: "Sobre mim", href: "/about", duration: 1.5 },
     { text: "Contato", href: "/contact", duration: 2.0 },
   ];
@@ -76,14 +80,13 @@ const Footer = (): React.JSX.Element => {
               </h2>
               <ul className="space-y-2 flex flex-col">
                 {navLinkItems.map((navItem, index) => (
-                  <NavItems.Footer
+                  <NavItems
                     key={index}
                     onClick={() => handleClick(navItem.href)}
-                    duration={navItem.duration}
                     href={navItem.href}
                   >
                     {navItem.text}
-                  </NavItems.Footer>
+                  </NavItems>
                 ))}
               </ul>
             </nav>

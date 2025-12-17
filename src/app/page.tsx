@@ -252,7 +252,7 @@ export default function Home() {
         </div>
         <Link
           className="my-10 mx-auto flex flex-row justify-center items-center w-fitp-4 gap-4 group"
-          href={"/projects"}
+          href={"/projects?page=1"}
         >
           <h1 className="text-gray-soft tracking-wider text-xl font-semibold group-hover:text-orange-500 duration-1000 transition-colors">
             Veja Meus Projetos
