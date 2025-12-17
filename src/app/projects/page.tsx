@@ -21,18 +21,18 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
-  const params = useSearchParams().get("page");
+  const params = Number(useSearchParams().get("page")) || 1;
   const router = useRouter();
   const [activeButton, setActiveButton] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(
-    params ? Number(params) : 1
-  );
+  const [currentPage, setCurrentPage] = useState<number>(params);
   const [filter, setFilter] = useState<string>("Todos");
 
   const { data, isLoading: loading } = useProjects("all", currentPage);
 
   const projects = data?.projects;
   const total = data?.total;
+
+  console.log(total);
 
   const filteredProjects = useMemo(() => {
     if (filter === "Todos") return projects;
@@ -49,6 +49,7 @@ const ProjectsPage = (): React.JSX.Element => {
   };
 
   const handlePage = (page: number) => {
+    if (page === currentPage) return;
     router.push(`/projects?page=${page}`, { scroll: false });
     setCurrentPage(page);
   };
@@ -102,7 +103,7 @@ const ProjectsPage = (): React.JSX.Element => {
         {!loading && projects.length === 0 && <ProjectsNotFound />}
       </div>
       <div className="mt-10 p-5 space-x-2">
-        {total > 0 &&
+        {total > 0 ? (
           [...Array(Math.ceil(total / 8))].map((_, index) => (
             <button
               key={index}
@@ -115,7 +116,15 @@ const ProjectsPage = (): React.JSX.Element => {
             >
               {index + 1}
             </button>
-          ))}
+          ))
+        ) : (
+          <button
+            className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
+            onClick={() => handlePage(1)}
+          >
+            1
+          </button>
+        )}
       </div>
     </div>
   );

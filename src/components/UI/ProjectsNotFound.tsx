@@ -30,7 +30,7 @@ const ProjectsNotFound = (): React.JSX.Element => {
       </motion.p>
 
       <motion.button
-        onClick={() => window.location.reload()}
+        onClick={() => (window.location.href = "/projects?page=1")}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.85 }}
         className="uppercase bg-gray-light rounded-md w-fit border border-transparent text-gray-dark p-2 transition duration-300"
