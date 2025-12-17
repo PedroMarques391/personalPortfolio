@@ -110,17 +110,9 @@ export default function Home() {
         </div>
         <div className="flex flex-col md:justify-start items-center  pt-20 p-3 w-full order-1 md:order-2 gap-5 ">
           <motion.div
-            animate={{
-              scale: [0.8, 1.2, 1.2, 0.8, 1],
-              rotate: [0, 0, 180, 180, 0],
-              borderRadius: ["50%", "50%", "0%", "00%", " 50%"],
-            }}
-            transition={{
-              duration: 2,
-              ease: "easeOut",
-              times: [0, 0.2, 0.5, 0.8, 1],
-              delay: 0.5,
-            }}
+            initial={{ y: "-100%" }}
+            animate={{ y: isInView ? 0 : "-100%" }}
+            transition={{ type: "spring", stiffness: 100, damping: 25 }}
             className="w-64 h-64 rounded-full flex justify-center items-center  bg-gray-light"
           >
             <Image
