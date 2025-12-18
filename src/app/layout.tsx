@@ -1,11 +1,9 @@
 import Main from "@/components/Layout/Main";
-import { LoadingPage } from "@/components/UI/LoadingPage";
 import { jsonLD } from "@/utils/scheme.org/scheme";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Script from "next/script";
-import { Suspense } from "react";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -40,9 +38,7 @@ export default function RootLayout({
             __html: JSON.stringify(jsonLD),
           }}
         />
-        <Suspense fallback={<LoadingPage />}>
-          <Main>{children}</Main>
-        </Suspense>
+        <Main>{children}</Main>
         <Analytics />
       </body>
     </html>

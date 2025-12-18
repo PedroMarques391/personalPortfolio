@@ -72,10 +72,10 @@ export default function Home() {
           </div>
           <motion.p
             ref={ref}
-            initial={{ x: "-100%" }}
-            animate={{ x: isInView ? 0 : "-100%" }}
-            transition={{ type: "spring", stiffness: 100, damping: 25 }}
-            className="text-justify text-lg leading-relaxed hyphens-none shrink-0 break-words w-full lg:w-4/5"
+            initial={{ x: -60, opacity: 0 }}
+            animate={{ x: isInView ? 0 : -60, opacity: isInView ? 1 : 0 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="opacity-0 text-justify text-lg leading-relaxed break-words w-full lg:w-4/5"
           >
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações web{" "}
             <span className="text-orange-500">FullStack</span> enquanto também
@@ -113,18 +113,18 @@ export default function Home() {
         </div>
         <div className="flex flex-col md:justify-start items-center  pt-20 p-3 w-full order-1 md:order-2 gap-5 ">
           <motion.div
-            initial={{ y: "-100%" }}
-            animate={{ y: isInView ? 0 : "-100%" }}
-            transition={{ type: "spring", stiffness: 100, damping: 25 }}
-            className="w-64 h-64 rounded-full flex justify-center items-center  bg-gray-light"
+            initial={{ y: -80, opacity: 0 }}
+            animate={{ y: isInView ? 0 : -80, opacity: isInView ? 1 : 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="opacity-0 w-64 h-64 rounded-full flex items-center justify-center bg-gray-light overflow-hidden"
           >
             <Image
               src="/assets/profile.webp"
               alt="Perfil"
-              width={"600"}
-              height={"600"}
+              width={600}
+              height={600}
               priority
-              className="object-cover"
+              className="w-full h-full object-cover"
             />
           </motion.div>
 
