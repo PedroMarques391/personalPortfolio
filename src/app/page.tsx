@@ -11,7 +11,7 @@ import { handleDownload } from "@/utils/functions/handleDownload";
 import { handleScroll } from "@/utils/functions/handleScroll";
 import { skills } from "@/utils/projects";
 import { usePrefetchQuery } from "@tanstack/react-query";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -29,8 +29,9 @@ import { TbWorldWww } from "react-icons/tb";
 export default function Home() {
   const stacks: string[] = ["FullStack", "Mobile"];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref);
+
+  const ref = useRef<HTMLDivElement>(null);
+
   usePrefetchQuery({
     queryKey: ["projects", "all", 1],
     queryFn: async () => {
@@ -72,9 +73,9 @@ export default function Home() {
           </div>
           <motion.p
             ref={ref}
-            initial={{ x: -60, opacity: 0 }}
-            animate={{ x: isInView ? 0 : -60, opacity: isInView ? 1 : 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: "linear" }}
             className="opacity-0 text-justify text-lg leading-relaxed break-words w-full lg:w-4/5"
           >
             Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações web{" "}
@@ -113,8 +114,9 @@ export default function Home() {
         </div>
         <div className="flex flex-col md:justify-start items-center  pt-20 p-3 w-full order-1 md:order-2 gap-5 ">
           <motion.div
-            initial={{ y: -80, opacity: 0 }}
-            animate={{ y: isInView ? 0 : -80, opacity: isInView ? 1 : 0 }}
+            ref={ref}
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="opacity-0 w-64 h-64 rounded-full flex items-center justify-center bg-gray-light overflow-hidden"
           >

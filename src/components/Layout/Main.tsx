@@ -29,16 +29,16 @@ const Main = ({ children }: IBodyProps): React.JSX.Element => {
   return (
     <main className="w-full min-h-screen bg-black relative">
       <ScrollLinked />
-      <Header />
       <Suspense fallback={<LoadingPage />}>
+        <Header />
         <div className="flex flex-col items-start w-full md:max-w-7xl mx-auto p-5 ">
           <QueryClientProvider client={queryClient}>
             {children}
           </QueryClientProvider>
         </div>
         <Button.Float scrollY={scrollY} />
+        <Footer />
       </Suspense>
-      <Footer />
     </main>
   );
 };
