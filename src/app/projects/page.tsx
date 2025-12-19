@@ -23,17 +23,16 @@ export interface IProjectInterface {
 }
 
 const ProjectsPage = (): React.JSX.Element => {
-  const params = Number(useSearchParams().get("page")) || 1;
+  const currentPage = Number(useSearchParams().get("page")) || 1;
   const router = useRouter();
   const [activeButton, setActiveButton] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(params);
   const [filter, setFilter] = useState<string>("Todos");
   const queryClient = useQueryClient();
 
   const { data, isLoading: loading } = useProjects("all", currentPage);
 
   const projects = data?.projects || [];
-  const total = data?.total;
+  const total = data?.total || 1;
   const totalPages = Math.ceil(total / 8);
 
   const filteredProjects = useMemo(() => {
@@ -51,18 +50,18 @@ const ProjectsPage = (): React.JSX.Element => {
   };
 
   const handlePage = (page: number) => {
+    if (page === currentPage) return;
     setFilter("Todos");
     setActiveButton(0);
-
-    if (page === currentPage) return;
     router.push(`/projects?page=${page}`, { scroll: false });
-    setCurrentPage(page);
   };
 
   useEffect(() => {
     const nextPage = currentPage + 1;
     const nextQuery = ["projects", "all", nextPage];
+
     if (nextPage > totalPages) return;
+
     if (queryClient.getQueryData(nextQuery)) return;
     queryClient.prefetchQuery({
       queryKey: nextQuery,
@@ -73,7 +72,7 @@ const ProjectsPage = (): React.JSX.Element => {
         );
       },
     });
-  }, [currentPage, queryClient]);
+  }, [currentPage, queryClient, data]);
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
