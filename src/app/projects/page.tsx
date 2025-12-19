@@ -32,7 +32,7 @@ const ProjectsPage = (): React.JSX.Element => {
 
   const { data, isLoading: loading } = useProjects("all", currentPage);
 
-  const projects = data?.projects;
+  const projects = data?.projects || [];
   const total = data?.total;
   const totalPages = Math.ceil(total / 8);
 
@@ -53,6 +53,7 @@ const ProjectsPage = (): React.JSX.Element => {
   const handlePage = (page: number) => {
     setFilter("Todos");
     setActiveButton(0);
+
     if (page === currentPage) return;
     router.push(`/projects?page=${page}`, { scroll: false });
     setCurrentPage(page);
@@ -96,9 +97,37 @@ const ProjectsPage = (): React.JSX.Element => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
+      <div className="my-6 p-5 space-x-2">
+        {total > 0 ? (
+          [...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
+                currentPage === index + 1
+                  ? "border border-orange-500 text-orange-500"
+                  : ""
+              }`}
+              onClick={(e) => {
+                e.currentTarget.blur();
+                handlePage(index + 1);
+              }}
+            >
+              {index + 1}
+            </button>
+          ))
+        ) : (
+          <button
+            className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
+            onClick={() => handlePage(1)}
+          >
+            {loading ? "..." : "1"}
+          </button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mb-10 w-full ">
         {loading ? (
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="popLayout">
             {[...Array(4)].map((_, i) => (
               <Skeleton key={i} index={i} />
             ))}
@@ -124,30 +153,6 @@ const ProjectsPage = (): React.JSX.Element => {
           (projects.length === 0 || filteredProjects.length === 0) && (
             <ProjectsNotFound />
           )}
-      </div>
-      <div className="my-14 p-5 space-x-2">
-        {total > 0 ? (
-          [...Array(totalPages)].map((_, index) => (
-            <button
-              key={index}
-              className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
-                currentPage === index + 1
-                  ? "border border-orange-500 text-orange-500"
-                  : ""
-              }`}
-              onClick={() => handlePage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))
-        ) : (
-          <button
-            className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
-            onClick={() => handlePage(1)}
-          >
-            1
-          </button>
-        )}
       </div>
     </div>
   );
