@@ -72,7 +72,7 @@ const ProjectsPage = (): React.JSX.Element => {
         );
       },
     });
-  }, [currentPage, queryClient, data]);
+  }, [currentPage, queryClient, totalPages]);
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
