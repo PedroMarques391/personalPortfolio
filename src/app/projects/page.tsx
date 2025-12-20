@@ -9,7 +9,8 @@ import { Requests } from "@/services/requests";
 import { buttonsValues } from "@/utils/projects";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 export interface IProjectInterface {
@@ -24,7 +25,6 @@ export interface IProjectInterface {
 
 const ProjectsPage = (): React.JSX.Element => {
   const currentPage = Number(useSearchParams().get("page")) || 1;
-  const router = useRouter();
   const [activeButton, setActiveButton] = useState<number>(0);
   const [filter, setFilter] = useState<string>("Todos");
   const queryClient = useQueryClient();
@@ -47,13 +47,6 @@ const ProjectsPage = (): React.JSX.Element => {
   const handleFilter = (rule: string, index: number) => {
     setActiveButton(index);
     setFilter(rule);
-  };
-
-  const handlePage = (page: number) => {
-    if (page === currentPage) return;
-    setFilter("Todos");
-    setActiveButton(0);
-    router.push(`/projects?page=${page}`, { scroll: false });
   };
 
   useEffect(() => {
@@ -99,7 +92,11 @@ const ProjectsPage = (): React.JSX.Element => {
       <div className="my-6 p-5 space-x-2">
         {total > 0 ? (
           [...Array(totalPages)].map((_, index) => (
-            <button
+            <Link
+              prefetch
+              title={`Página ${index + 1}`}
+              about={`pagination-link-${index + 1}`}
+              href={{ pathname: "/projects", query: { page: index + 1 } }}
               key={index}
               className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
                 currentPage === index + 1
@@ -108,19 +105,24 @@ const ProjectsPage = (): React.JSX.Element => {
               }`}
               onClick={(e) => {
                 e.currentTarget.blur();
-                handlePage(index + 1);
+                setFilter("Todos");
+                setActiveButton(0);
               }}
             >
               {index + 1}
-            </button>
+            </Link>
           ))
         ) : (
-          <button
+          <Link
+            href={{ pathname: "/projects", query: { page: 1 } }}
             className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
-            onClick={() => handlePage(1)}
+            onClick={() => {
+              setFilter("Todos");
+              setActiveButton(0);
+            }}
           >
             {loading ? "..." : "1"}
-          </button>
+          </Link>
         )}
       </div>
 
