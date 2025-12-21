@@ -5,13 +5,14 @@ import UseAnimationFrame from "@/components/Motions/AnimationFrame";
 import UseTime from "@/components/Motions/ContactMotion";
 import { Button } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
-import Modal from "@/components/UI/Modal";
+import { Modal } from "@/components/UI/Modal/index";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { insertMaskInPhone } from "@/utils/functions/phoneMask";
 import { ContactData, contactScheme } from "@/validations/contact.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
+import { GrClose } from "react-icons/gr";
 
 export interface IMessageInterface {
   title: string;
@@ -87,16 +88,17 @@ const Contact = (): React.JSX.Element => {
   return (
     <section className="w-full flex flex-col justify-center items-center relative overflow-hidden">
       <UseTime />
-      {showModal && (
-        <Modal
-          onClose={() => setShowModal(false)}
-          title={message.title}
-          subtitle={message.subtitle}
-          success={message.success}
-        >
-          {message.content}
-        </Modal>
-      )}
+
+      <Modal.Root type={message.success ? "success" : "error"} open={showModal}>
+        <Modal.ActionButton onClick={() => setShowModal(false)}>
+          <Modal.Icon icon={GrClose} color="red" size={20} />
+        </Modal.ActionButton>
+        <Modal.Title>{message.title}</Modal.Title>
+        <Modal.Subtitle>{message.subtitle}</Modal.Subtitle>
+        <Modal.Content>
+          <p>{message.content}</p>
+        </Modal.Content>
+      </Modal.Root>
 
       <SectionHeader
         title="Entre em Contato"

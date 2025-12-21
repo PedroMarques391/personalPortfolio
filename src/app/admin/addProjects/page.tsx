@@ -3,7 +3,7 @@
 import { IMessageInterface } from "@/app/contact/page";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import { Input } from "@/components/UI/Input";
-import Modal from "@/components/UI/Modal";
+import { Modal } from "@/components/UI/Modal";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { useMutationProjects } from "@/services/projects/mutations";
 import { ProjectData, projectScheme } from "@/validations/project.scheme";
@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiTrashAlt } from "react-icons/bi";
 import { FiLoader } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
 
 const Page = (): React.JSX.Element => {
   const [image, setImage] = useState<File | null>(null);
@@ -96,16 +97,16 @@ const Page = (): React.JSX.Element => {
         id="newProject"
       />
 
-      {showModal && (
-        <Modal
-          onClose={() => setShowModal(false)}
-          title={message.title}
-          subtitle={message.subtitle}
-          success={message.success}
-        >
-          {message.content}
-        </Modal>
-      )}
+      <Modal.Root type={message.success ? "success" : "error"} open={showModal}>
+        <Modal.ActionButton onClick={() => setShowModal(false)}>
+          <Modal.Icon icon={IoClose} color="red" size={20} />
+        </Modal.ActionButton>
+        <Modal.Title>{message.title}</Modal.Title>
+        <Modal.Subtitle>{message.subtitle}</Modal.Subtitle>
+        <Modal.Content>
+          <p>{message.content}</p>
+        </Modal.Content>
+      </Modal.Root>
 
       <form
         onSubmit={handleSubmit(handleNewProject)}
