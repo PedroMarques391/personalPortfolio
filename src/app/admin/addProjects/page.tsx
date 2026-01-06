@@ -61,7 +61,7 @@ const Page = (): React.JSX.Element => {
     try {
       setLoading(true);
 
-      createProject.mutate({ data, image });
+      await createProject.mutate({ data, image });
 
       setShowModal(true);
       setMessage({
