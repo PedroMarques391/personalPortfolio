@@ -15,13 +15,14 @@ export function useMutationProjects() {
 
   const createProject = useMutation({
     mutationFn: async ({ data, image }: { data: ProjectData; image: File }) => {
-      const res = await Requests.createProject(data, image);
-      console.log(res);
-      return res.rows;
+      await Requests.createProject(data, image);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["projects"] });
       return;
+    },
+    onError: (error: any) => {
+      console.log(error.message);
     },
   });
 

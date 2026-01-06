@@ -72,9 +72,9 @@ export async function POST(req: NextRequest) {
     const rows = await projectRepository.addProject(data);
 
     return NextResponse.json({ success: true, rows }, { status: 200 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("[add-project] Error to add project", error);
-    return NextResponse.json({ success: false }, { status: 500 });
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
 

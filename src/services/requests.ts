@@ -31,11 +31,12 @@ export class Requests {
       body: JSON.stringify({ ...data, imageURL: base64 }),
     });
 
-    if (!response.ok) {
-      throw new Error("Erro ao adicionar o projeto. Tente novamente.");
-    }
+    const result = await response.json();
 
-    return await response.json();
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+    return result;
   }
 
   static async deleteProject(id: number) {
