@@ -219,6 +219,9 @@ const Page = (): React.JSX.Element => {
             >
               Automações
             </option>
+            <option className="bg-gray-light text-gray-dark " value="api">
+              Api
+            </option>
           </select>
           <label
             htmlFor={"select"}

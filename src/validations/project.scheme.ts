@@ -3,9 +3,9 @@ import z from "zod";
 const projectScheme = z.object({
   title: z.string().min(1, "O nome é obrigatório."),
   content: z.string().min(1, "A descrição é obrigatória."),
-  type: z.enum(["web", "mobile", "automações"], {
+  type: z.enum(["web", "mobile", "automações", "api"], {
     errorMap: () => ({
-      message: "Permitido apenas (web, mobile, automações)",
+      message: "Permitido apenas (web, mobile, automações, api)",
     }),
   }),
   tags: z
