@@ -1,5 +1,4 @@
 import Main from "@/components/Layout/Main";
-import { SnowFall } from "@/components/Motions/Snow";
 import { jsonLD } from "@/utils/scheme.org/scheme";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
@@ -39,7 +38,6 @@ export default function RootLayout({
             __html: JSON.stringify(jsonLD),
           }}
         />
-        <SnowFall />
         <Main>{children}</Main>
         <Analytics />
       </body>
