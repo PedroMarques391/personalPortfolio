@@ -1,20 +1,27 @@
-import { IProjectInterface } from "@/app/api/project/route";
 import MySQL from "@/database/connection";
+import {
+  IProject,
+  IProjectRepository,
+  TProjectRow,
+} from "@/model/ProjectModel";
+import { ResultSetHeader } from "mysql2";
 
-class ProjectRepository {
-  async getProjects(page: number = 1) {
+class ProjectRepository implements IProjectRepository {
+  async getProjects(
+    page: number = 1,
+  ): Promise<{ rows: TProjectRow[]; total: number }> {
     const offset = (page - 1) * 8;
     const query = `SELECT *, COUNT(*) OVER() AS total FROM projects ORDER BY title ASC 
     LIMIT 8 OFFSET ${offset}`;
 
-    const [rows]: any[] = await MySQL.execute(query);
-    const total = rows.length > 0 ? rows[0].total : 0;
+    const [rows] = await MySQL.execute<TProjectRow[]>(query);
+    const total = rows.length > 0 ? (rows[0].total ?? 0) : 0;
     return { rows, total };
   }
 
-  async getProjectsByUserId(userId: string) {
+  async getProjectsByUserId(userId: string): Promise<TProjectRow[]> {
     const query = "SELECT * FROM projects WHERE user_id = ? ORDER BY title ASC";
-    const [rows]: any[] = await MySQL.execute(query, [userId]);
+    const [rows] = await MySQL.execute<TProjectRow[]>(query, [userId]);
 
     if (rows.length === 0) {
       throw new Error("Nenhum projeto encontrado para este usuário");
@@ -22,9 +29,9 @@ class ProjectRepository {
     return rows;
   }
 
-  async addProject(data: IProjectInterface) {
+  async addProject(data: IProject): Promise<ResultSetHeader> {
     const query = `INSERT INTO projects (title, content, type, tags, url, imageURL, user_id) VALUES (?, ?, ?, ?, ?, ?, ?);`;
-    const [rows]: any[] = await MySQL.execute(query, [
+    const [rows] = await MySQL.execute<ResultSetHeader>(query, [
       data.title,
       data.content,
       data.type,
@@ -37,13 +44,13 @@ class ProjectRepository {
     return rows;
   }
 
-  async deleteProject(id: string | null) {
+  async deleteProject(id: string | null): Promise<ResultSetHeader> {
     if (!id) {
       throw new Error("id is required");
     }
     const query = "DELETE FROM projects WHERE id = ?";
 
-    const [rows]: any[] = await MySQL.execute(query, [id]);
+    const [rows] = await MySQL.execute<ResultSetHeader>(query, [id]);
 
     if (!rows.affectedRows) {
       throw new Error(`Não existe um projeto com o id ${id}.`);

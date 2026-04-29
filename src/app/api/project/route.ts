@@ -1,16 +1,10 @@
 import projectRepository from "@/app/api/repository/ProjectRepository";
 import { AuthTokenService } from "@/app/api/services/AuthTokenService";
+import { IProject } from "@/model/ProjectModel";
 import { NextRequest, NextResponse } from "next/server";
 
-export interface IProjectInterface {
-  imageURL: string;
-  title: string;
-  type: string;
-  content: React.ReactNode;
-  tags: string;
-  url: string;
-  user_id: string;
-}
+export type { IProject };
+
 
 export async function GET(req: NextRequest) {
   try {
@@ -63,7 +57,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const payload = await AuthTokenService.verifyToken(req);
-    const body: IProjectInterface = await req.json();
+    const body: IProject = await req.json();
     const data = {
       ...body,
       user_id: payload.id as string,
