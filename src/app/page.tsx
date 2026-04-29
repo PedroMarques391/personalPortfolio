@@ -36,7 +36,7 @@ export default function Home() {
     queryKey: ["projects", "all", 1],
     queryFn: async () => {
       return await Requests.getProject(
-        `${process.env.NEXT_PUBLIC_URL_BASE}/api/project?role=all&page=1`
+        `${process.env.NEXT_PUBLIC_URL_BASE}/api/project?role=all&page=1`,
       );
     },
     staleTime: 1000 * 60 * 60,

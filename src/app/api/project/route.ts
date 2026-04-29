@@ -1,5 +1,5 @@
-import projectRepository from "@/core/repository/ProjectRepository";
-import { AuthTokenService } from "@/core/services/AuthTokenService";
+import projectRepository from "@/app/api/repository/ProjectRepository";
+import { AuthTokenService } from "@/app/api/services/AuthTokenService";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface IProjectInterface {

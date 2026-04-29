@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AuthTokenService } from "./core/services/AuthTokenService";
+import { AuthTokenService } from "./app/api/services/AuthTokenService";
 
 export async function middleware(req: NextRequest) {
   try {

@@ -1,17 +1,18 @@
-import userRepository from "@/core/repository/UserRepository";
-import { AuthTokenService } from "@/core/services/AuthTokenService";
-import { CookieService } from "@/core/services/CookieService";
+import userRepository from "@/app/api/repository/UserRepository";
+import { AuthTokenService } from "@/app/api/services/AuthTokenService";
+import { CookieService } from "@/app/api/services/CookieService";
+import { TUserLogin } from "@/model/UserModel";
 import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json();
+    const data: TUserLogin = await req.json();
 
-    const user = await userRepository.login(email, password);
+    const user = await userRepository.login(data);
     const token = await AuthTokenService.generateToken(user);
 
     const response = NextResponse.json(
       { success: true, message: "Autenticado com sucesso." },
-      { status: 200 }
+      { status: 200 },
     );
 
     return CookieService.setAuthCookie(response, token);
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
     console.error("[login] Error to login", error.message);
     return NextResponse.json(
       { success: false, message: error.message },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }
