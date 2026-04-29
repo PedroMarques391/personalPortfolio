@@ -33,10 +33,16 @@ function useAuth() {
       setLoading(false);
     }
   }
+  async function logout() {
+    const response = await fetch("/api/auth/logout", { method: "POST" });
+    const data = await response.json();
+    return data;
+  }
 
   return {
     error,
     loading,
+    logout,
     handleLogin,
   };
 }
