@@ -3,10 +3,11 @@ import { Input } from "@/components/UI/Input";
 import useAuth from "@/hooks/useAuth";
 import { AuthData, authScheme } from "@/validations/auth.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const Page = (): React.JSX.Element => {
-  const { loading, error, handleLogin } = useAuth();
+  const { loading, error, handleLogin, logout } = useAuth();
 
   const {
     register,
@@ -16,8 +17,12 @@ const Page = (): React.JSX.Element => {
     resolver: zodResolver(authScheme),
   });
 
+  useEffect(() => {
+    logout();
+  }, []);
+
   return (
-    <section className="w-full h-auto max-w-xl bg-gray-light  rounded-2xl  p-8 mx-auto my-20 text-gray-soft">
+    <section className="w-fu  ll h-auto max-w-xl bg-gray-light  rounded-2xl  p-8 mx-auto my-20 text-gray-soft">
       <h1 className="text-2xl font-semibold text-center mb-8">
         Painel de Acesso
       </h1>

@@ -1,4 +1,4 @@
-import { CookieService } from "@/core/services/CookieService";
+import { CookieService } from "@/app/api/services/CookieService";
 import { NextResponse } from "next/server";
 
 export async function POST() {
