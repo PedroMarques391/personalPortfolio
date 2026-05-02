@@ -4,8 +4,6 @@ import { IProject } from "@/model/ProjectModel";
 import { NextRequest, NextResponse } from "next/server";
 import ProjectService from "../services/ProjectService";
 
-export type { IProject };
-
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.nextUrl;
