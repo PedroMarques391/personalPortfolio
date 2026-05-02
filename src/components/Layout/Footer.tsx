@@ -1,8 +1,9 @@
 "use client";
-import { handleScroll } from "@/utils/functions/handleScroll";
+
 import { usePathname, useRouter } from "next/navigation";
 import { NavItems } from "../Menu/NavItems";
 import { Button } from "../UI/Button";
+import Handler from "@/utils/handler";
 
 interface ISocialItemsInterface {
   text: string;
@@ -50,12 +51,12 @@ const Footer = (): React.JSX.Element => {
   ];
 
   function handleClick(
-    href: string | { pathname: string; query: { page: number } }
+    href: string | { pathname: string; query: { page: number } },
   ) {
     const url = typeof href === "string" ? href : href.pathname;
 
     if (url === pathName) {
-      handleScroll(0);
+      Handler.scroll(0);
     }
     if (href !== pathName) {
       router.push(url, { scroll: true });

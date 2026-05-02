@@ -7,7 +7,7 @@ import { Button } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import { Modal } from "@/components/UI/Modal/index";
 import SectionHeader from "@/components/UI/SectionHeader";
-import { insertMaskInPhone } from "@/utils/functions/phoneMask";
+import { insertMaskInPhone } from "@/utils/phoneMask";
 import { ContactData, contactScheme } from "@/validations/contact.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";

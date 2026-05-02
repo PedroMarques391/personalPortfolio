@@ -1,4 +1,4 @@
-import { insertMaskInPhone } from "@/utils/functions/phoneMask";
+import { insertMaskInPhone } from "@/utils/phoneMask";
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
@@ -16,7 +16,7 @@ export async function sendEmail(
   email: string,
   name: string,
   phone: string,
-  message: string
+  message: string,
 ) {
   const formattedPhone = insertMaskInPhone(phone);
   return await transporter.sendMail({

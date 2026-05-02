@@ -1,5 +1,5 @@
 import { IUser, IUserRepository, TUserLogin } from "@/model/UserModel";
-import Encrypt from "@/utils/functions/encrypt";
+import Encrypt from "@/utils/encrypt";
 
 class UserService {
   constructor(private readonly userResopitory: IUserRepository) {}

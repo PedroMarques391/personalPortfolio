@@ -6,7 +6,7 @@ import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
 import SectionHeader from "@/components/UI/SectionHeader";
 import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
-import { buttonsValues } from "@/utils/projects";
+import { buttonsValues } from "@/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import Link from "next/link";
@@ -39,7 +39,7 @@ const ProjectsPage = (): React.JSX.Element => {
     if (filter === "Todos") return projects;
     const filterProjects = projects.filter(
       (project: IProjectInterface) =>
-        project.type.toLowerCase() === filter.toLowerCase()
+        project.type.toLowerCase() === filter.toLowerCase(),
     );
     return filterProjects;
   }, [projects, filter]);
@@ -61,7 +61,7 @@ const ProjectsPage = (): React.JSX.Element => {
       staleTime: 1000 * 60 * 5,
       queryFn: async () => {
         return await Requests.getProject(
-          `/api/project?role=all&page=${nextPage}`
+          `/api/project?role=all&page=${nextPage}`,
         );
       },
     });

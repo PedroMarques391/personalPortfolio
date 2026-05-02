@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/UI/Button";
 import TechList from "@/components/UI/TechList";
-import { handleDownload } from "@/utils/functions/handleDownload";
+import Handler from "@/utils/handler";
 import { motion } from "motion/react";
 import Image from "next/image";
 import React from "react";
@@ -61,7 +61,7 @@ const About = (): React.JSX.Element => {
           </div>
 
           <Button
-            onClick={handleDownload}
+            onClick={Handler.download}
             styles={
               "bg-gray-800 w-auto  px-6 py-3 rounded-md mt-8 hover:scale-105 transition-transform duration-300 hover:border hover:border-white hover:text-white text-gray-300 ml-3"
             }
