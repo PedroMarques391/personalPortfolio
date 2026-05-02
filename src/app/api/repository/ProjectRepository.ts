@@ -8,7 +8,7 @@ import { ResultSetHeader } from "mysql2";
 
 class ProjectRepository implements IProjectRepository {
   async getProjects(
-    page: number = 1,
+    page: number,
   ): Promise<{ rows: TProjectRow[]; total: number }> {
     const offset = (page - 1) * 8;
     const query = `SELECT *, COUNT(*) OVER() AS total FROM projects ORDER BY title ASC 
@@ -23,9 +23,6 @@ class ProjectRepository implements IProjectRepository {
     const query = "SELECT * FROM projects WHERE user_id = ? ORDER BY title ASC";
     const [rows] = await MySQL.execute<TProjectRow[]>(query, [userId]);
 
-    if (rows.length === 0) {
-      throw new Error("Nenhum projeto encontrado para este usuário");
-    }
     return rows;
   }
 
@@ -44,22 +41,13 @@ class ProjectRepository implements IProjectRepository {
     return rows;
   }
 
-  async deleteProject(id: string | null): Promise<ResultSetHeader> {
-    if (!id) {
-      throw new Error("id is required");
-    }
+  async deleteProject(id: string): Promise<ResultSetHeader> {
     const query = "DELETE FROM projects WHERE id = ?";
 
     const [rows] = await MySQL.execute<ResultSetHeader>(query, [id]);
-
-    if (!rows.affectedRows) {
-      throw new Error(`Não existe um projeto com o id ${id}.`);
-    }
 
     return rows;
   }
 }
 
-const projectRepository = new ProjectRepository();
-
-export default projectRepository;
+export default ProjectRepository;

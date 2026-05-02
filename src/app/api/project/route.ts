@@ -1,10 +1,10 @@
-import projectRepository from "@/app/api/repository/ProjectRepository";
+import { default as ProjectRepository } from "@/app/api/repository/ProjectRepository";
 import { AuthTokenService } from "@/app/api/services/AuthTokenService";
 import { IProject } from "@/model/ProjectModel";
 import { NextRequest, NextResponse } from "next/server";
+import ProjectService from "../services/ProjectService";
 
 export type { IProject };
-
 
 export async function GET(req: NextRequest) {
   try {
@@ -13,20 +13,23 @@ export async function GET(req: NextRequest) {
     const role = searchParams.get("role");
     const page = Number(searchParams.get("page")) || 1;
 
+    const projectRepository = new ProjectRepository();
+    const projectService = new ProjectService(projectRepository);
+
     if (!role || role === "all") {
       const { rows, total } = await projectRepository.getProjects(page);
 
       return NextResponse.json(
         { success: true, projects: rows, total },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
     if (role === "user-projects") {
       const payload = await AuthTokenService.verifyToken(req);
 
-      const projects = await projectRepository.getProjectsByUserId(
-        payload.id as string
+      const projects = await projectService.getProjectsByUserId(
+        payload.id as string,
       );
 
       return NextResponse.json(
@@ -35,7 +38,7 @@ export async function GET(req: NextRequest) {
           projects,
           total: projects.length,
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -49,12 +52,14 @@ export async function GET(req: NextRequest) {
         projects: [],
         message: "Erro ao carregar projetos.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function POST(req: NextRequest) {
+  const projectRepository = new ProjectRepository();
+  const projectService = new ProjectService(projectRepository);
   try {
     const payload = await AuthTokenService.verifyToken(req);
     const body: IProject = await req.json();
@@ -63,25 +68,30 @@ export async function POST(req: NextRequest) {
       user_id: payload.id as string,
     };
 
-    const rows = await projectRepository.addProject(data);
+    const rows = await projectService.addProject(data);
 
     return NextResponse.json({ success: true, rows }, { status: 200 });
   } catch (error: any) {
     console.error("[add-project] Error to add project", error);
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 },
+    );
   }
 }
 
 export async function DELETE(req: NextRequest) {
+  const projectRepository = new ProjectRepository();
+  const projectService = new ProjectService(projectRepository);
   try {
     const { searchParams } = req.nextUrl;
-    const id = searchParams.get("id");
+    const id = searchParams.get("id")!;
 
-    await projectRepository.deleteProject(id);
+    await projectService.deleteProject(id);
 
     return NextResponse.json(
       { success: true, message: "Projeto deletado com sucesso." },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     console.error("[delete-project] Error to delete project", error.message);
@@ -92,7 +102,7 @@ export async function DELETE(req: NextRequest) {
           ? error.message
           : "Erro ao deletar projeto, tente novemente.",
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }
