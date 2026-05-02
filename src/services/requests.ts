@@ -1,4 +1,4 @@
-import imageToBase64 from "@/utils/functions/imageToBase64";
+import imageToBase64 from "@/utils/imageToBase64";
 import { ProjectData } from "@/validations/project.scheme";
 
 export class Requests {

@@ -1,5 +1,5 @@
 import Main from "@/components/Layout/Main";
-import { jsonLD } from "@/utils/scheme.org/scheme";
+import { jsonLD } from "@/utils/scheme";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";

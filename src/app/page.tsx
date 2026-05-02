@@ -7,9 +7,8 @@ import HardSkillsCard from "@/components/UI/HardSkillsCard";
 import SectionHeader from "@/components/UI/SectionHeader";
 import Typewriter from "@/components/UI/Typewriter";
 import { Requests } from "@/services/requests";
-import { handleDownload } from "@/utils/functions/handleDownload";
-import { handleScroll } from "@/utils/functions/handleScroll";
-import { skills } from "@/utils/projects";
+import { skills } from "@/utils";
+import Handler from "@/utils/handler";
 import { usePrefetchQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
 import Image from "next/image";
@@ -101,7 +100,7 @@ export default function Home() {
             <Button
               aria-label="Baixar Currículo"
               styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light"
-              onClick={handleDownload}
+              onClick={Handler.download}
             >
               <MdFileDownload size={20} />
               <p>CV</p>
@@ -206,7 +205,7 @@ export default function Home() {
       <section className=" w-full flex flex-col gap-y-2">
         <button
           aria-label="Botão que leva até os cards de serviços."
-          onClick={() => handleScroll("service")}
+          onClick={() => Handler.scroll("service")}
           className="mx-auto text-center p-6 animate-bounce "
         >
           <MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" />
