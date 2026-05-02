@@ -5,7 +5,6 @@ class UserRepository implements IUserRepository {
   async findUserByEmail(email: string): Promise<TUserRow | null> {
     const query = "SELECT * FROM users WHERE email = ?";
     const [rows] = await MySQL.execute<TUserRow[]>(query, [email]);
-    console.log(rows);
 
     if (!rows || rows.length === 0) {
       throw new Error("Credenciais inválidas");
