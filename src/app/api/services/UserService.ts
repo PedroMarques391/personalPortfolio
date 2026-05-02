@@ -2,10 +2,10 @@ import { IUser, IUserRepository, TUserLogin } from "@/model/UserModel";
 import Encrypt from "@/utils/encrypt";
 
 class UserService {
-  constructor(private readonly userResopitory: IUserRepository) {}
+  constructor(private readonly userRepository: IUserRepository) {}
 
   async login(data: TUserLogin): Promise<IUser> {
-    const user = await this.userResopitory.findUserByEmail(data.email);
+    const user = await this.userRepository.findUserByEmail(data.email);
 
     if (!user) {
       throw new Error("Usuário ou senha incorretos");

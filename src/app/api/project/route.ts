@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     const projectService = new ProjectService(projectRepository);
 
     if (!role || role === "all") {
-      const { rows, total } = await projectRepository.getProjects(page);
+      const { rows, total } = await projectService.getProjects(page);
 
       return NextResponse.json(
         { success: true, projects: rows, total },
@@ -66,9 +66,9 @@ export async function POST(req: NextRequest) {
       user_id: payload.id as string,
     };
 
-    const rows = await projectService.addProject(data);
+    const message = await projectService.addProject(data);
 
-    return NextResponse.json({ success: true, rows }, { status: 200 });
+    return NextResponse.json({ success: true, message }, { status: 200 });
   } catch (error: any) {
     console.error("[add-project] Error to add project", error);
     return NextResponse.json(
@@ -83,7 +83,17 @@ export async function DELETE(req: NextRequest) {
   const projectService = new ProjectService(projectRepository);
   try {
     const { searchParams } = req.nextUrl;
-    const id = searchParams.get("id")!;
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Missing required query parameter: id.",
+        },
+        { status: 400 },
+      );
+    }
 
     await projectService.deleteProject(id);
 

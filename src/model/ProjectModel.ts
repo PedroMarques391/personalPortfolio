@@ -4,7 +4,7 @@ export interface IProjectRepository {
   getProjects(page: number): Promise<{ rows: TProjectRow[]; total: number }>;
   getProjectsByUserId(userId: string): Promise<TProjectRow[]>;
   addProject(data: IProject): Promise<ResultSetHeader>;
-  deleteProject(id: string | null): Promise<ResultSetHeader>;
+  deleteProject(id: string): Promise<ResultSetHeader>;
 }
 
 export interface IProject {

@@ -1,7 +1,7 @@
 import { RowDataPacket } from "mysql2";
 
 export interface IUserRepository {
-  findUserByEmail(email: string): Promise<any>;
+  findUserByEmail(email: string): Promise<TUserRow | null>;
 }
 
 export interface IUser {

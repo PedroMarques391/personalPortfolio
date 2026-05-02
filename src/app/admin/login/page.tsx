@@ -22,7 +22,7 @@ const Page = (): React.JSX.Element => {
   }, []);
 
   return (
-    <section className="w-fu  ll h-auto max-w-xl bg-gray-light  rounded-2xl  p-8 mx-auto my-20 text-gray-soft">
+    <section className="w-full h-auto max-w-xl bg-gray-light  rounded-2xl  p-8 mx-auto my-20 text-gray-soft">
       <h1 className="text-2xl font-semibold text-center mb-8">
         Painel de Acesso
       </h1>
