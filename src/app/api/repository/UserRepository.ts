@@ -1,11 +1,11 @@
 import MySQL from "@/database/connection";
 import {
+  IUser,
   IUserRepository,
   TUserLogin,
-  IUser,
   TUserRow,
 } from "@/model/UserModel";
-import Encrypt from "@/utils/encrypt";
+import Encrypt from "@/utils/functions/encrypt";
 
 class UserRepository implements IUserRepository {
   async login(data: TUserLogin): Promise<IUser> {
