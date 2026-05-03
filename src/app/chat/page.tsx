@@ -1,15 +1,45 @@
 "use client";
 
+import ChatBuble from "@/components/UI/ChatBubble";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsSendArrowUp } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import { IoReloadOutline } from "react-icons/io5";
-
 import Ada from "../../../public/assets/ada.jpg";
+import { getTimeForMessage } from "@/utils/time";
 
 const Page = () => {
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
+
+
+
+  const suggestions: string[] = [
+    "Qual a stack principal?",
+    "Projeto Recente?",
+    "Quais banco de dados você utiliza?",
+    "Quais ferramentas de deploy você utiliza?",
+  ];
+
+  const { messages, sendMessage } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+    }),
+    onError: (e) => {
+      console.error(e);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    sendMessage({ text: input });
+    setInput("");
+  };
 
   const openModal = () => {
     modalRef.current?.showModal();
@@ -19,8 +49,12 @@ const Page = () => {
     modalRef.current?.close();
   };
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <div className="w-full h-screen flex items-center justify-center text-white bg-black">
+    <div className="w-full h-screen flex items-center justify-center text-white bg-black gap-2">
       <button
         onClick={openModal}
         className="px-4 py-2 bg-orange-500 rounded-lg text-black font-medium hover:bg-orange-400 transition-colors"
@@ -70,74 +104,89 @@ const Page = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4 scrollbar-thin -mr-4 ">
+          <div className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4 scrollbar-thin -mr-4">
             <p className="text-[11px] text-gray-dark text-center">Hoje</p>
-            <div className="flex items-end gap-2.5 max-w-[85%] ">
-              <Image
-                src={Ada}
-                alt="Ada"
-                width={28}
-                height={28}
-                className="rounded-full object-cover w-7 h-7 flex-shrink-0"
-              />
-              <div className="flex flex-col gap-1">
-                <p className="text-[11px] text-gray-dark font-medium">Ada</p>
-                <div className="bg-gray-light px-3.5 py-2.5 rounded-2xl rounded-bl-none text-[13px] text-gray-soft leading-relaxed">
-                  Olá! 👋 Sou a Ada, sua guia pelo portfólio do Pedro. Como
-                  posso ajudar?
+
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={
+                  message.role === "user"
+                    ? "flex flex-col items-end gap-1 ml-auto max-w-[75%]"
+                    : "flex items-end gap-2.5 max-w-[85%]"
+                }
+              >
+                {message.role !== "user" && (
+                  <Image
+                    src={Ada}
+                    alt="Ada"
+                    width={28}
+                    height={28}
+                    className="rounded-full object-cover w-7 h-7 flex-shrink-0"
+                  />
+                )}
+
+                <div
+                  className={
+                    message.role !== "user" ? "flex flex-col gap-1" : ""
+                  }
+                >
+                  {message.role !== "user" && (
+                    <p className="text-[11px] text-gray-dark font-medium">
+                      Ada{" "}
+                    </p>
+                  )}
+
+                  {message.parts.map((part, i) => {
+                    switch (part.type) {
+                      case "text":
+                        return (
+                          <ChatBuble
+                            key={`${message.id}-${i}`}
+                            message={part.text}
+                            role={message.role as "user" | "assistant"}
+                            id={message.id}
+                            index={i}
+                            time={getTimeForMessage(message.id, i)}
+                          />
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
                 </div>
-                <p className="text-[10px] text-gray-dark/60 ml-1">19:55</p>
               </div>
-            </div>
+            ))}
 
-            <div className="flex flex-col items-end  gap-1 ml-auto max-w-[75%]">
-              <div className="bg-orange-500 px-3.5 py-2.5 rounded-2xl rounded-br-none text-[13px] text-black/80 font-medium leading-relaxed">
-                Gostaria de saber mais sobre os projetos.
-              </div>
-              <p className="text-[10px] text-gray-dark/60 mr-1">19:55</p>
-            </div>
+            <div ref={messagesEndRef} />
+          </div>
 
-            <div className="flex items-end gap-2.5 max-w-[85%]">
-              <Image
-                src={Ada}
-                alt="Ada"
-                width={28}
-                height={28}
-                className="rounded-full object-cover w-7 h-7 flex-shrink-0"
-              />
-              <div className="flex flex-col gap-1">
-                <div className="bg-gray-light px-3.5 py-2.5 rounded-2xl rounded-bl-none text-[13px] text-gray-soft leading-relaxed">
-                  Claro! O Pedro trabalha com desenvolvimento FullStack e
-                  Mobile. Quer saber sobre alguma tecnologia específica?
-                </div>
-                <p className="text-[10px] text-gray-dark/60 ml-1">19:55</p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2 justify-end">
-              <button className="px-3 py-1.5 rounded-full border border-orange-500/40 text-orange-500 text-xs hover:bg-orange-500/10 transition-colors">
-                Projetos recentes
+          <div className="grid grid-cols-2 gap-2 px-4">
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion}
+                onClick={() => sendMessage({ text: suggestion })}
+                className="px-4 py-2 bg-gray-light text-gray-soft text-sm rounded-xl hover:bg-gray-dark transition-colors"
+              >
+                {suggestion}
               </button>
-              <button className="px-3 py-1.5 rounded-full border border-orange-500/40 text-orange-500 text-xs hover:bg-orange-500/10 transition-colors">
-                Tecnologias
-              </button>
-              <button className="px-3 py-1.5 rounded-full border border-orange-500/40 text-orange-500 text-xs hover:bg-orange-500/10 transition-colors">
-                Contato
-              </button>
-            </div>
+            ))}
           </div>
 
           <div className="px-4 py-3 border-t border-white/5">
-            <form action="" className="flex items-center gap-2">
+            <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <input
                 type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Digite sua mensagem..."
-                className="flex-1 bg-gray-light text-gray-soft text-sm rounded-xl px-4 py-2.5 placeholder:text-gray-dark/50 focus:outline-none focus:ring-1 focus:ring-orange-500/30 border border-white/5 transition-all"
+                className="flex-1 bg-gray-light text-gray-soft text-sm rounded-xl px-4 py-2.5 placeholder:text-gray-dark/50 focus:outline-none focus:ring-1 focus:ring-orange-500/30 border border-white/5 transition-all disabled:opacity-50"
               />
               <button
                 type="submit"
-                className="bg-orange-500 hover:bg-orange-400 text-black p-2.5 rounded-xl transition-colors flex-shrink-0"
+                className="bg-orange-500 hover:bg-orange-400 text-black p-2.5 rounded-xl transition-colors flex-shrink-0 disabled:opacity-50 disabled:hover:bg-orange-500"
                 aria-label="Enviar mensagem"
+                disabled={!input.trim()}
               >
                 <BsSendArrowUp size={16} />
               </button>
