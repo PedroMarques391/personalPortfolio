@@ -35,10 +35,6 @@ export function Root({
   if (size === "expanded") sizeClasses = "w-[90vw] h-[90vh]";
   if (size === "fullscreen") sizeClasses = "w-screen h-screen";
 
-  let positionClasses = "inset-0 m-auto";
-  if (position === "bottom-right")
-    positionClasses = "bottom-4 right-4 mr-0 ml-auto mt-auto";
-
   return (
     <AnimatePresence>
       {open && (
@@ -48,7 +44,7 @@ export function Root({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className={`bg-[#111111] rounded-2xl text-white backdrop:bg-black/90 p-0 outline-none shadow-[0_8px_40px_rgba(0,0,0,0.6)] border border-white/5 overflow-hidden fixed mb-0 flex flex-col z-50 ${sizeClasses} ${positionClasses} ${className}`}
+          className={`bg-[#111111] rounded-2xl text-white backdrop:bg-black/90 p-0 outline-none shadow-[0_8px_40px_rgba(0,0,0,0.6)] border border-white/5 overflow-hidden fixed  flex flex-col z-50 ${sizeClasses} ${position === "bottom-right" ? "ml-auto mt-auto mb-2 mr-2" : ""} ${className}`}
         >
           <div className="w-full h-full flex flex-col relative">
             {showCloseButton && (
