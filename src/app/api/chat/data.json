@@ -1,0 +1,67 @@
+{
+  "about": {
+    "name": "Pedro Marques",
+    "role": "Full-Stack Developer",
+    "description": "Desenvolvedor Full-Stack, com experiência em React, React Native, Next.js, TailwindCSS, Firebase, TypeScript, SQL, NodeJS e Express. Formado em Logística pela Universidade Paulista (UNIP), mas encontrou sua verdadeira paixão no mundo da tecnologia e desenvolvimento de software. Atualmente focado no desenvolvimento mobile, criando soluções modernas e otimizadas com Flutter e React Native, além de desenvolver aplicações web buscando sempre melhorar a experiência do usuário. Sua meta é desenvolver projetos inovadores que entreguem valor real, ao mesmo tempo em que aprimora suas habilidades para se tornar um desenvolvedor cada vez mais completo."
+  },
+  "skills": {
+    "frontend": [
+      "HTML",
+      "CSS",
+      "Bootstrap",
+      "TypeScript",
+      "TailwindCSS",
+      "React.js",
+      "Next.js",
+      "Astro.js",
+      "Svelte Kit"
+    ],
+    "backend": [
+      "Node.js",
+      "Nest.js",
+      "Express.js",
+      "Java"
+    ],
+    "database": [
+      "SQL",
+      "Postgres",
+      "MongoDB",
+      "Firebase"
+    ],
+    "mobile": [
+      "React Native",
+      "Expo GO",
+      "Flutter"
+    ],
+    "idioms": [
+      "Português",
+      "Inglês"
+    ],
+    "tools": [
+      "Git",
+      "Docker",
+      "Github",
+      "Figma",
+      "GitKraken",
+      "Postman",
+      "Insomnia"
+    ],
+    "OS": [
+      "Linux",
+      "Debian",
+      "gnome"
+    ]
+  },
+  "services": {
+    "web_development": "Construção de sites modernos, responsivos e de alta performance, criados sob medida utilizando tecnologias como Node.js, Next.js, React e Tailwind.",
+    "mobile_development": "Projeto de aplicativos móveis personalizados, modernos e de alta performance, com suporte nativo para Android e soluções multiplataforma utilizando React Native e Flutter.",
+    "bots_and_automations": "Desenvolvimento de automações web utilizando Python e JavaScript, com especialização na criação de bots personalizados para WhatsApp e Telegram."
+  },
+  "social_links": {
+    "linkedin": "https://www.linkedin.com/in/pedromarques391/",
+    "github": "https://github.com/PedroMarques391",
+    "instagram": "https://www.instagram.com/pedromarques.dev/",
+    "x_twitter": "https://x.com/opeedrodev",
+    "email": "pedromarques.py@gmail.com"
+  }
+}

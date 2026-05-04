@@ -50,7 +50,7 @@ const Main = ({ children }: IBodyProps): React.JSX.Element => {
         />
 
         <Button.Float
-          show={true}
+          show={scrollY}
           side="right"
           onClick={() => setIsModalChatOpen(true)}
           icon={BiBot}
