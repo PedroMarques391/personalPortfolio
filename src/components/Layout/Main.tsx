@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense, useEffect, useState } from "react";
-import { BiBot } from "react-icons/bi";
+import { LuBot } from "react-icons/lu";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 import ScrollLinked from "../Motions/ScrollLinked";
 import { Button } from "../ui/Button";
@@ -49,12 +49,15 @@ const Main = ({ children }: IBodyProps): React.JSX.Element => {
           icon={MdKeyboardDoubleArrowUp}
         />
 
-        <Button.Float
-          show={scrollY}
-          side="right"
+        <button
           onClick={() => setIsModalChatOpen(true)}
-          icon={BiBot}
-        />
+          className="fixed bottom-10 right-5 md:right-10 w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all hover:scale-110 active:scale-95 shadow-xl group"
+        >
+          <LuBot
+            className="text-white/70 group-hover:text-white transition-colors"
+            size={28}
+          />
+        </button>
         <Chat
           showChatModal={isModalChatOpen}
           handleCloseModal={() => setIsModalChatOpen(false)}
