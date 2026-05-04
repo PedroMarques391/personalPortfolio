@@ -2,23 +2,21 @@
 import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";
-import { MdKeyboardDoubleArrowUp } from "react-icons/md";
+import { IconType } from "react-icons";
 
-interface IButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+interface IButtonProps extends React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> {
   children: React.ReactNode;
   styles?: string;
   duration?: number;
 }
 
-interface IButtonFooterProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+interface IButtonFooterProps extends React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> {
   children: React.ReactNode;
   href: string;
   duration?: number;
@@ -82,18 +80,30 @@ function Footer({
   );
 }
 
-function Float({ scrollY }: { scrollY: boolean }): React.JSX.Element {
+function Float({
+  show,
+  side,
+  onClick,
+  icon,
+}: {
+  show: boolean;
+  side: "left" | "right";
+  onClick: () => void;
+  icon: IconType;
+}): React.JSX.Element {
+  const Icon = icon;
+
   return (
     <button
+      onClick={onClick}
       className={`w-10 h-10 sm:h-12 sm:w-12 bg-white/30 justify-center items-center flex fixed bottom-10 right-5 md:right-10 rounded-xl duration-500 transition-opacity ${
-        scrollY ? "opacity-1" : "opacity-0"
-      }`}
+        show ? "opacity-1" : "opacity-0"
+      } ${side === "left" ? "left-5 md:left-10" : "right-5 md:right-10"}`}
     >
-      <MdKeyboardDoubleArrowUp
+      <Icon
         aria-label="Scroll To Top"
         className="text-4xl md:text-6xl"
         color="#1c1c1c"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       />
     </button>
   );
