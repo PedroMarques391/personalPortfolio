@@ -39,6 +39,7 @@ export function Root({
         <motion.dialog
           ref={modalRef}
           layout
+          transition={{ duration: 0.3, ease: "easeOut" }}
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
