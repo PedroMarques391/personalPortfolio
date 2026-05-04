@@ -107,7 +107,7 @@ const Chat = ({
       </Modal.Header>
 
       <Modal.Content>
-        <p className="text-[11px] text-gray-dark text-center">Hoje</p>
+        <p className=" text-gray-dark text-center">Hoje</p>
 
         {messages.map((message) => (
           <div
@@ -182,7 +182,7 @@ const Chat = ({
       </Modal.Content>
 
       <Modal.Footer>
-        <div className="grid grid-cols-2 gap-2 px-4">
+        <div className="grid grid-cols-2 gap-2 px-4 w-full max-w-4xl mx-auto">
           {suggestions.map((suggestion) => (
             <button
               key={suggestion}
@@ -194,7 +194,10 @@ const Chat = ({
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+        <form
+          onSubmit={handleSubmit}
+          className="flex items-center gap-2 w-full max-w-5xl mx-auto"
+        >
           <input
             type="text"
             value={input}
