@@ -26,6 +26,8 @@ const Chat = ({
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
+  const [isCentered, setIsCentered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const suggestions: string[] = [
     "Qual a stack principal?",
@@ -60,15 +62,30 @@ const Chat = ({
     }
   }, [showChatModal]);
 
+  const handleCenterModal = () => {
+    setIsCentered((prev) => !prev);
+  };
+
+  const handleExpandModal = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
   return (
     <AnimatePresence>
       {showChatModal && (
         <motion.dialog
           ref={modalRef}
+          layout
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+          animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="bg-[#111111] w-[42rem] h-[32rem] rounded-2xl text-white backdrop:bg-black/90 p-0 outline-none shadow-[0_8px_40px_rgba(0,0,0,0.6)] border border-white/5 overflow-hidden fixed bottom-4 right-4 mb-0 mr-0 ml-auto mt-auto flex flex-col z-50"
+          className={`bg-[#111111] rounded-2xl text-white backdrop:bg-black/90 p-0 outline-none shadow-[0_8px_40px_rgba(0,0,0,0.6)] border border-white/5 overflow-hidden fixed mb-0 flex flex-col z-50 ${
+            isExpanded ? "w-[90vw] h-[90vh]" : "w-[42rem] h-[32rem]"
+          } ${
+            isCentered
+              ? "inset-0 m-auto"
+              : "bottom-4 right-4 mr-0 ml-auto mt-auto"
+          }`}
         >
           <div className="w-full h-full flex flex-col">
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
@@ -97,6 +114,7 @@ const Chat = ({
                   aria-label="Centralizar"
                   aria-roledescription="button"
                   title="Centralizar"
+                  onClick={handleCenterModal}
                 >
                   <BsArrowsMove size={16} className="text-gray-dark" />
                 </button>
@@ -105,6 +123,7 @@ const Chat = ({
                   aria-label="Expandir"
                   title="Expandir"
                   aria-roledescription="button"
+                  onClick={handleExpandModal}
                 >
                   <BsArrowsAngleExpand size={16} className="text-gray-dark" />
                 </button>
