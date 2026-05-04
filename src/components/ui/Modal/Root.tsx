@@ -26,8 +26,6 @@ export function Root({
   useEffect(() => {
     if (open && modalRef.current && !modalRef.current.open) {
       modalRef.current.showModal();
-    } else if (!open && modalRef.current && modalRef.current.open) {
-      modalRef.current.close();
     }
   }, [open]);
 
