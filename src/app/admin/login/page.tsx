@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "@/components/UI/Input";
+import { Input } from "@/components/ui/Input";
 import useAuth from "@/hooks/useAuth";
 import { AuthData, authScheme } from "@/validations/auth.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";

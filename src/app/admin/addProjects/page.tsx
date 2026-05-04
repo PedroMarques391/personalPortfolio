@@ -2,9 +2,9 @@
 
 import { IMessageInterface } from "@/app/contact/page";
 import AdminLayout from "@/components/Layout/AdminLayout";
-import { Input } from "@/components/UI/Input";
-import { Modal } from "@/components/UI/Modal";
-import SectionHeader from "@/components/UI/SectionHeader";
+import { Input } from "@/components/ui/Input";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { Toast } from "@/components/ui/Toast";
 import { useMutationProjects } from "@/services/projects/mutations";
 import { ProjectData, projectScheme } from "@/validations/project.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -97,16 +97,16 @@ const Page = (): React.JSX.Element => {
         id="newProject"
       />
 
-      <Modal.Root type={message.success ? "success" : "error"} open={showModal}>
-        <Modal.ActionButton onClick={() => setShowModal(false)}>
-          <Modal.Icon icon={IoClose} color="red" size={20} />
-        </Modal.ActionButton>
-        <Modal.Title>{message.title}</Modal.Title>
-        <Modal.Subtitle>{message.subtitle}</Modal.Subtitle>
-        <Modal.Content>
+      <Toast.Root type={message.success ? "success" : "error"} open={showModal}>
+        <Toast.ActionButton onClick={() => setShowModal(false)}>
+          <Toast.Icon icon={IoClose} color="red" size={20} />
+        </Toast.ActionButton>
+        <Toast.Title>{message.title}</Toast.Title>
+        <Toast.Subtitle>{message.subtitle}</Toast.Subtitle>
+        <Toast.Content>
           <p>{message.content}</p>
-        </Modal.Content>
-      </Modal.Root>
+        </Toast.Content>
+      </Toast.Root>
 
       <form
         onSubmit={handleSubmit(handleNewProject)}

@@ -5,9 +5,9 @@ import { Suspense, useEffect, useState } from "react";
 import { BiBot } from "react-icons/bi";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 import ScrollLinked from "../Motions/ScrollLinked";
-import { Button } from "../UI/Button";
-import Chat from "../UI/chat/Chat";
-import { LoadingPage } from "../UI/LoadingPage";
+import { Button } from "../ui/Button";
+import Chat from "../ui/chat/Chat";
+import { LoadingPage } from "../ui/LoadingPage";
 import Footer from "./Footer";
 import Header from "./Header";
 

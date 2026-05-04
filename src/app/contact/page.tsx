@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 
 import UseAnimationFrame from "@/components/Motions/AnimationFrame";
 import UseTime from "@/components/Motions/ContactMotion";
-import { Button } from "@/components/UI/Button";
-import { Input } from "@/components/UI/Input";
-import { Modal } from "@/components/UI/Modal/index";
-import SectionHeader from "@/components/UI/SectionHeader";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { Toast } from "@/components/ui/Toast/index";
 import { insertMaskInPhone } from "@/utils/phoneMask";
 import { ContactData, contactScheme } from "@/validations/contact.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -89,16 +89,16 @@ const Contact = (): React.JSX.Element => {
     <section className="w-full flex flex-col justify-center items-center relative overflow-hidden">
       <UseTime />
 
-      <Modal.Root type={message.success ? "success" : "error"} open={showModal}>
-        <Modal.ActionButton onClick={() => setShowModal(false)}>
-          <Modal.Icon icon={GrClose} color="red" size={20} />
-        </Modal.ActionButton>
-        <Modal.Title>{message.title}</Modal.Title>
-        <Modal.Subtitle>{message.subtitle}</Modal.Subtitle>
-        <Modal.Content>
+      <Toast.Root type={message.success ? "success" : "error"} open={showModal}>
+        <Toast.ActionButton onClick={() => setShowModal(false)}>
+          <Toast.Icon icon={GrClose} color="red" size={20} />
+        </Toast.ActionButton>
+        <Toast.Title>{message.title}</Toast.Title>
+        <Toast.Subtitle>{message.subtitle}</Toast.Subtitle>
+        <Toast.Content>
           <p>{message.content}</p>
-        </Modal.Content>
-      </Modal.Root>
+        </Toast.Content>
+      </Toast.Root>
 
       <SectionHeader
         title="Entre em Contato"

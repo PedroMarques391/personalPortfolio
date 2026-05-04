@@ -1,9 +1,9 @@
 "use client";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import Skeleton from "@/components/Motions/Skeleton";
-import ProjectCard from "@/components/UI/ProjectCard";
-import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
-import SectionHeader from "@/components/UI/SectionHeader";
+import ProjectCard from "@/components/ui/ProjectCard";
+import ProjectsNotFound from "@/components/ui/ProjectsNotFound";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { useMutationProjects } from "@/services/projects/mutations";
 import { useProjects } from "@/services/projects/queries";
 import { AnimatePresence } from "motion/react";
