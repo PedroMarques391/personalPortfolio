@@ -67,6 +67,19 @@ export async function POST(req: NextRequest) {
             };
           },
         },
+        whoAreYou: {
+          description: "Get background information about who Ada is.",
+          inputSchema: z.object({}),
+          execute: async () => {
+            return {
+              name: "Ada",
+              creator: "Pedro Marques",
+              origin:
+                "Inspirada em um bot de WhatsApp homônimo criado pelo Pedro",
+              role: "Assistente de IA do portfólio",
+            };
+          },
+        },
       },
     });
 

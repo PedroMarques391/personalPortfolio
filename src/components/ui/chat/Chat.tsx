@@ -11,7 +11,7 @@ import {
 import { GrClose } from "react-icons/gr";
 import Ada from "../../../../public/assets/ada.jpg";
 import { Modal } from "../Modal";
-import ChatBuble from "./ChatBubble";
+import ChatBubble from "./ChatBubble";
 
 interface ChatProps {
   showChatModal: boolean;
@@ -31,7 +31,7 @@ const Chat = ({
     "Olá!",
     "Quais os principais projetos?",
     "Quem é Ada?",
-    "Qual a sua função?",
+    "O que você consegue fazer por aqui?",
   ];
 
   const { messages, sendMessage } = useChat({
@@ -139,7 +139,7 @@ const Chat = ({
                 switch (part.type) {
                   case "text":
                     return (
-                      <ChatBuble
+                      <ChatBubble
                         key={`${message.id}-${i}`}
                         message={part.text}
                         role={message.role as "user" | "assistant"}
@@ -158,7 +158,23 @@ const Chat = ({
                         ? `${result.lastProjecs}`
                         : "Buscando projetos...";
                       return (
-                        <ChatBuble
+                        <ChatBubble
+                          key={`${message.id}-${i}`}
+                          message={messageText}
+                          role={message.role as "user" | "assistant"}
+                          id={message.id}
+                          index={i}
+                          time={getTimeForMessage(message.id, i)}
+                        />
+                      );
+                    }
+                    return null;
+
+                  case "tool-whoAreYou":
+                    if ("state" in part && part.state === "output-available") {
+                      const messageText = JSON.stringify(part, null, 2);
+                      return (
+                        <ChatBubble
                           key={`${message.id}-${i}`}
                           message={messageText}
                           role={message.role as "user" | "assistant"}
