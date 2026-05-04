@@ -28,10 +28,10 @@ const Chat = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const suggestions: string[] = [
-    "Qual a stack principal?",
-    "Projeto Recente?",
-    "Quais banco de dados você utiliza?",
-    "Quais ferramentas de deploy você utiliza?",
+    "Olá!",
+    "Quais os principais projetos?",
+    "Quem é Ada?",
+    "Qual a sua função?",
   ];
 
   const { messages, sendMessage } = useChat({
