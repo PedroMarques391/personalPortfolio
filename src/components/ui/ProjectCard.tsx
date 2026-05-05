@@ -51,9 +51,11 @@ const ProjectCard = ({
         scale: 0.96,
         transition: { duration: 0.2 },
       }}
-      className={`flex w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all ease-in-out group duration-700 ${view === "list" ? "flex-col md:flex-row" : "flex-col"}`}
+      className={`flex w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all ease-in-out group duration-700 ${view === "list" ? "flex-row" : "flex-col"}`}
     >
-      <section className={`relative cursor-pointer shrink-0 ${view === "list" ? "w-full h-64 md:w-[30%] md:h-auto md:min-h-full" : "w-full h-64"}`}>
+      <section
+        className={`relative cursor-pointer shrink-0 ${view === "list" ? "w-24 h-auto md:w-[30%] md:h-auto md:min-h-full" : "w-full h-64"}`}
+      >
         <Image
           src={src}
           alt={title}
@@ -92,9 +94,11 @@ const ProjectCard = ({
           {title}
         </h2>
 
-        <p className="text-gray-soft text-sm leading-relaxed">{children}</p>
+        <p className="text-gray-soft text-sm leading-relaxed shrink-0 ">
+          {children}
+        </p>
 
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="hidden md:flex flex-wrap gap-2 mt-2">
           {tags.split(",").map((tag, index) => (
             <span
               key={index}

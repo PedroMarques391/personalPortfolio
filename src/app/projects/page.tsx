@@ -105,7 +105,7 @@ const ProjectsPage = (): React.JSX.Element => {
         ))}
       </div>
 
-      <div className="my-6 p-5 space-x-2 w-full flex justify-around">
+      <div className="my-6 p-5 space-x-2 w-full flex justify-around items-center">
         <div className="space-x-2">
           {total > 0 ? (
             [...Array(totalPages)].map((_, index) => (
