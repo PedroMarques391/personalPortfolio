@@ -91,7 +91,7 @@ const ProjectsPage = (): React.JSX.Element => {
           <Button
             key={index}
             onClick={() => handleFilter(button.title, index)}
-            styles={`uppercase bg-gray-light rounded-md w-auto border 
+            styles={`uppercase bg-gray-light rounded-md w-auto border text-[12px] md:text-sm
                     ${
                       activeButton === index
                         ? "scale-110 font-bold text-white"
@@ -118,7 +118,7 @@ const ProjectsPage = (): React.JSX.Element => {
                   query: { page: index + 1, view },
                 }}
                 key={index}
-                className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
+                className={`bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl ${
                   currentPage === index + 1
                     ? " border-2 border-orange-500 text-orange-500"
                     : ""
@@ -135,7 +135,9 @@ const ProjectsPage = (): React.JSX.Element => {
           ) : (
             <Link
               href={{ pathname: "/projects", query: { page: 1, view } }}
-              className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
+              className={
+                "bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl"
+              }
               onClick={() => {
                 setFilter("Todos");
                 setActiveButton(0);
@@ -148,7 +150,7 @@ const ProjectsPage = (): React.JSX.Element => {
 
         <button
           onClick={toggleView}
-          className={`bg-gray-light py-2 px-4 rounded-xl text-xl `}
+          className={`bg-gray-light py-2 px-4 rounded-xl  `}
           aria-label="Toggle view"
           title={`Visualização em ${view === "grid" ? "lista" : "grade"}`}
         >
