@@ -136,7 +136,6 @@ const Chat = ({
               )}
 
               {message.parts.map((part, i) => {
-                console.log("Message part:", part);
                 switch (part.type) {
                   case "text":
                     return (
