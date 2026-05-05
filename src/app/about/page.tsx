@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/UI/Button";
-import TechList from "@/components/UI/TechList";
+import { Button } from "@/components/ui/Button";
+import TechList from "@/components/ui/TechList";
 import Handler from "@/utils/handler";
 import { motion } from "motion/react";
 import Image from "next/image";

@@ -2,10 +2,10 @@
 import MarqueeEffect from "@/components/Motions/Marquee";
 import MotionPath from "@/components/Motions/MotionPath";
 import ServicesCards from "@/components/Motions/ServicesCards";
-import { Button } from "@/components/UI/Button";
-import HardSkillsCard from "@/components/UI/HardSkillsCard";
-import SectionHeader from "@/components/UI/SectionHeader";
-import Typewriter from "@/components/UI/Typewriter";
+import { Button } from "@/components/ui/Button";
+import HardSkillsCard from "@/components/ui/HardSkillsCard";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Typewriter from "@/components/ui/Typewriter";
 import { Requests } from "@/services/requests";
 import { skills } from "@/utils";
 import Handler from "@/utils/handler";

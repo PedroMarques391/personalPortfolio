@@ -1,9 +1,9 @@
 "use client";
 import Skeleton from "@/components/Motions/Skeleton";
-import { Button } from "@/components/UI/Button";
-import ProjectCard from "@/components/UI/ProjectCard";
-import ProjectsNotFound from "@/components/UI/ProjectsNotFound";
-import SectionHeader from "@/components/UI/SectionHeader";
+import { Button } from "@/components/ui/Button";
+import ProjectCard from "@/components/ui/ProjectCard";
+import ProjectsNotFound from "@/components/ui/ProjectsNotFound";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
 import { buttonsValues } from "@/utils";

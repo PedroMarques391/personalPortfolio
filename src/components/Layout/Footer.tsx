@@ -1,9 +1,9 @@
 "use client";
 
+import Handler from "@/utils/handler";
 import { usePathname, useRouter } from "next/navigation";
 import { NavItems } from "../Menu/NavItems";
-import { Button } from "../UI/Button";
-import Handler from "@/utils/handler";
+import { Button } from "../ui/Button";
 
 interface ISocialItemsInterface {
   text: string;

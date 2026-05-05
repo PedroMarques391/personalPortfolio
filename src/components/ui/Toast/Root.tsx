@@ -11,7 +11,7 @@ export function Root({ children, type = "neutral", open }: RootProps) {
     <AnimatePresence>
       {open && (
         <motion.div
-          key="modal"
+          key="toast"
           initial={{ opacity: 0, x: 500 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 500 }}
