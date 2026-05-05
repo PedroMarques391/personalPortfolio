@@ -136,6 +136,7 @@ const Chat = ({
               )}
 
               {message.parts.map((part, i) => {
+                console.log("Message part:", part);
                 switch (part.type) {
                   case "text":
                     return (
@@ -172,11 +173,11 @@ const Chat = ({
 
                   case "tool-whoAreYou":
                     if ("state" in part && part.state === "output-available") {
-                      const messageText = JSON.stringify(part, null, 2);
+                      const { response } = part.output as { response: string };
                       return (
                         <ChatBubble
                           key={`${message.id}-${i}`}
-                          message={messageText}
+                          message={response}
                           role={message.role as "user" | "assistant"}
                           id={message.id}
                           index={i}

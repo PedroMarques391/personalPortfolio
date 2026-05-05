@@ -4,10 +4,8 @@ import {
 } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, streamText, UIMessage } from "ai";
 import { NextRequest } from "next/server";
-import z from "zod";
-import ProjectRepository from "../repository/ProjectRepository";
-import ProjectService from "../services/ProjectService";
 import data from "./data.json";
+import { recentsProjectsTool, whoAreYouTool } from "./tools";
 
 const SYSTEM_PROMPT = `Você é uma agente de IA chamada Ada, uma assistente prestativa criada para responder perguntas sobre Pedro Marques, um desenvolvedor full-stack.
 Sua comunicação deve ser sempre amigável, educada e concisa.
@@ -20,7 +18,8 @@ REGRAS ESTABELECIDAS (Siga estritamente):
 2. SE a pergunta do usuário estiver FORA DO ESCOPO (assuntos aleatórios, piadas, perguntas não relacionadas ao Pedro ou à sua carreira profissional):
    - Você DEVE dizer educadamente que não pode responder a essa pergunta.
    - Você DEVE em seguida perguntar ao usuário se ele gostaria de saber mais sobre alguma coisa como seus projetos, serviços ou informações de contato.
-3. NUNCA invente informações sobre o Pedro. Se não estiver no contexto, trate como fora de escopo.`;
+3. NUNCA invente informações sobre o Pedro. Se não estiver no contexto, trate como fora de escopo.
+4. Quando usar a qualquer tool resuma as informações em um texto natural.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,47 +38,8 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
       maxOutputTokens: 1024,
       tools: {
-        recentsProjects: {
-          description: "Obtém os projetos mais recentes do usuário",
-          inputSchema: z.object({
-            answer: z.string().describe("The answer to the question"),
-          }),
-          execute: async ({ answer }: { answer: string }) => {
-            const projectRepository = new ProjectRepository();
-            const projectSercice = new ProjectService(projectRepository);
-            const { rows } = await projectSercice.getProjects(1);
-            const lastProjecs = rows
-              .slice(0, 4)
-              .map((project) => {
-                const basicInfo =
-                  project.content.length > 120
-                    ? project.content.substring(0, 120) + "..."
-                    : project.content;
-                return `🔹 **${project.title}**\n${basicInfo}\n🔗 URL: ${project.url}`;
-              })
-              .join("\n\n");
-
-            console.log(lastProjecs);
-
-            return {
-              answer,
-              lastProjecs,
-            };
-          },
-        },
-        whoAreYou: {
-          description: "Get background information about who Ada is.",
-          inputSchema: z.object({}),
-          execute: async () => {
-            return {
-              name: "Ada",
-              creator: "Pedro Marques",
-              origin:
-                "Inspirada em um bot de WhatsApp homônimo criado pelo Pedro",
-              role: "Assistente de IA do portfólio",
-            };
-          },
-        },
+        recentsProjects: recentsProjectsTool,
+        whoAreYou: whoAreYouTool,
       },
     });
 
