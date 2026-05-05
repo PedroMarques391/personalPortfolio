@@ -85,7 +85,10 @@ const Chat = ({
             title="Centralizar"
             onClick={handleCenterModal}
           >
-            <BsArrowsMove size={16} className="text-gray-dark" />
+            <BsArrowsMove
+              size={16}
+              className={isCentered ? "text-orange-600" : "text-gray-dark"}
+            />
           </Modal.ActionButton>
           <Modal.ActionButton
             aria-label="Expandir"
@@ -93,7 +96,10 @@ const Chat = ({
             title="Expandir"
             onClick={handleExpandModal}
           >
-            <BsArrowsAngleExpand size={16} className="text-gray-dark" />
+            <BsArrowsAngleExpand
+              size={16}
+              className={isExpanded ? "text-orange-600" : "text-gray-dark"}
+            />
           </Modal.ActionButton>
           <Modal.ActionButton
             aria-label="Fechar"
