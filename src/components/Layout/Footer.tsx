@@ -80,9 +80,9 @@ const Footer = (): React.JSX.Element => {
         <div className="flex flex-col gap-5 text-white w-full">
           <div className="grid grid-cols-2 mt-10 md:mt-0 mx-auto  gap-10">
             <nav className="w-full flex flex-col justify-start items-center">
-              <h2 className="text-xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
+              <h1 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
                 Navegação
-              </h2>
+              </h1>
               <ul className="space-y-2 flex flex-col">
                 {navLinkItems.map((navItem, index) => (
                   <NavItems
@@ -97,9 +97,9 @@ const Footer = (): React.JSX.Element => {
             </nav>
 
             <nav className="w-full flex flex-col justify-start items-center">
-              <h2 className="text-xl md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
+              <h1 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
                 Redes Sociais
-              </h2>
+              </h1>
               <div className="space-y-2 md:space-y-5">
                 {socialItems.map((socialItem, index) => (
                   <Button.Footer
