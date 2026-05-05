@@ -1,5 +1,6 @@
 "use client";
 
+import { useChatModal } from "@/hooks/useChatModal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense, useEffect, useState } from "react";
 import { LuBot } from "react-icons/lu";
@@ -19,7 +20,7 @@ const queryClient = new QueryClient();
 
 const Main = ({ children }: IBodyProps): React.JSX.Element => {
   const [scrollY, setScrollY] = useState<boolean>(false);
-  const [isModalChatOpen, setIsModalChatOpen] = useState<boolean>(false);
+  const { isChatOpen, closeChat, openChat } = useChatModal();
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -50,7 +51,7 @@ const Main = ({ children }: IBodyProps): React.JSX.Element => {
         />
 
         <button
-          onClick={() => setIsModalChatOpen(true)}
+          onClick={openChat}
           className="fixed bottom-10 right-5 md:right-10 w-14 h-14 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all hover:scale-110 active:scale-95 shadow-xl group"
         >
           <LuBot
@@ -58,10 +59,7 @@ const Main = ({ children }: IBodyProps): React.JSX.Element => {
             size={28}
           />
         </button>
-        <Chat
-          showChatModal={isModalChatOpen}
-          handleCloseModal={() => setIsModalChatOpen(false)}
-        />
+        <Chat showChatModal={isChatOpen} handleCloseModal={closeChat} />
 
         <Footer />
       </Suspense>

@@ -3,13 +3,13 @@
 import React, { createContext, useState } from "react";
 
 interface IChatModalContext {
-  isModalChatOpen: boolean;
+  isChatOpen: boolean;
   openChat: () => void;
   closeChat: () => void;
 }
 
-export const ChatModalContext = createContext<IChatModalContext | undefined>(
-  undefined,
+export const ChatModalContext = createContext<IChatModalContext>(
+  {} as IChatModalContext,
 );
 
 export const ChatModalProvider = ({
@@ -17,15 +17,15 @@ export const ChatModalProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isModalChatOpen, setIsModalChatOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const openChat = () => setIsModalChatOpen(true);
-  const closeChat = () => setIsModalChatOpen(false);
+  const openChat = () => setIsChatOpen(true);
+  const closeChat = () => setIsChatOpen(false);
 
   return (
     <ChatModalContext.Provider
       value={{
-        isModalChatOpen,
+        isChatOpen,
         openChat,
         closeChat,
       }}
