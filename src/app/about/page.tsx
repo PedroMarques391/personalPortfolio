@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import TechList from "@/components/ui/TechList";
 import Handler from "@/utils/handler";
+import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import { motion } from "motion/react";
 import Image from "next/image";
 import React from "react";
@@ -60,17 +61,20 @@ const About = (): React.JSX.Element => {
             </p>
           </div>
 
-          <Button
-            onClick={Handler.download}
-            styles={
-              "bg-gray-800 w-auto  px-6 py-3 rounded-md mt-8 hover:scale-105 transition-transform duration-300 hover:border hover:border-white hover:text-white text-gray-300 ml-3"
-            }
-          >
-            <p>
-              <BiDownload size={20} />
-            </p>
-            <p className=" font-medium">Download CV</p>
-          </Button>
+          <div className="flex flex-wrap items-center gap-4 mt-8 ml-3">
+            <Button
+              onClick={Handler.download}
+              styles={
+                "bg-gray-800 w-auto px-6 py-3 rounded-md hover:scale-105 transition-transform duration-300 hover:border hover:border-white hover:text-white text-gray-300"
+              }
+            >
+              <p>
+                <BiDownload size={20} />
+              </p>
+              <p className=" font-medium">Download CV</p>
+            </Button>
+            <AdaCallButton />
+          </div>
         </motion.section>
         <motion.section
           initial={{ opacity: 0, x: 20 }}

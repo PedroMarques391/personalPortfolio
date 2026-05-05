@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import HardSkillsCard from "@/components/ui/HardSkillsCard";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Typewriter from "@/components/ui/Typewriter";
+import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import { Requests } from "@/services/requests";
 import { skills } from "@/utils";
 import Handler from "@/utils/handler";
@@ -105,6 +106,9 @@ export default function Home() {
               <MdFileDownload size={20} />
               <p>CV</p>
             </Button>
+            <div className="hidden sm:block">
+              <AdaCallButton />
+            </div>
           </div>
 
           <div className="w-full flex-1 flex justify-center items-center relative overflow-hidden">

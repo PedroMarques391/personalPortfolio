@@ -1,4 +1,5 @@
 import Main from "@/components/Layout/Main";
+import { ChatModalProvider } from "@/contexts/ChatModalContext";
 import { jsonLD } from "@/utils/scheme";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
@@ -38,7 +39,9 @@ export default function RootLayout({
             __html: JSON.stringify(jsonLD),
           }}
         />
-        <Main>{children}</Main>
+        <ChatModalProvider>
+          <Main>{children}</Main>
+        </ChatModalProvider>
         <Analytics />
       </body>
     </html>
