@@ -64,7 +64,7 @@ function Footer({
       prefetch
       target="_blank"
       rel="noopener noreferrer"
-      className="block py-2 text-base md:text-xl tracking-wider  text-gray-dark hover:text-gray-soft text-center px-2 hover:-translate-x-10 transition-transform duration-200"
+      className="block py-2 text-base md:text-xl tracking-wider text-gray-dark text-center px-2 duration-200"
       aria-label={`Abrir link ${children} em uma nova aba`}
     >
       <motion.p
@@ -73,6 +73,12 @@ function Footer({
         animate={isInView ? "visible" : "hidden"}
         variants={itemVariant}
         transition={{ duration: duration }}
+        whileHover={{
+          scale: 1.12,
+          color: "#f97316",
+          textShadow: "0px 2px 12px rgba(255, 102, 0, 0.3)",
+          rotate: 2,
+        }}
       >
         {children}
       </motion.p>
