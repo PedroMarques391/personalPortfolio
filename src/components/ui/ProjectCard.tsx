@@ -14,6 +14,7 @@ interface IProjectCardProps {
   url: string;
   onDelete?: () => void;
   isDeleting?: boolean;
+  view?: "grid" | "list";
 }
 
 const ProjectCard = ({
@@ -24,7 +25,8 @@ const ProjectCard = ({
   url,
   type,
   onDelete,
-}: IProjectCardProps) => {
+  view = "list",
+}: IProjectCardProps): React.JSX.Element => {
   const ref = useRef(null);
 
   return (
@@ -49,9 +51,9 @@ const ProjectCard = ({
         scale: 0.96,
         transition: { duration: 0.2 },
       }}
-      className={`flex flex-col w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all  ease-in-out group duration-700 `}
+      className={`flex w-full bg-gray-light rounded-lg shadow-lg overflow-hidden transition-all ease-in-out group duration-700 ${view === "list" ? "flex-col md:flex-row" : "flex-col"}`}
     >
-      <section className="relative w-full h-64 cursor-pointer">
+      <section className={`relative cursor-pointer shrink-0 ${view === "list" ? "w-full h-64 md:w-[30%] md:h-auto md:min-h-full" : "w-full h-64"}`}>
         <Image
           src={src}
           alt={title}
@@ -85,7 +87,7 @@ const ProjectCard = ({
         />
       </section>
 
-      <section className="p-6 flex flex-col gap-2 justify-start">
+      <section className="p-6 flex flex-col gap-2 justify-start flex-1">
         <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-dark group-hover:text-gray-500 transition duration-200">
           {title}
         </h2>

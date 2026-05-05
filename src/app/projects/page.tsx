@@ -10,8 +10,9 @@ import { buttonsValues } from "@/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 
 export interface IProjectInterface {
   id: number;
@@ -23,8 +24,16 @@ export interface IProjectInterface {
   url: string;
 }
 
+type ViewMode = "grid" | "list";
+
 const ProjectsPage = (): React.JSX.Element => {
-  const currentPage = Number(useSearchParams().get("page")) || 1;
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const rawViewMode = searchParams.get("view") as ViewMode;
+  const view: ViewMode =
+    rawViewMode === "grid" || rawViewMode === "list" ? rawViewMode : "grid";
   const [activeButton, setActiveButton] = useState<number>(0);
   const [filter, setFilter] = useState<string>("Todos");
   const queryClient = useQueryClient();
@@ -67,6 +76,13 @@ const ProjectsPage = (): React.JSX.Element => {
     });
   }, [currentPage, queryClient, totalPages]);
 
+  const toggleView = () => {
+    const nextView = view === "grid" ? "list" : "grid";
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("view", nextView);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
       <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
@@ -89,48 +105,64 @@ const ProjectsPage = (): React.JSX.Element => {
         ))}
       </div>
 
-      <div className="my-6 p-5 space-x-2">
-        {total > 0 ? (
-          [...Array(totalPages)].map((_, index) => (
+      <div className="my-6 p-5 space-x-2 w-full flex justify-around">
+        <div className="space-x-2">
+          {total > 0 ? (
+            [...Array(totalPages)].map((_, index) => (
+              <Link
+                prefetch
+                title={`Página ${index + 1}`}
+                about={`pagination-link-${index + 1}`}
+                href={{
+                  pathname: "/projects",
+                  query: { page: index + 1, view },
+                }}
+                key={index}
+                className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
+                  currentPage === index + 1
+                    ? " border-2 border-orange-500 text-orange-500"
+                    : ""
+                }`}
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  setFilter("Todos");
+                  setActiveButton(0);
+                }}
+              >
+                {index + 1}
+              </Link>
+            ))
+          ) : (
             <Link
-              prefetch
-              title={`Página ${index + 1}`}
-              about={`pagination-link-${index + 1}`}
-              href={{ pathname: "/projects", query: { page: index + 1 } }}
-              key={index}
-              className={`bg-gray-light py-2 px-4 rounded-xl text-xl ${
-                currentPage === index + 1
-                  ? "border border-orange-500 text-orange-500"
-                  : ""
-              }`}
-              onClick={(e) => {
-                e.currentTarget.blur();
+              href={{ pathname: "/projects", query: { page: 1, view } }}
+              className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
+              onClick={() => {
                 setFilter("Todos");
                 setActiveButton(0);
               }}
             >
-              {index + 1}
+              {loading ? "..." : "1"}
             </Link>
-          ))
-        ) : (
-          <Link
-            href={{ pathname: "/projects", query: { page: 1 } }}
-            className={"bg-gray-light py-2 px-4 rounded-xl text-xl"}
-            onClick={() => {
-              setFilter("Todos");
-              setActiveButton(0);
-            }}
-          >
-            {loading ? "..." : "1"}
-          </Link>
-        )}
+          )}
+        </div>
+
+        <button
+          onClick={toggleView}
+          className={`bg-gray-light py-2 px-4 rounded-xl text-xl `}
+          aria-label="Toggle view"
+          title={`Visualização em ${view === "grid" ? "lista" : "grade"}`}
+        >
+          {view === "grid" ? <CiGrid2H size={24} /> : <CiGrid41 size={24} />}
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mb-10 w-full ">
+      <div
+        className={`grid ${view === "grid" ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3" : "grid-cols-1"} gap-x-4 gap-y-6 mb-10 w-full `}
+      >
         {loading ? (
           <AnimatePresence mode="popLayout">
             {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} index={i} />
+              <Skeleton key={i} index={i} view={view} />
             ))}
           </AnimatePresence>
         ) : (
@@ -144,6 +176,7 @@ const ProjectsPage = (): React.JSX.Element => {
                 type={project.type}
                 title={project.title}
                 url={project.url}
+                view={view}
               >
                 {project.content}
               </ProjectCard>
