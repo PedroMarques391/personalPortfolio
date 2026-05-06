@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import TechList from "@/components/ui/TechList";
 import Handler from "@/utils/handler";
-import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import { motion } from "motion/react";
 import Image from "next/image";
 import React from "react";
@@ -11,20 +11,68 @@ import { BiDownload } from "react-icons/bi";
 import cat from "../../../public/assets/profile2.webp";
 
 const About = (): React.JSX.Element => {
-  const frontend: string[] = [
+  const languages: string[] = [
+    "JavaScript",
+    "TypeScript",
+    "Java",
     "HTML",
     "CSS",
-    "Bootstrap",
-    "TypeScript",
-    "TailwindCSS",
+    "SQL",
+  ];
+  const frontend: string[] = [
     "React.js",
     "Next.js",
-    "Astro.js",
-    "Svelte Kit",
+    "Astro",
+    "SvelteKit",
+    "Vue.js",
+    "TailwindCSS",
+    "Bootstrap",
   ];
-  const backend: string[] = ["Node.js", "Nest.js", "Express.js", "Java"];
-  const database: string[] = ["SQL", "Postgres", "MongoDB", "Firebase"];
-  const mobile: string[] = ["React Native", "Expo GO", "Flutter"];
+  const backend: string[] = [
+    "Node.js",
+    "NestJS",
+    "Express.js",
+    "Fastify",
+    "Spring Boot",
+  ];
+  const database: string[] = [
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "Redis",
+    "SQLite",
+    "Prisma ORM",
+  ];
+  const mobile: string[] = ["React Native", "Expo Go", "Flutter"];
+  const tools: string[] = [
+    "Git",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "Firebase",
+    "Linux",
+    "Postman",
+    "Insomnia",
+    "Swagger",
+  ];
+  const libraries: string[] = [
+    "React Query",
+    "Material UI",
+    "Chakra UI",
+    "DaisyUI",
+    "Shadcn UI",
+    "React Native Paper",
+  ];
+
+  const techCategories = [
+    { title: "Linguagens", skills: languages },
+    { title: "Front-End", skills: frontend },
+    { title: "Back-End", skills: backend },
+    { title: "Mobile", skills: mobile },
+    { title: "Banco de Dados", skills: database },
+    { title: "Ferramentas", skills: tools },
+    { title: "Bibliotecas & UI", skills: libraries },
+  ];
 
   return (
     <div className="w-full flex flex-col mb-10">
@@ -40,24 +88,34 @@ const About = (): React.JSX.Element => {
               Olá, me chamo Pedro Marques
             </h1>
 
-            <p className="text-sm md:text-base lg:text-lg mt-10 mb-3 text-left lg:text-justify leading-relaxed hyphens-none break-words">
-              Sou desenvolvedor Full-Stack, com experiência em React, React
-              Native, Next.js, TailwindCSS, Firebase, TypeScript, SQL, NodeJS e
-              Express. Tenho formação em Logística pela Universidade Paulista
-              (UNIP), mas encontrei minha verdadeira paixão no mundo da
-              tecnologia e desenvolvimento de software.
-            </p>
-            <p className="text-sm md:text-base lg:text-lg text-left lg:text-justify leading-relaxed hyphens-none  break-words">
-              Atualmente, estou focado no desenvolvimento mobile, criando
-              soluções modernas e otimizadas, utilizando Flutter e React Native.
-              Também desenvolvo aplicações web, buscando sempre melhorar a
-              experiência do usuário.
+            <p className="text-sm md:text-base lg:text-lg mt-10 mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
+              Sou um desenvolvedor Full-Stack apaixonado por criar soluções
+              eficientes e inovadoras. Minha jornada profissional começou na
+              área de Logística, formado pela Universidade Paulista (UNIP), onde
+              desenvolvi uma forte capacidade analítica e de resolução de
+              problemas. No entanto, foi na tecnologia que encontrei minha
+              verdadeira vocação. Atualmente, estou cursando Análise e
+              Desenvolvimento de Sistemas na UniCesumar, consolidando minha base
+              teórica enquanto atuo ativamente no mercado.
             </p>
 
-            <p className="text-sm md:text-base lg:text-lg text-left lg:text-justify leading-relaxed hyphens-none  break-words">
-              Minha meta é desenvolver projetos inovadores que entreguem valor
-              real, ao mesmo tempo em que aprimoro minhas habilidades para me
-              tornar um desenvolvedor cada vez mais completo.
+            <p className="text-sm md:text-base lg:text-lg mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
+              Tenho sólida experiência no desenvolvimento web e mobile,
+              utilizando tecnologias como React, Next.js, React Native,
+              TypeScript e TailwindCSS no Front-End, e Node.js (NestJS, Express,
+              Fastify) no Back-End. Trabalho com bancos de dados relacionais e
+              não relacionais, além de ferramentas modernas do ecossistema de
+              desenvolvimento.
+            </p>
+
+            <p className="text-sm md:text-base lg:text-lg mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
+              Neste momento, meu foco principal está em aprofundar meus
+              conhecimentos no Back-End e em arquitetura de software, estudando
+              Java, mensageria e orquestração de containers com Docker e
+              Kubernetes. Também tenho explorado ativamente o universo da
+              Inteligência Artificial. Meu grande objetivo é construir projetos
+              que gerem valor real para os usuários, mantendo-me em constante
+              evolução técnica e profissional.
             </p>
           </div>
 
@@ -100,46 +158,21 @@ const About = (): React.JSX.Element => {
           Tecnologias
         </h1>
         <div className="w-full flex flex-col gap-6">
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <h1 className="text-gray-soft text-xl md:text-2xl font-semibold w-32 text-left">
-              FrontEnd
-            </h1>
-            <ul className="flex flex-wrap gap-3">
-              {frontend.map((skills, i) => (
-                <TechList key={i}>{skills}</TechList>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <h1 className="text-gray-soft text-xl md:text-2xl font-semibold w-32 text-left">
-              BackEnd
-            </h1>
-            <ul className="flex flex-wrap gap-3">
-              {backend.map((skills, i) => (
-                <TechList key={i}>{skills}</TechList>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <h1 className="text-gray-soft text-xl md:text-2xl font-semibold w-32 text-left">
-              DataBase
-            </h1>
-            <ul className="flex flex-wrap gap-3">
-              {database.map((skills, i) => (
-                <TechList key={i}>{skills}</TechList>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <h1 className="text-gray-soft text-xl md:text-2xl font-semibold w-32 text-left">
-              Mobile
-            </h1>
-            <ul className="flex flex-wrap gap-3">
-              {mobile.map((skills, i) => (
-                <TechList key={i}>{skills}</TechList>
-              ))}
-            </ul>
-          </div>
+          {techCategories.map((category, index) => (
+            <div
+              key={index}
+              className="flex flex-col md:flex-row md:items-center gap-4"
+            >
+              <h2 className="text-gray-soft text md:text-2xl font-semibold w-48 text-left shrink-0">
+                {category.title}
+              </h2>
+              <ul className="flex flex-wrap gap-3">
+                {category.skills.map((skill, i) => (
+                  <TechList key={i}>{skill}</TechList>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </div>
