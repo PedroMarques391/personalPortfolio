@@ -61,7 +61,7 @@ const ProjectsPage = (): React.JSX.Element => {
       staleTime: 1000 * 60 * 5,
       queryFn: async () => {
         return await Requests.getProject(
-          `/api/project?role=all&page=${nextPage}&type=${filter}`,
+          `/api/project?role=all&page=${nextPage}&type=all`,
         );
       },
     });
@@ -82,6 +82,23 @@ const ProjectsPage = (): React.JSX.Element => {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
+  const prefetchFilter = (filterType: string) => {
+    const type = filterType === "Todos" ? "all" : filterType.toLowerCase();
+    const queryKey = ["projects", "all", 1, type];
+
+    if (!queryClient.getQueryData(queryKey)) {
+      queryClient.prefetchQuery({
+        queryKey,
+        staleTime: 1000 * 60 * 5,
+        queryFn: async () => {
+          return await Requests.getProject(
+            `/api/project?role=all&page=1&type=${type}`,
+          );
+        },
+      });
+    }
+  };
+
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
       <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
@@ -90,6 +107,8 @@ const ProjectsPage = (): React.JSX.Element => {
           <Button
             key={index}
             onClick={() => handleFilter(filter, index)}
+            onMouseEnter={() => prefetchFilter(filter)}
+            onTouchStart={() => prefetchFilter(filter)}
             styles={`uppercase bg-gray-light rounded-md w-auto border text-[12px] md:text-sm
                     ${
                       activeButton === index
