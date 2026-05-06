@@ -7,7 +7,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { TProjectType } from "@/model/ProjectModel";
 import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
-import { buttonsValues } from "@/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import Link from "next/link";
@@ -27,6 +26,8 @@ export interface IProjectInterface {
 
 type ViewMode = "grid" | "list";
 
+const validFilters = ["all", "web", "mobile", "api", "automações"];
+
 const ProjectsPage = (): React.JSX.Element => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -34,9 +35,7 @@ const ProjectsPage = (): React.JSX.Element => {
   const currentPage = Number(searchParams.get("page")) || 1;
   const rawViewMode = searchParams.get("view") as ViewMode;
   const rawFilter = searchParams.get("type") as TProjectType;
-  const filter = !["all", "web", "mobile", "api", "automações"].includes(
-    rawFilter?.toLowerCase(),
-  )
+  const filter = !validFilters.includes(rawFilter?.toLowerCase())
     ? "all"
     : (rawFilter as TProjectType);
   const view: ViewMode =
@@ -78,7 +77,7 @@ const ProjectsPage = (): React.JSX.Element => {
   const handleFilter = (rule: string, index: number) => {
     setActiveButton(index);
     const params = new URLSearchParams(searchParams.toString());
-    params.set("type", rule === "Todos" ? "all" : rule.toLowerCase());
+    params.set("type", rule.toLowerCase());
     params.set("page", "1");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
@@ -87,10 +86,10 @@ const ProjectsPage = (): React.JSX.Element => {
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
       <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
       <div className="flex flex-wrap justify-center gap-5 mt-10 w-[90%] mx-auto ">
-        {buttonsValues.map((button, index) => (
+        {validFilters.map((filter, index) => (
           <Button
             key={index}
-            onClick={() => handleFilter(button.title, index)}
+            onClick={() => handleFilter(filter, index)}
             styles={`uppercase bg-gray-light rounded-md w-auto border text-[12px] md:text-sm
                     ${
                       activeButton === index
@@ -98,9 +97,9 @@ const ProjectsPage = (): React.JSX.Element => {
                         : "border-transparent text-gray-dark"
                     } 
                     py-2 transition duration-300`}
-            duration={button.duration}
+            duration={index * 0.2}
           >
-            {button.title}
+            {filter === "all" ? "Todos" : filter}
           </Button>
         ))}
       </div>
