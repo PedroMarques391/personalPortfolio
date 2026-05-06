@@ -83,7 +83,7 @@ export default function Home() {
             encaro de forma proativa os desafios do desenvolvimento de
             aplicativos <span className="text-orange-500">Mobile</span>.
           </motion.p>
-          <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5">
+          <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5 flex-wrap">
             <Link
               className="flex items-center gap-3 p-3 md:gap-4 transition"
               href="/contact"
@@ -106,9 +106,7 @@ export default function Home() {
               <MdFileDownload size={20} />
               <p>CV</p>
             </Button>
-            <div className="hidden sm:block">
-              <AdaCallButton />
-            </div>
+            <AdaCallButton />
           </div>
 
           <div className="w-full flex-1 flex justify-center items-center relative overflow-hidden">
