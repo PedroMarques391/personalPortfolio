@@ -13,11 +13,9 @@ services:
       - 3306:3306
     volumes:
       - backup_mysql:/var/lib/mysql
-      - dump_sql:/volumes/dump.sql
 
 
 volumes:
   backup_mysql:
-  dump_sql: 
-    driver: local
+
     
