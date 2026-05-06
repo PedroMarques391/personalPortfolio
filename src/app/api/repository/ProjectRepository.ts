@@ -18,10 +18,7 @@ class ProjectRepository implements IProjectRepository {
 
     const [rows] = await MySQL.execute<TProjectRow[]>(query, [type, type]);
     const total = rows.length > 0 ? (rows[0].total ?? 0) : 0;
-    console.log(
-      "Total projects:",
-      rows.map((row) => row.title),
-    );
+
     return { rows, total };
   }
 
