@@ -33,10 +33,10 @@ export default function Home() {
   const ref = useRef<HTMLDivElement>(null);
 
   usePrefetchQuery({
-    queryKey: ["projects", "all", 1],
+    queryKey: ["projects", "all", 1, "all"],
     queryFn: async () => {
       return await Requests.getProject(
-        `${process.env.NEXT_PUBLIC_URL_BASE}/api/project?role=all&page=1`,
+        `${process.env.NEXT_PUBLIC_URL_BASE}/api/project?role=all&page=1&type=all`,
       );
     },
     staleTime: 1000 * 60 * 60,

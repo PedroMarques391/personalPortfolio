@@ -16,7 +16,7 @@ export interface IProject {
   id?: string;
   imageURL: string;
   title: string;
-  type: Omit<TProjectType, "all">;
+  type: string;
   content: string;
   tags: string;
   url: string;
