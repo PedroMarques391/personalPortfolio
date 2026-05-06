@@ -8,7 +8,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import React from "react";
 import { BiDownload } from "react-icons/bi";
-import cat from "../../../public/assets/profile2.webp";
+import cat from "../../../public/assets/aboutImage.jpeg";
 
 const About = (): React.JSX.Element => {
   const languages: string[] = [
