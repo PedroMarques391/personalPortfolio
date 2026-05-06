@@ -54,14 +54,15 @@ export default function Home() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
         <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1 pt-0 md:pt-20">
           <div>
-            <h1 className="text-lg sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap">
+            <h1 className="sr-only">Pedro Marques - Desenvolvedor Fullstack e Mobile</h1>
+            <div className="text-lg sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap" aria-hidden="true">
               Olá, meu nome é{" "}
               <Typewriter
                 writing="Pedro Marques"
                 hiddenCursor
                 color="text-orange-500"
               />
-            </h1>
+            </div>
             <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start h-10 items-center">
               Desenvolvedor{" "}
               <Typewriter
@@ -123,7 +124,7 @@ export default function Home() {
           >
             <Image
               src="/assets/profile.webp"
-              alt="Perfil"
+              alt="Pedro Marques - Desenvolvedor Fullstack e Mobile"
               width={600}
               height={600}
               priority
@@ -250,7 +251,7 @@ export default function Home() {
         </div>
         <Link
           className="my-10 mx-auto flex flex-row justify-center items-center w-fitp-4 gap-4 group"
-          href={"/projects?page=1"}
+          href={"/projects"}
         >
           <h1 className="text-gray-soft tracking-wider text-xl font-semibold group-hover:text-orange-500 duration-1000 transition-colors">
             Veja Meus Projetos

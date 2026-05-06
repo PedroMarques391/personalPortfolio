@@ -15,13 +15,24 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Pedro Marques | Full-Stack",
+  title: {
+    template: "%s | Pedro Marques",
+    default: "Pedro Marques | Desenvolvedor Fullstack",
+  },
   description:
-    "Portfólio Web de Pedro Marques, desenvolvedor Fullstack. Conheça meus projetos e habilidades.",
+    "Portfólio Web de Pedro Marques, Desenvolvedor Fullstack e Mobile especializado em aplicações modernas, responsivas e de alta performance.",
   robots: "index, follow",
   keywords:
-    "Pedro Marques, Full-Stack, desenvolvedor, portfólio web, projetos Fullstack, HTML, CSS, JavaScript, React, Next.js, desenvolvimento web",
+    "Pedro Marques, Desenvolvedor Fullstack, Web Developer, portfólio web, React, Next.js, Node.js, TypeScript, Mobile",
   creator: "Pedro Marques",
+  openGraph: {
+    title: "Pedro Marques | Desenvolvedor Fullstack",
+    description: "Conheça meu trabalho como Desenvolvedor Fullstack, construindo soluções modernas e eficientes.",
+    url: "https://pedromarques.dev.br",
+    siteName: "Pedro Marques Portfolio",
+    locale: "pt_BR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

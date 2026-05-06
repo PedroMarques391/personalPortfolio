@@ -1,14 +1,15 @@
-import { WithContext, WebPage } from "schema-dts";
+import { WithContext, ProfilePage } from "schema-dts";
 
-const jsonLD: WithContext<WebPage> = {
+const jsonLD: WithContext<ProfilePage> = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    headline: "Pedro Marque - Desenvolvedor",
+    "@type": "ProfilePage",
+    headline: "Pedro Marques - Desenvolvedor Fullstack",
     description:
-        "Desenvolvedor de software focado em soluções inovadoras e aprendizado constante.",
-    author: {
+        "Desenvolvedor Fullstack e Mobile focado em criar aplicações modernas, eficientes e de alta performance.",
+    mainEntity: {
         "@type": "Person",
         name: "Pedro Marques",
+        jobTitle: "Desenvolvedor Fullstack",
         url: "https://pedromarques.dev.br",
         sameAs: [
             "https://linkedin.com/in/pedromarques391",
@@ -18,8 +19,7 @@ const jsonLD: WithContext<WebPage> = {
         ],
     },
     datePublished: "2025-01-01",
-    dateModified: "2025-08-12",
-    mainEntityOfPage: "https://pedromarques.dev.br",
+    dateModified: new Date().toISOString().split('T')[0],
 };
 
 
