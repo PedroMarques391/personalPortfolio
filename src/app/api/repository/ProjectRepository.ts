@@ -3,19 +3,25 @@ import {
   IProject,
   IProjectRepository,
   TProjectRow,
+  TProjectType,
 } from "@/model/ProjectModel";
 import { ResultSetHeader } from "mysql2";
 
 class ProjectRepository implements IProjectRepository {
   async getProjects(
     page: number,
+    type: TProjectType,
   ): Promise<{ rows: TProjectRow[]; total: number }> {
     const offset = (page - 1) * 8;
-    const query = `SELECT *, COUNT(*) OVER() AS total FROM projects ORDER BY title ASC 
+    const query = `SELECT *, COUNT(*) OVER() AS total FROM projects WHERE (? = 'all' OR type = ?) ORDER BY title ASC 
     LIMIT 8 OFFSET ${offset}`;
 
-    const [rows] = await MySQL.execute<TProjectRow[]>(query);
+    const [rows] = await MySQL.execute<TProjectRow[]>(query, [type, type]);
     const total = rows.length > 0 ? (rows[0].total ?? 0) : 0;
+    console.log(
+      "Total projects:",
+      rows.map((row) => row.title),
+    );
     return { rows, total };
   }
 

@@ -1,6 +1,6 @@
 import { default as ProjectRepository } from "@/app/api/repository/ProjectRepository";
 import { AuthTokenService } from "@/app/api/services/AuthTokenService";
-import { IProject } from "@/model/ProjectModel";
+import { IProject, TProjectType } from "@/model/ProjectModel";
 import { NextRequest, NextResponse } from "next/server";
 import ProjectService from "../services/ProjectService";
 
@@ -9,13 +9,16 @@ export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
 
     const role = searchParams.get("role");
-    const page = Number(searchParams.get("page")) || 1;
+    let page = Number(searchParams.get("page")) || 1;
+    if (page < 1) page = 1;
+    const rawType = searchParams.get("type");
+    const type = (rawType ? rawType.toLowerCase() : "all") as TProjectType;
 
     const projectRepository = new ProjectRepository();
     const projectService = new ProjectService(projectRepository);
 
     if (!role || role === "all") {
-      const { rows, total } = await projectService.getProjects(page);
+      const { rows, total } = await projectService.getProjects(page, type);
 
       return NextResponse.json(
         { success: true, projects: rows, total },

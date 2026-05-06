@@ -1,7 +1,12 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 
+export type TProjectType = "all" | "web" | "mobile" | "automações" | "api";
+
 export interface IProjectRepository {
-  getProjects(page: number): Promise<{ rows: TProjectRow[]; total: number }>;
+  getProjects(
+    page: number,
+    type: TProjectType,
+  ): Promise<{ rows: TProjectRow[]; total: number }>;
   getProjectsByUserId(userId: string): Promise<TProjectRow[]>;
   addProject(data: IProject): Promise<ResultSetHeader>;
   deleteProject(id: string): Promise<ResultSetHeader>;
@@ -11,7 +16,7 @@ export interface IProject {
   id?: string;
   imageURL: string;
   title: string;
-  type: string;
+  type: Omit<TProjectType, "all">;
   content: string;
   tags: string;
   url: string;

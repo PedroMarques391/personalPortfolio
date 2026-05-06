@@ -46,10 +46,7 @@ const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
-            <NavItems
-              onClick={() => setIsOpen(false)}
-              href={{ pathname: "/projects", query: { page: 1 } }}
-            >
+            <NavItems onClick={() => setIsOpen(false)} href="/projects">
               Projetos
             </NavItems>
           </motion.div>

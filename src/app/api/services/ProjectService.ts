@@ -2,6 +2,7 @@ import {
   IProject,
   IProjectRepository,
   TProjectRow,
+  TProjectType,
 } from "@/model/ProjectModel";
 
 class ProjectService {
@@ -9,8 +10,9 @@ class ProjectService {
 
   async getProjects(
     page: number = 1,
+    type: TProjectType = "all",
   ): Promise<{ rows: TProjectRow[]; total: number }> {
-    return this.projectRepository.getProjects(page);
+    return this.projectRepository.getProjects(page, type);
   }
 
   async getProjectsByUserId(userId: string): Promise<TProjectRow[]> {

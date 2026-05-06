@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import ProjectCard from "@/components/ui/ProjectCard";
 import ProjectsNotFound from "@/components/ui/ProjectsNotFound";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { TProjectType } from "@/model/ProjectModel";
 import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
 import { buttonsValues } from "@/utils";
@@ -11,7 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 
 export interface IProjectInterface {
@@ -32,35 +33,26 @@ const ProjectsPage = (): React.JSX.Element => {
   const pathname = usePathname();
   const currentPage = Number(searchParams.get("page")) || 1;
   const rawViewMode = searchParams.get("view") as ViewMode;
+  const rawFilter = searchParams.get("type") as TProjectType;
+  const filter = !["all", "web", "mobile", "api", "automações"].includes(
+    rawFilter?.toLowerCase(),
+  )
+    ? "all"
+    : (rawFilter as TProjectType);
   const view: ViewMode =
     rawViewMode === "grid" || rawViewMode === "list" ? rawViewMode : "grid";
   const [activeButton, setActiveButton] = useState<number>(0);
-  const [filter, setFilter] = useState<string>("Todos");
   const queryClient = useQueryClient();
 
-  const { data, isLoading: loading } = useProjects("all", currentPage);
+  const { data, isLoading: loading } = useProjects("all", currentPage, filter);
 
   const projects = data?.projects || [];
   const total = data?.total || 1;
   const totalPages = Math.ceil(total / 8);
 
-  const filteredProjects = useMemo(() => {
-    if (filter === "Todos") return projects;
-    const filterProjects = projects.filter(
-      (project: IProjectInterface) =>
-        project.type.toLowerCase() === filter.toLowerCase(),
-    );
-    return filterProjects;
-  }, [projects, filter]);
-
-  const handleFilter = (rule: string, index: number) => {
-    setActiveButton(index);
-    setFilter(rule);
-  };
-
   useEffect(() => {
     const nextPage = currentPage + 1;
-    const nextQuery = ["projects", "all", nextPage];
+    const nextQuery = ["projects", "all", nextPage, filter];
 
     if (nextPage > totalPages) return;
 
@@ -70,16 +62,24 @@ const ProjectsPage = (): React.JSX.Element => {
       staleTime: 1000 * 60 * 5,
       queryFn: async () => {
         return await Requests.getProject(
-          `/api/project?role=all&page=${nextPage}`,
+          `/api/project?role=all&page=${nextPage}&type=${filter}`,
         );
       },
     });
-  }, [currentPage, queryClient, totalPages]);
+  }, [currentPage, queryClient, totalPages, filter]);
 
   const toggleView = () => {
     const nextView = view === "grid" ? "list" : "grid";
     const params = new URLSearchParams(searchParams.toString());
     params.set("view", nextView);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  const handleFilter = (rule: string, index: number) => {
+    setActiveButton(index);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("type", rule === "Todos" ? "all" : rule.toLowerCase());
+    params.set("page", "1");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -115,7 +115,7 @@ const ProjectsPage = (): React.JSX.Element => {
                 about={`pagination-link-${index + 1}`}
                 href={{
                   pathname: "/projects",
-                  query: { page: index + 1, view },
+                  query: { page: index + 1, type: filter, view },
                 }}
                 key={index}
                 className={`bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl ${
@@ -125,7 +125,6 @@ const ProjectsPage = (): React.JSX.Element => {
                 }`}
                 onClick={(e) => {
                   e.currentTarget.blur();
-                  setFilter("Todos");
                   setActiveButton(0);
                 }}
               >
@@ -134,12 +133,14 @@ const ProjectsPage = (): React.JSX.Element => {
             ))
           ) : (
             <Link
-              href={{ pathname: "/projects", query: { page: 1, view } }}
+              href={{
+                pathname: "/projects",
+                query: { page: 1, type: filter, view },
+              }}
               className={
                 "bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl"
               }
               onClick={() => {
-                setFilter("Todos");
                 setActiveButton(0);
               }}
             >
@@ -169,7 +170,7 @@ const ProjectsPage = (): React.JSX.Element => {
           </AnimatePresence>
         ) : (
           <>
-            {filteredProjects.map((project: IProjectInterface) => (
+            {projects.map((project: IProjectInterface) => (
               <ProjectCard
                 key={project.id}
                 id={project.id}
@@ -185,10 +186,7 @@ const ProjectsPage = (): React.JSX.Element => {
             ))}
           </>
         )}
-        {!loading &&
-          (projects.length === 0 || filteredProjects.length === 0) && (
-            <ProjectsNotFound />
-          )}
+        {!loading && projects.length === 0 && <ProjectsNotFound />}
       </div>
     </div>
   );
