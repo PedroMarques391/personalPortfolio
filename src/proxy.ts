@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AuthTokenService } from "./app/api/services/AuthTokenService";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   try {
     await AuthTokenService.verifyToken(req);
     return NextResponse.next();
