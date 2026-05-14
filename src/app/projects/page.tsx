@@ -147,7 +147,7 @@ const ProjectsPage = (): React.JSX.Element => {
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
       <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
-      <div className="flex flex-wrap justify-center gap-5 mt-10 w-[90%] mx-auto ">
+      <div className="flex flex-wrap justify-center gap-3 md:gap-5 mt-10 w-[90%] mx-auto">
         {validFilters.map((filter, index) => (
           <Button
             key={index}
@@ -168,8 +168,8 @@ const ProjectsPage = (): React.JSX.Element => {
         ))}
       </div>
 
-      <div className="my-6 p-5 space-x-2 w-full flex justify-around items-center">
-        <div className="space-x-2">
+      <div className="my-6 w-[90%] mx-auto grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
+        <div className="flex justify-start space-x-2 order-2 md:order-1 col-span-1">
           {total > 0 ? (
             [...Array(totalPages)].map((_, index) => (
               <Link
@@ -186,10 +186,10 @@ const ProjectsPage = (): React.JSX.Element => {
                   },
                 }}
                 key={index}
-                className={`bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl ${
+                className={`bg-gray-light flex items-center justify-center h-10 px-4 rounded-xl text-sm md:text-xl transition-colors ${
                   currentPage === index + 1
-                    ? " border-2 border-orange-500 text-orange-500"
-                    : ""
+                    ? "border-2 border-orange-500 text-orange-500"
+                    : " hover:text-orange-500"
                 }`}
                 onClick={(e) => {
                   e.currentTarget.blur();
@@ -210,9 +210,7 @@ const ProjectsPage = (): React.JSX.Element => {
                   ...(rawSearch && { search: rawSearch }),
                 },
               }}
-              className={
-                "bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl"
-              }
+              className="bg-gray-light flex items-center justify-center h-10 px-4 rounded-xl text-sm md:text-xl transition-colors hover:bg-gray-200"
               onClick={() => {
                 setActiveButton(0);
               }}
@@ -222,33 +220,35 @@ const ProjectsPage = (): React.JSX.Element => {
           )}
         </div>
 
-        <div className="flex justify-center items-center space-x-2 bg-gray-light p-2 rounded-xl">
+        <div className="flex justify-center items-center bg-gray-light p-2 rounded-xl order-1 md:order-2 col-span-2 md:col-span-1 shadow-sm gap-1">
           <input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="h-9 rounded-l-lg border border-gray-400 focus:border-orange-600 active:border-orange-600  focus:outline-orange-600 focus:ring-0 focus:outline bg-transparent text-sm md:text-base w-64 px-3"
+            className="h-10 rounded-l-lg border border-gray-400 focus:border-orange-600 active:border-orange-600 focus:outline-orange-600 focus:ring-0 focus:outline bg-transparent text-sm md:text-base w-full px-3"
             type="text"
-            placeholder="projeto"
+            placeholder="Buscar projeto..."
           />
           <button
             disabled={!searchTerm.trim()}
             type="button"
-            className={`h-10 w-10 bg-orange-600 rounded-r-lg flex justify-center items-center transition-opacity duration-300 ${!searchTerm.trim() ? "opacity-50 cursor-not-allowed" : "hover:bg-orange-700"}`}
+            className={`h-10 w-12 bg-orange-600 rounded-r-lg flex justify-center items-center transition-opacity duration-300 ${!searchTerm.trim() ? "opacity-50 cursor-not-allowed" : "hover:bg-orange-700"}`}
             onClick={handleSearch}
           >
             <CgSearch size={20} color="#FFF" />
           </button>
         </div>
 
-        <button
-          onClick={toggleView}
-          className={`bg-gray-light py-2 px-4 rounded-xl  `}
-          aria-label="Toggle view"
-          title={`Visualização em ${view === "grid" ? "lista" : "grade"}`}
-        >
-          {view === "grid" ? <CiGrid2H size={24} /> : <CiGrid41 size={24} />}
-        </button>
+        <div className="flex justify-end order-3 md:order-3 col-span-1">
+          <button
+            onClick={toggleView}
+            className="bg-gray-light h-10 px-4 rounded-xl flex items-center justify-center transition-colors hover:bg-gray-200 shadow-sm"
+            aria-label="Toggle view"
+            title={`Visualização em ${view === "grid" ? "lista" : "grade"}`}
+          >
+            {view === "grid" ? <CiGrid2H size={24} /> : <CiGrid41 size={24} />}
+          </button>
+        </div>
       </div>
 
       <div
