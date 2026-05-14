@@ -6,6 +6,7 @@ export interface IProjectRepository {
   getProjects(
     page: number,
     type: TProjectType,
+    searchTerm: string,
   ): Promise<{ rows: TProjectRow[]; total: number }>;
   getProjectsByUserId(userId: string): Promise<TProjectRow[]>;
   addProject(data: IProject): Promise<ResultSetHeader>;

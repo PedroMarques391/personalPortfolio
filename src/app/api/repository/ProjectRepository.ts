@@ -11,12 +11,21 @@ class ProjectRepository implements IProjectRepository {
   async getProjects(
     page: number,
     type: TProjectType,
+    searchTerm: string,
   ): Promise<{ rows: TProjectRow[]; total: number }> {
     const offset = (page - 1) * 8;
-    const query = `SELECT *, COUNT(*) OVER() AS total FROM projects WHERE (? = 'all' OR type = ?) ORDER BY title ASC 
+    const query = `SELECT *, COUNT(*) OVER() AS total FROM projects 
+    WHERE (? = 'all' OR type = ?) 
+      AND (title LIKE ? OR content LIKE ?) 
+    ORDER BY title ASC 
     LIMIT 8 OFFSET ${offset}`;
 
-    const [rows] = await MySQL.execute<TProjectRow[]>(query, [type, type]);
+    const [rows] = await MySQL.execute<TProjectRow[]>(query, [
+      type,
+      type,
+      `%${searchTerm.toLowerCase()}%`,
+      `%${searchTerm.toLowerCase()}%`,
+    ]);
     const total = rows.length > 0 ? (rows[0].total ?? 0) : 0;
 
     return { rows, total };

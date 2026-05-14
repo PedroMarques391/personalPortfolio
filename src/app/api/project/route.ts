@@ -12,13 +12,20 @@ export async function GET(req: NextRequest) {
     let page = Number(searchParams.get("page")) || 1;
     if (page < 1) page = 1;
     const rawType = searchParams.get("type");
+    const rawSearch = searchParams.get("search");
+
     const type = (rawType ? rawType.toLowerCase() : "all") as TProjectType;
+    const search = rawSearch ? rawSearch.trim() : "";
 
     const projectRepository = new ProjectRepository();
     const projectService = new ProjectService(projectRepository);
 
     if (!role || role === "all") {
-      const { rows, total } = await projectService.getProjects(page, type);
+      const { rows, total } = await projectService.getProjects(
+        page,
+        type,
+        search,
+      );
 
       return NextResponse.json(
         { success: true, projects: rows, total },

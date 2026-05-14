@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import ProjectCard from "@/components/ui/ProjectCard";
 import ProjectsNotFound from "@/components/ui/ProjectsNotFound";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { useDebounce } from "@/hooks/useDebounce";
 import { TProjectType } from "@/model/ProjectModel";
 import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
@@ -12,6 +13,7 @@ import { AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CgSearch } from "react-icons/cg";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 
 export interface IProjectInterface {
@@ -35,6 +37,7 @@ const ProjectsPage = (): React.JSX.Element => {
   const currentPage = Number(searchParams.get("page")) || 1;
   const rawViewMode = searchParams.get("view") as ViewMode;
   const rawFilter = searchParams.get("type") as TProjectType;
+  const rawSearch = searchParams.get("search") || "";
   const filter = !validFilters.includes(rawFilter?.toLowerCase())
     ? "all"
     : (rawFilter as TProjectType);
@@ -43,7 +46,31 @@ const ProjectsPage = (): React.JSX.Element => {
   const [activeButton, setActiveButton] = useState<number>(0);
   const queryClient = useQueryClient();
 
-  const { data, isLoading: loading } = useProjects("all", currentPage, filter);
+  const [searchTerm, setSearchTerm] = useState(rawSearch);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const { data, isLoading: loading } = useProjects(
+    "all",
+    currentPage,
+    filter,
+    debouncedSearchTerm,
+  );
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    const currentSearch = params.get("search") || "";
+
+    if (debouncedSearchTerm === currentSearch) return;
+
+    if (debouncedSearchTerm.trim()) {
+      params.set("search", debouncedSearchTerm.trim());
+    } else {
+      params.delete("search");
+    }
+
+    params.set("page", "1");
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [debouncedSearchTerm, pathname, router, searchParams]);
 
   const projects = data?.projects || [];
   const total = data?.total || 1;
@@ -76,9 +103,11 @@ const ProjectsPage = (): React.JSX.Element => {
 
   const handleFilter = (rule: string, index: number) => {
     setActiveButton(index);
+    setSearchTerm("");
     const params = new URLSearchParams(searchParams.toString());
     params.set("type", rule.toLowerCase());
     params.set("page", "1");
+    params.delete("search");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -98,6 +127,22 @@ const ProjectsPage = (): React.JSX.Element => {
       });
     }
   };
+
+  function handleSearch() {
+    const params = new URLSearchParams(searchParams.toString());
+    const currentSearch = params.get("search") || "";
+
+    if (debouncedSearchTerm === currentSearch) return;
+
+    if (debouncedSearchTerm.trim()) {
+      params.set("search", debouncedSearchTerm.trim());
+    } else {
+      params.delete("search");
+    }
+    params.set("page", "1");
+
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
@@ -133,7 +178,12 @@ const ProjectsPage = (): React.JSX.Element => {
                 about={`pagination-link-${index + 1}`}
                 href={{
                   pathname: "/projects",
-                  query: { page: index + 1, type: filter, view },
+                  query: {
+                    page: index + 1,
+                    type: filter,
+                    view,
+                    ...(rawSearch && { search: rawSearch }),
+                  },
                 }}
                 key={index}
                 className={`bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl ${
@@ -153,7 +203,12 @@ const ProjectsPage = (): React.JSX.Element => {
             <Link
               href={{
                 pathname: "/projects",
-                query: { page: 1, type: filter, view },
+                query: {
+                  page: 1,
+                  type: filter,
+                  view,
+                  ...(rawSearch && { search: rawSearch }),
+                },
               }}
               className={
                 "bg-gray-light py-2 px-4 rounded-xl text-sm md:text-xl"
@@ -165,6 +220,25 @@ const ProjectsPage = (): React.JSX.Element => {
               {loading ? "..." : "1"}
             </Link>
           )}
+        </div>
+
+        <div className="flex justify-center items-center space-x-2 bg-gray-light p-2 rounded-xl">
+          <input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="h-9 rounded-l-lg border border-gray-400 focus:border-orange-600 active:border-orange-600  focus:outline-orange-600 focus:ring-0 focus:outline bg-transparent text-sm md:text-base w-64 px-3"
+            type="text"
+            placeholder="projeto"
+          />
+          <button
+            disabled={!searchTerm.trim()}
+            type="button"
+            className={`h-10 w-10 bg-orange-600 rounded-r-lg flex justify-center items-center transition-opacity duration-300 ${!searchTerm.trim() ? "opacity-50 cursor-not-allowed" : "hover:bg-orange-700"}`}
+            onClick={handleSearch}
+          >
+            <CgSearch size={20} color="#FFF" />
+          </button>
         </div>
 
         <button

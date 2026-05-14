@@ -11,8 +11,9 @@ class ProjectService {
   async getProjects(
     page: number = 1,
     type: TProjectType = "all",
+    searchTerm: string = "",
   ): Promise<{ rows: TProjectRow[]; total: number }> {
-    return this.projectRepository.getProjects(page, type);
+    return this.projectRepository.getProjects(page, type, searchTerm);
   }
 
   async getProjectsByUserId(userId: string): Promise<TProjectRow[]> {
