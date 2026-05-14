@@ -64,6 +64,8 @@ const ProjectsPage = (): React.JSX.Element => {
 
     if (debouncedSearchTerm.trim()) {
       params.set("search", debouncedSearchTerm.trim());
+      params.set("type", "all");
+      setActiveButton(0);
     } else {
       params.delete("search");
     }
