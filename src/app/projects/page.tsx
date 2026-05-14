@@ -105,9 +105,9 @@ const ProjectsPage = (): React.JSX.Element => {
     setActiveButton(index);
     setSearchTerm("");
     const params = new URLSearchParams(searchParams.toString());
-    params.set("type", rule.toLowerCase());
-    params.set("page", "1");
     params.delete("search");
+    params.set("page", "1");
+    params.set("type", rule.toLowerCase());
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
