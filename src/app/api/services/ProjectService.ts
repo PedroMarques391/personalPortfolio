@@ -1,9 +1,11 @@
 import {
+  GetProjectsResponse,
   IProject,
   IProjectRepository,
   TProjectRow,
   TProjectType,
 } from "@/model/ProjectModel";
+import CacheService from "./CacheService";
 
 class ProjectService {
   constructor(private readonly projectRepository: IProjectRepository) {}
@@ -12,8 +14,22 @@ class ProjectService {
     page: number = 1,
     type: TProjectType = "all",
     searchTerm: string = "",
-  ): Promise<{ rows: TProjectRow[]; total: number }> {
-    return this.projectRepository.getProjects(page, type, searchTerm);
+  ): Promise<GetProjectsResponse> {
+    const cacheKey = `projects:${page}:${type}:${searchTerm}`;
+    const cachedData =
+      await CacheService.getCache<GetProjectsResponse>(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+
+    const projects = await this.projectRepository.getProjects(
+      page,
+      type,
+      searchTerm,
+    );
+    await CacheService.setCache(cacheKey, projects, 3600);
+
+    return projects;
   }
 
   async getProjectsByUserId(userId: string): Promise<TProjectRow[]> {
@@ -33,6 +49,7 @@ class ProjectService {
       throw new Error("Project data is required");
     }
     const project = await this.projectRepository.addProject(data);
+    await CacheService.invalidateCache("projects:*");
     return `Project added successfully with id ${project.insertId}.`;
   }
 
@@ -46,6 +63,7 @@ class ProjectService {
       throw new Error(`Project with id ${id} not exists.`);
     }
 
+    await CacheService.invalidateCache("projects:*");
     return `Project with id ${id} deleted successfully.`;
   }
 }
