@@ -209,7 +209,7 @@ const Chat = ({
             <button
               key={suggestion}
               onClick={() => sendMessage({ text: suggestion })}
-              className="px-4 py-2 bg-gray-light text-gray-soft text-sm rounded-xl hover:bg-gray-dark transition-colors"
+              className="px-4 py-2 bg-gray-light text-gray-soft text-sm rounded-xl hover:text-orange-400 transition-colors border-2 border-transparent hover:border-orange-500 duration-300"
             >
               {suggestion}
             </button>
@@ -225,7 +225,7 @@ const Chat = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Digite sua mensagem..."
-            className="flex-1 bg-gray-light text-gray-soft text-sm rounded-xl px-4 py-2.5 placeholder:text-gray-dark/50 focus:outline-none focus:ring-1 focus:ring-orange-500/30 border border-white/5 transition-all disabled:opacity-50"
+            className="flex-1 bg-gray-light text-gray-soft text-sm rounded-xl px-4 py-2.5 placeholder:text-gray-dark/50 focus:outline-none outline-none focus:ring-1 focus:ring-orange-500/30 border border-white/5 transition-all disabled:opacity-50"
           />
           <Modal.ActionButton
             type="submit"

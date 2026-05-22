@@ -244,7 +244,7 @@ const ProjectsPage = (): React.JSX.Element => {
         <div className="flex justify-end order-3 md:order-3 col-span-1">
           <button
             onClick={toggleView}
-            className="bg-gray-light h-10 px-4 rounded-xl flex items-center justify-center transition-colors hover:bg-gray-200 shadow-sm"
+            className="bg-gray-light h-10 px-4 rounded-xl flex items-center justify-center transition-colors hover:text-orange-500 shadow-sm border-2 border-transparent hover:border-orange-500 duration-300"
             aria-label="Toggle view"
             title={`Visualização em ${view === "grid" ? "lista" : "grade"}`}
           >
