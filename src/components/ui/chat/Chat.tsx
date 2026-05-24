@@ -30,7 +30,7 @@ const Chat = ({
   const suggestions: string[] = [
     "Olá!",
     "Quais os principais projetos?",
-    "Quem é Ada?",
+    "Quem é Você?",
     "O que você consegue fazer por aqui?",
   ];
 
