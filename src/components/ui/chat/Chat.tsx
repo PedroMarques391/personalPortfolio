@@ -34,12 +34,39 @@ const Chat = ({
     "O que você consegue fazer por aqui?",
   ];
 
-  const { messages, sendMessage } = useChat({
+  const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
     }),
-    onError: (e) => {
-      console.error(e);
+    onError: (e: any) => {
+      let errorMessage =
+        "Desculpe, ocorreu um erro inesperado. Tente novamente mais tarde.";
+
+      if (
+        e.message?.includes("credits") ||
+        e.message?.includes("tokens") ||
+        e.status === 402
+      ) {
+        errorMessage =
+          "⚠️ O limite de créditos temporários do portfólio foi atingido. Pedro já foi notificado para recarregar!";
+      }
+
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        {
+          id: `error-${Date.now()}`,
+          role: "assistant",
+
+          content: errorMessage,
+          parts: [
+            {
+              type: "text",
+              text: errorMessage,
+            },
+          ],
+          createdAt: new Date(),
+        },
+      ]);
     },
   });
 
