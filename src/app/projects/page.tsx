@@ -80,7 +80,7 @@ const ProjectsPage = (): React.JSX.Element => {
 
   useEffect(() => {
     const nextPage = currentPage + 1;
-    const nextQuery = ["projects", "all", nextPage, filter];
+    const nextQuery = ["projects", "all", nextPage, filter, ""];
 
     if (nextPage > totalPages) return;
 
@@ -90,7 +90,7 @@ const ProjectsPage = (): React.JSX.Element => {
       staleTime: 1000 * 60 * 5,
       queryFn: async () => {
         return await Requests.getProject(
-          `/api/project?role=all&page=${nextPage}&type=all`,
+          `/api/project?role=all&page=${nextPage}&type=${filter}`,
         );
       },
     });
@@ -115,7 +115,7 @@ const ProjectsPage = (): React.JSX.Element => {
 
   const prefetchFilter = (filterType: string) => {
     const type = filterType === "Todos" ? "all" : filterType.toLowerCase();
-    const queryKey = ["projects", "all", 1, type];
+    const queryKey = ["projects", "all", 1, type, ""];
 
     if (!queryClient.getQueryData(queryKey)) {
       queryClient.prefetchQuery({
