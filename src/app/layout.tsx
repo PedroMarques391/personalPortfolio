@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { NextIntlClientProvider } from "next-intl";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -27,7 +28,8 @@ export const metadata: Metadata = {
   creator: "Pedro Marques",
   openGraph: {
     title: "Pedro Marques | Desenvolvedor Fullstack",
-    description: "Conheça meu trabalho como Desenvolvedor Fullstack, construindo soluções modernas e eficientes.",
+    description:
+      "Conheça meu trabalho como Desenvolvedor Fullstack, construindo soluções modernas e eficientes.",
     url: "https://pedromarques.dev.br",
     siteName: "Pedro Marques Portfolio",
     locale: "pt_BR",
@@ -51,7 +53,9 @@ export default function RootLayout({
           }}
         />
         <ChatModalProvider>
-          <Main>{children}</Main>
+          <NextIntlClientProvider>
+            <Main>{children}</Main>
+          </NextIntlClientProvider>
         </ChatModalProvider>
         <Analytics />
       </body>

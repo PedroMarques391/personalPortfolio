@@ -12,6 +12,7 @@ import { skills } from "@/utils";
 import Handler from "@/utils/handler";
 import { usePrefetchQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -29,6 +30,7 @@ import { TbWorldWww } from "react-icons/tb";
 export default function Home() {
   const stacks: string[] = ["FullStack", "Mobile"];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const t = useTranslations("HomePage");
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -61,9 +63,9 @@ export default function Home() {
               className="text-lg sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap"
               aria-hidden="true"
             >
-              Olá, meu nome é{" "}
+              {t("title")}
               <Typewriter
-                writing="Pedro Marques"
+                writing="Pedro"
                 hiddenCursor
                 color="text-orange-500"
               />
