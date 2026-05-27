@@ -1,3 +1,4 @@
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import React from "react";
 import { NavItems } from "./NavItems";
 
@@ -8,6 +9,7 @@ const Desktop = (): React.JSX.Element => {
       <NavItems href="/projects">Projetos</NavItems>
       <NavItems href="/about">Sobre Mim</NavItems>
       <NavItems href="/contact">Contato</NavItems>
+      <LanguageToggle />
     </ul>
   );
 };

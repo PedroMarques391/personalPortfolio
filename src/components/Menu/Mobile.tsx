@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { LanguageToggle } from "../ui/LanguageToggle";
 import { NavItems } from "./NavItems";
 
 interface IMobileProps {
@@ -40,6 +41,7 @@ const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
           animate="visible"
           exit="hidden"
         >
+          <LanguageToggle />
           <motion.div variants={variants}>
             <NavItems onClick={() => setIsOpen(false)} href="/">
               Home
