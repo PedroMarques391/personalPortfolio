@@ -15,6 +15,7 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { BsTwitterX } from "react-icons/bs";
 import { FaGithub, FaRobot } from "react-icons/fa";
@@ -34,6 +35,8 @@ export default function Home() {
   const svc = useTranslations("sections.services");
 
   const ref = useRef<HTMLDivElement>(null);
+
+  const { locale } = useParams();
 
   usePrefetchQuery({
     queryKey: ["projects", "all", 1, "all", ""],
@@ -57,9 +60,7 @@ export default function Home() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
         <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1 pt-0 md:pt-20">
           <div>
-            <h1 className="sr-only">
-              {t("srOnlyTitle")}
-            </h1>
+            <h1 className="sr-only">{t("srOnlyTitle")}</h1>
             <div
               className="text-lg sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap"
               aria-hidden="true"
@@ -88,7 +89,9 @@ export default function Home() {
             className="opacity-0 text-justify text-lg leading-relaxed break-words w-full lg:w-4/5"
           >
             {t.rich("heroDescription", {
-              highlight: (chunks) => <span className="text-orange-500">{chunks}</span>,
+              highlight: (chunks) => (
+                <span className="text-orange-500">{chunks}</span>
+              ),
             })}
           </motion.p>
           <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5 flex-wrap">
@@ -231,7 +234,9 @@ export default function Home() {
             title={svc("webDevTitle")}
           >
             {svc.rich("webDevDescription", {
-              code: (chunks) => <code className="text-orange-500">{chunks}</code>,
+              code: (chunks) => (
+                <code className="text-orange-500">{chunks}</code>
+              ),
             })}
           </ServicesCards>
 
@@ -240,19 +245,23 @@ export default function Home() {
             title={svc("mobileDevTitle")}
           >
             {svc.rich("mobileDevDescription", {
-              highlight: (chunks) => <span className="text-orange-500">{chunks}</span>,
+              highlight: (chunks) => (
+                <span className="text-orange-500">{chunks}</span>
+              ),
             })}
           </ServicesCards>
 
           <ServicesCards icon={<FaRobot size={50} />} title={svc("botsTitle")}>
             {svc.rich("botsDescription", {
-              highlight: (chunks) => <span className="text-orange-500">{chunks}</span>,
+              highlight: (chunks) => (
+                <span className="text-orange-500">{chunks}</span>
+              ),
             })}
           </ServicesCards>
         </div>
         <Link
           className="my-10 mx-auto flex flex-row justify-center items-center w-fitp-4 gap-4 group"
-          href={"/projects"}
+          href={`/${locale}/projects`}
         >
           <h1 className="text-gray-soft tracking-wider text-xl font-semibold group-hover:text-orange-500 duration-1000 transition-colors">
             {t("seeMyProjects")}
