@@ -1,14 +1,15 @@
 import Main from "@/components/Layout/Main";
 import { ChatModalProvider } from "@/contexts/ChatModalContext";
 import { routing } from "@/i18n/routing";
-import { jsonLD } from "@/utils/scheme";
+import { generateJsonLD } from "@/utils/scheme";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
 import { Roboto } from "next/font/google";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 import "./globals.css";
-import NotFound from "./not-found";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -17,27 +18,39 @@ const roboto = Roboto({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | Pedro Marques",
-    default: "Pedro Marques | Desenvolvedor Fullstack",
-  },
-  description:
-    "Portfólio Web de Pedro Marques, Desenvolvedor Fullstack e Mobile especializado em aplicações modernas, responsivas e de alta performance.",
-  robots: "index, follow",
-  keywords:
-    "Pedro Marques, Desenvolvedor Fullstack, Web Developer, portfólio web, React, Next.js, Node.js, TypeScript, Mobile",
-  creator: "Pedro Marques",
-  openGraph: {
-    title: "Pedro Marques | Desenvolvedor Fullstack",
-    description:
-      "Conheça meu trabalho como Desenvolvedor Fullstack, construindo soluções modernas e eficientes.",
-    url: "https://pedromarques.dev.br",
-    siteName: "Pedro Marques Portfolio",
-    locale: "pt_BR",
-    type: "website",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata.root" });
+
+  return {
+    title: {
+      template: t("titleTemplate"),
+      default: t("title"),
+    },
+    description: t("description"),
+    robots: "index, follow",
+    keywords: t("keywords"),
+    creator: "Pedro Marques",
+    openGraph: {
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      url: "https://pedromarques.dev.br",
+      siteName: "Pedro Marques Portfolio",
+      locale: locale === "pt" ? "pt_BR" : "en_US",
+      type: "website",
+    },
+    alternates: {
+      languages: {
+        pt: "/pt",
+        en: "/en",
+      },
+    },
+  };
+}
 
 type Props = {
   children: React.ReactNode;
@@ -47,21 +60,26 @@ type Props = {
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
-    return <NotFound />;
+    notFound();
   }
 
+  const tSeo = await getTranslations({ locale, namespace: "seo.jsonLd" });
+  const schema = generateJsonLD(tSeo);
+
+  const messages = await getMessages();
+
   return (
-    <html lang="pt-br">
+    <html lang={locale}>
       <body className={`${roboto.className} antialiased`}>
         <Script
           id="faq-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLD),
+            __html: JSON.stringify(schema),
           }}
         />
         <ChatModalProvider>
-          <NextIntlClientProvider>
+          <NextIntlClientProvider messages={messages} locale={locale}>
             <Main>{children}</Main>
           </NextIntlClientProvider>
         </ChatModalProvider>

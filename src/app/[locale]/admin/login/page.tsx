@@ -1,20 +1,25 @@
 "use client";
 import { Input } from "@/components/ui/Input";
 import useAuth from "@/hooks/useAuth";
-import { AuthData, authScheme } from "@/validations/auth.scheme";
+import { AuthData, createAuthScheme } from "@/validations/auth.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 const Page = (): React.JSX.Element => {
   const { loading, error, handleLogin, logout } = useAuth();
+  const t = useTranslations("admin.login");
+  const validationT = useTranslations("validations.auth");
+
+  const schema = useMemo(() => createAuthScheme(validationT), [validationT]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AuthData>({
-    resolver: zodResolver(authScheme),
+    resolver: zodResolver(schema),
   });
 
   useEffect(() => {
@@ -24,7 +29,7 @@ const Page = (): React.JSX.Element => {
   return (
     <section className="w-full h-auto max-w-xl bg-gray-light  rounded-2xl  p-8 mx-auto my-20 text-gray-soft">
       <h1 className="text-2xl font-semibold text-center mb-8">
-        Painel de Acesso
+        {t("title")}
       </h1>
 
       <form
@@ -35,14 +40,14 @@ const Page = (): React.JSX.Element => {
           duration={0.5}
           {...register("email")}
           error={errors.email?.message}
-          label="Email"
+          label={t("emailLabel")}
         />
 
         <Input
           duration={0.5}
           {...register("password")}
           error={errors.password?.message}
-          label="Senha"
+          label={t("passwordLabel")}
         />
 
         {error && <p className="text-red-500">{error}</p>}
@@ -52,7 +57,7 @@ const Page = (): React.JSX.Element => {
           type="submit"
           className="mt-3 bg-orange-500 hover:bg-orange-600 text-black font-medium rounded-xl transition p-2 w-full md:w-[70%] tracking-widest disabled:bg-orange-500/80 disabled:cursor-not-allowed"
         >
-          {loading ? "Acessando..." : "Acessar"}
+          {loading ? t("submitting") : t("submit")}
         </button>
       </form>
     </section>

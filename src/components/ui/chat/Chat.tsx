@@ -1,6 +1,7 @@
 import { getTimeForMessage } from "@/utils/time";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -26,29 +27,32 @@ const Chat = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isCentered, setIsCentered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const t = useTranslations("components.chat");
+  const locale = useLocale();
 
   const suggestions: string[] = [
-    "Olá!",
-    "Quais os principais projetos?",
-    "Quem é Você?",
-    "O que você consegue fazer por aqui?",
+    t("suggestion1"),
+    t("suggestion2"),
+    t("suggestion3"),
+    t("suggestion4"),
   ];
 
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
+      headers: {
+        "x-locale": locale,
+      },
     }),
     onError: (e: any) => {
-      let errorMessage =
-        "Desculpe, ocorreu um erro inesperado. Tente novamente mais tarde.";
+      let errorMessage = t("genericError");
 
       if (
         e.message?.includes("credits") ||
         e.message?.includes("tokens") ||
         e.status === 402
       ) {
-        errorMessage =
-          "⚠️ O limite de créditos temporários do portfólio foi atingido. Pedro já foi notificado para recarregar!";
+        errorMessage = t("creditsError");
       }
 
       setMessages((currentMessages) => [
@@ -99,17 +103,17 @@ const Chat = ({
     >
       <Modal.Header>
         <div className="flex items-center gap-3">
-          <Modal.ImageIcon src={Ada} alt="Avatar da Ada" />
+          <Modal.ImageIcon src={Ada} alt={t("avatarAlt")} />
           <div>
             <Modal.Title>Ada</Modal.Title>
-            <Modal.Subtitle>Online</Modal.Subtitle>
+            <Modal.Subtitle>{t("onlineStatus")}</Modal.Subtitle>
           </div>
         </div>
         <div className="flex items-center gap-1 sm:gap-2">
           <Modal.ActionButton
-            aria-label="Centralizar"
+            aria-label={t("centerLabel")}
             aria-roledescription="button"
-            title="Centralizar"
+            title={t("centerLabel")}
             onClick={handleCenterModal}
           >
             <BsArrowsMove
@@ -118,9 +122,9 @@ const Chat = ({
             />
           </Modal.ActionButton>
           <Modal.ActionButton
-            aria-label="Expandir"
+            aria-label={t("expandLabel")}
             aria-roledescription="button"
-            title="Expandir"
+            title={t("expandLabel")}
             onClick={handleExpandModal}
           >
             <BsArrowsAngleExpand
@@ -129,9 +133,9 @@ const Chat = ({
             />
           </Modal.ActionButton>
           <Modal.ActionButton
-            aria-label="Fechar"
+            aria-label={t("closeLabel")}
             aria-roledescription="button"
-            title="Fechar"
+            title={t("closeLabel")}
             onClick={handleCloseModal}
           >
             <GrClose size={16} className="text-gray-dark" />
@@ -140,7 +144,7 @@ const Chat = ({
       </Modal.Header>
 
       <Modal.Content>
-        <p className=" text-gray-dark text-center">Hoje</p>
+        <p className=" text-gray-dark text-center">{t("todayLabel")}</p>
 
         {messages.map((message) => (
           <div
@@ -189,7 +193,7 @@ const Chat = ({
                       };
                       const messageText = result
                         ? `${result.lastProjecs}`
-                        : "Buscando projetos...";
+                        : t("fetchingProjects");
                       return (
                         <ChatBubble
                           key={`${message.id}-${i}`}
@@ -251,13 +255,13 @@ const Chat = ({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Digite sua mensagem..."
+            placeholder={t("inputPlaceholder")}
             className="flex-1 bg-gray-light text-gray-soft text-sm rounded-xl px-4 py-2.5 placeholder:text-gray-dark/50 focus:outline-none outline-none focus:ring-1 focus:ring-orange-500/30 border border-white/5 transition-all disabled:opacity-50"
           />
           <Modal.ActionButton
             type="submit"
             className="bg-orange-500 hover:bg-orange-400 text-black p-2.5 rounded-xl transition-colors flex-shrink-0 disabled:opacity-50 disabled:hover:bg-orange-500"
-            aria-label="Enviar mensagem"
+            aria-label={t("sendAriaLabel")}
             disabled={!input.trim()}
           >
             <BsSendArrowUp size={16} />

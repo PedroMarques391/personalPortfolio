@@ -1,4 +1,5 @@
 import useAuth from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
@@ -9,6 +10,7 @@ interface IAdminLayoutProps {
 const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("admin.layout");
 
   const { logout } = useAuth();
   async function handleLogout() {
@@ -28,7 +30,7 @@ const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
               pathname === "/admin/addProjects" ? "text-orange-500" : ""
             }
           >
-            Novo Projeto
+            {t("newProject")}
           </Link>
           <Link
             href="/admin/myProjects"
@@ -36,9 +38,9 @@ const AdminLayout = ({ children }: IAdminLayoutProps): React.JSX.Element => {
               pathname === "/admin/myProjects" ? "text-orange-500" : ""
             }
           >
-            Meus Projetos
+            {t("myProjects")}
           </Link>
-          <button onClick={handleLogout} title="sair" className="w-fit p-2">
+          <button onClick={handleLogout} title={t("logoutTitle")} className="w-fit p-2">
             <LuLogOut color="#fff" size={20} />
           </button>
         </li>

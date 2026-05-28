@@ -7,6 +7,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { useMutationProjects } from "@/services/projects/mutations";
 import { useProjects } from "@/services/projects/queries";
 import { AnimatePresence } from "motion/react";
+import { useTranslations } from "next-intl";
 
 export interface IProjectInterface {
   id: number;
@@ -21,12 +22,13 @@ export interface IProjectInterface {
 const ProjectsPage = (): React.JSX.Element => {
   const { deleteProject } = useMutationProjects();
   const { data, isLoading: loading } = useProjects("user-projects");
+  const t = useTranslations("admin.myProjects");
 
   const projects = data?.projects;
 
   return (
     <AdminLayout>
-      <SectionHeader title="Cadastros" subtitle="" />
+      <SectionHeader title={t("sectionTitle")} subtitle={t("sectionSubtitle")} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 mt-10 w-full">
         {loading ? (

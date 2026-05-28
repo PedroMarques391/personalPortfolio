@@ -8,9 +8,10 @@ import { Input } from "@/components/ui/Input";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Toast } from "@/components/ui/Toast/index";
 import { insertMaskInPhone } from "@/utils/phoneMask";
-import { ContactData, contactScheme } from "@/validations/contact.scheme";
+import { ContactData, createContactScheme } from "@/validations/contact.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 
@@ -22,9 +23,14 @@ export interface IMessageInterface {
 }
 
 const Contact = (): React.JSX.Element => {
+  const t = useTranslations("pages.contact");
+  const validationT = useTranslations("validations.contact");
   const [pending, setPending] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [message, setMessage] = useState({} as IMessageInterface);
+  
+  const schema = useMemo(() => createContactScheme(validationT), [validationT]);
+
   const {
     register,
     handleSubmit,
@@ -33,7 +39,7 @@ const Contact = (): React.JSX.Element => {
     setValue,
     clearErrors,
   } = useForm<ContactData>({
-    resolver: zodResolver(contactScheme),
+    resolver: zodResolver(schema),
   });
 
   function handleContact(data: ContactData) {
@@ -48,20 +54,18 @@ const Contact = (): React.JSX.Element => {
       .then(() => {
         setShowModal(true);
         setMessage({
-          title: "Mensagem Enviada com Sucesso!",
-          subtitle: "Obrigado por entrar em contato conosco.",
-          content:
-            "Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.",
+          title: t("successTitle"),
+          subtitle: t("successSubtitle"),
+          content: t("successContent"),
           success: true,
         });
       })
       .catch(() => {
         setShowModal(true);
         setMessage({
-          title: "Erro ao Enviar Mensagem",
-          subtitle: "Ocorreu um problema ao enviar sua mensagem.",
-          content:
-            "Tente novamente mais tarde ou entre em contato diretamente pelo instagram.",
+          title: t("errorTitle"),
+          subtitle: t("errorSubtitle"),
+          content: t("errorContent"),
           success: false,
         });
       })
@@ -101,8 +105,8 @@ const Contact = (): React.JSX.Element => {
       </Toast.Root>
 
       <SectionHeader
-        title="Entre em Contato"
-        subtitle="Gostou do que viu?"
+        title={t("sectionTitle")}
+        subtitle={t("sectionSubtitle")}
         styles="mt-40"
       />
 
@@ -120,27 +124,27 @@ const Contact = (): React.JSX.Element => {
               duration={0.5}
               {...register("name")}
               error={errors.name?.message}
-              label="Nome"
+              label={t("nameLabel")}
               className="mb-10"
             />
             <Input
               duration={1.0}
               {...register("email")}
               error={errors.email?.message}
-              label="Email"
+              label={t("emailLabel")}
             />
             <Input
               duration={1.5}
               {...register("phone")}
               error={errors.phone?.message}
-              label="Telefone"
+              label={t("phoneLabel")}
               maxLength={15}
               onChange={handleMask}
             />
             <Input.TextArea
               duration={2.0}
               {...register("message")}
-              label="Mensagem"
+              label={t("messageLabel")}
             />
 
             <Button
@@ -149,11 +153,11 @@ const Contact = (): React.JSX.Element => {
             >
               {pending ? (
                 <>
-                  Enviando
+                  {t("submittingText")}
                   <FaSpinner className="animate-spin mr-2" />
                 </>
               ) : (
-                "Enviar"
+                t("submitText")
               )}
             </Button>
           </form>

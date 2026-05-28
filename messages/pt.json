@@ -1,5 +1,223 @@
 {
-    "HomePage": {
-        "title": "Olá, meu nome é"
+  "metadata": {
+    "root": {
+      "title": "Pedro Marques | Desenvolvedor Fullstack",
+      "titleTemplate": "%s | Pedro Marques",
+      "description": "Portfólio Web de Pedro Marques, Desenvolvedor Fullstack e Mobile especializado em aplicações modernas, responsivas e de alta performance.",
+      "keywords": "Pedro Marques, Desenvolvedor Fullstack, Web Developer, portfólio web, React, Next.js, Node.js, TypeScript, Mobile",
+      "ogTitle": "Pedro Marques | Desenvolvedor Fullstack",
+      "ogDescription": "Conheça meu trabalho como Desenvolvedor Fullstack, construindo soluções modernas e eficientes."
+    },
+    "about": {
+      "title": "Sobre Mim",
+      "description": "Conheça mais sobre a trajetória de Pedro Marques, Desenvolvedor Fullstack e Mobile, suas habilidades e experiências profissionais."
+    },
+    "projects": {
+      "title": "Projetos",
+      "description": "Explore o portfólio de projetos desenvolvidos por Pedro Marques. Soluções Fullstack, Mobile e Automações."
+    },
+    "contact": {
+      "title": "Contato",
+      "description": "Entre em contato com Pedro Marques, Desenvolvedor Fullstack. Vamos conversar sobre tecnologia e construir soluções inovadoras."
     }
+  },
+  "pages": {
+    "home": {
+      "srOnlyTitle": "Pedro Marques - Desenvolvedor Fullstack e Mobile",
+      "title": "Olá, meu nome é",
+      "developerLabel": "Desenvolvedor",
+      "heroDescription": "Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações web <highlight>FullStack</highlight> enquanto também encaro de forma proativa os desafios do desenvolvimento de aplicativos <highlight>Mobile</highlight>.",
+      "contactAriaLabel": "Ir para a página de contato",
+      "contactButtonAriaLabel": "Entrar em Contato",
+      "contactButtonText": "Contato",
+      "downloadCvAriaLabel": "Baixar Currículo",
+      "downloadCvText": "CV",
+      "profileImageAlt": "Pedro Marques - Desenvolvedor Fullstack e Mobile",
+      "githubAriaLabel": "Perfil no GitHub",
+      "githubLinkAriaLabel": "Link para o GitHub",
+      "twitterAriaLabel": "Perfil no Twitter",
+      "twitterLinkAriaLabel": "Link para o X - Antigo Twitter",
+      "linkedinAriaLabel": "Perfil no LinkedIn",
+      "linkedinLinkAriaLabel": "Link para o LinkedIn",
+      "technologiesTitle": "Tecnologias",
+      "scrollToServicesAriaLabel": "Botão que leva até os cards de serviços.",
+      "seeMyProjects": "Veja Meus Projetos"
+    },
+    "about": {
+      "greeting": "Olá, me chamo Pedro Marques",
+      "bioParagraph1": "Sou um desenvolvedor Full-Stack apaixonado por criar soluções eficientes e inovadoras. Minha jornada profissional começou na área de Logística, formado pela Universidade Paulista (UNIP), onde desenvolvi uma forte capacidade analítica e de resolução de problemas. No entanto, foi na tecnologia que encontrei minha verdadeira vocação. Atualmente, estou cursando Análise e Desenvolvimento de Sistemas na UniCesumar, consolidando minha base teórica enquanto atuo ativamente no mercado.",
+      "bioParagraph2": "Tenho sólida experiência no desenvolvimento web e mobile, utilizando tecnologias como React, Next.js, React Native, TypeScript e TailwindCSS no Front-End, e Node.js (NestJS, Express, Fastify) no Back-End. Trabalho com bancos de dados relacionais e não relacionais, além de ferramentas modernas do ecossistema de desenvolvimento.",
+      "bioParagraph3": "Neste momento, meu foco principal está em aprofundar meus conhecimentos no Back-End e em arquitetura de software, estudando Java, mensageria e orquestração de containers com Docker e Kubernetes. Também tenho explorado ativamente o universo da Inteligência Artificial. Meu grande objetivo é construir projetos que gerem valor real para os usuários, mantendo-me em constante evolução técnica e profissional.",
+      "downloadCvText": "Download CV",
+      "profileImageAlt": "Perfil",
+      "technologiesTitle": "Tecnologias",
+      "techLanguages": "Linguagens",
+      "techFrontend": "Front-End",
+      "techBackend": "Back-End",
+      "techMobile": "Mobile",
+      "techDatabase": "Banco de Dados",
+      "techTools": "Ferramentas",
+      "techLibraries": "Bibliotecas & UI"
+    },
+    "projects": {
+      "title": "Projetos",
+      "subtitle": "Um pouco do meu trabalho",
+      "filterAll": "Todos",
+      "paginationTitle": "Página {page}",
+      "searchPlaceholder": "Buscar projeto...",
+      "toggleViewAriaLabel": "Alternar visualização",
+      "viewModeGrid": "Visualização em grade",
+      "viewModeList": "Visualização em lista"
+    },
+    "contact": {
+      "sectionTitle": "Entre em Contato",
+      "sectionSubtitle": "Gostou do que viu?",
+      "nameLabel": "Nome",
+      "emailLabel": "Email",
+      "phoneLabel": "Telefone",
+      "messageLabel": "Mensagem",
+      "submitText": "Enviar",
+      "submittingText": "Enviando",
+      "successTitle": "Mensagem Enviada com Sucesso!",
+      "successSubtitle": "Obrigado por entrar em contato conosco.",
+      "successContent": "Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.",
+      "errorTitle": "Erro ao Enviar Mensagem",
+      "errorSubtitle": "Ocorreu um problema ao enviar sua mensagem.",
+      "errorContent": "Tente novamente mais tarde ou entre em contato diretamente pelo instagram."
+    },
+    "notFound": {
+      "errorLabel": "ERROR",
+      "title": "PÁGINA NÃO ENCONTRADA",
+      "description": "Parece que esta página se perdeu no ciberespaço. Não se preocupe, vamos te colocar de volta nos trilhos.",
+      "backToHome": "Voltar ao início"
+    }
+  },
+  "sections": {
+    "services": {
+      "title": "Serviços",
+      "subtitle": "Veja o que posso fazer por você...",
+      "webDevTitle": "Desenvolvimento Web",
+      "webDevDescription": "Construo sites modernos, responsivos e de alta performance, criados sob medida para atender às suas necessidades. Utilizo tecnologias como <code>Node.js, Next.js, React e Tailwind</code> para oferecer soluções eficientes e personalizadas.",
+      "mobileDevTitle": "Desenvolvimento Mobile",
+      "mobileDevDescription": "Projeto aplicativos móveis personalizados, modernos e de alta performance, com suporte nativo para Android e soluções multiplataforma utilizando <highlight>React Native e Flutter</highlight>.",
+      "botsTitle": "Bots e automações",
+      "botsDescription": "Desenvolvo automações web utilizando <highlight>Python e JavaScript</highlight>, com especialização na criação de bots personalizados para <highlight>WhatsApp e Telegram</highlight>."
+    }
+  },
+  "components": {
+    "navbar": {
+      "homeLink": "Home",
+      "projectsLink": "Projetos",
+      "aboutLink": "Sobre Mim",
+      "contactLink": "Contato"
+    },
+    "footer": {
+      "description": "Desenvolvedor apaixonado por transformar ideias em experiências digitais interativas, responsivas e cativantes. Sempre em busca de inovação e soluções que unam criatividade e funcionalidade.",
+      "navigationTitle": "Navegação",
+      "socialTitle": "Redes Sociais"
+    },
+    "header": {
+      "menuToggleAriaLabel": "Abrir/fechar Menu"
+    },
+    "ada": {
+      "callButtonText": "Já falou com a Ada?"
+    },
+    "chat": {
+      "suggestion1": "Olá!",
+      "suggestion2": "Quais os principais projetos?",
+      "suggestion3": "Quem é Você?",
+      "suggestion4": "O que você consegue fazer por aqui?",
+      "genericError": "Desculpe, ocorreu um erro inesperado. Tente novamente mais tarde.",
+      "creditsError": "⚠️ O limite de créditos temporários do portfólio foi atingido. Pedro já foi notificado para recarregar!",
+      "fetchingProjects": "Buscando projetos...",
+      "todayLabel": "Hoje",
+      "onlineStatus": "Online",
+      "avatarAlt": "Avatar da Ada",
+      "centerLabel": "Centralizar",
+      "expandLabel": "Expandir",
+      "closeLabel": "Fechar",
+      "inputPlaceholder": "Digite sua mensagem...",
+      "sendAriaLabel": "Enviar mensagem"
+    },
+    "projectsNotFound": {
+      "title": "Nada por aqui",
+      "subtitle": "Novos projetos surgem com o tempo",
+      "refreshButton": "Atualizar"
+    },
+    "projectCard": {
+      "deleteTitle": "Deletar Projeto"
+    }
+  },
+  "validations": {
+    "contact": {
+      "nameRequired": "O nome é obrigatório.",
+      "emailInvalid": "Digite um email válido.",
+      "phoneRequired": "O telefone é obrigatório",
+      "phoneInvalid": "Numero de telefone invalido",
+      "messageRequired": "A mensagem é obrigatória."
+    },
+    "auth": {
+      "fieldRequired": "O campo não pode ficar vazio.",
+      "emailInvalid": "Insira um email válido",
+      "passwordRequired": "Qual é a sua senha?"
+    },
+    "project": {
+      "titleRequired": "O nome é obrigatório.",
+      "contentRequired": "A descrição é obrigatória.",
+      "typeInvalid": "Permitido apenas (web, mobile, automações, api)",
+      "tagsRequired": "A tag é obrigatória e deve ser separada por vírgula.",
+      "urlRequired": "A url do projeto é obrigatória.",
+      "urlInvalid": "Insira uma url valida."
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "Painel de Acesso",
+      "emailLabel": "Email",
+      "passwordLabel": "Senha",
+      "submitting": "Acessando...",
+      "submit": "Acessar"
+    },
+    "addProject": {
+      "sectionTitle": "Novo Projeto",
+      "sectionSubtitle": "Adicionar um",
+      "imageUploadLabel": "Arraste ou selecione uma imagem",
+      "titleLabel": "Titulo",
+      "descriptionLabel": "Descrição",
+      "typeLabel": "Tipo",
+      "typeSelectPlaceholder": "Selecionar",
+      "typeWeb": "Web",
+      "typeMobile": "Mobile",
+      "typeAutomation": "Automações",
+      "typeApi": "Api",
+      "tagsLabel": "Tags",
+      "urlLabel": "URL",
+      "submitButton": "Adicionar Projeto",
+      "submitTitle": "Prosseguir",
+      "noImageTitle": "Selecione uma Imagem",
+      "noImageSubtitle": "É nescessario selecionar uma imagem para o projeto.",
+      "noImageContent": "Tenta Novamente",
+      "successTitle": "Projeto Adicionado com Sucesso",
+      "successSubtitle": "Obrigado por adicionar um novo projeto.",
+      "successContent": "Obrigado por adicionar um novo projeto.",
+      "errorTitle": "Algo deu errado",
+      "errorContent": "Tente Novamente"
+    },
+    "myProjects": {
+      "sectionTitle": "Cadastros",
+      "sectionSubtitle": ""
+    },
+    "layout": {
+      "newProject": "Novo Projeto",
+      "myProjects": "Meus Projetos",
+      "logoutTitle": "sair"
+    }
+  },
+  "seo": {
+    "jsonLd": {
+      "headline": "Pedro Marques - Desenvolvedor Fullstack",
+      "description": "Desenvolvedor Fullstack e Mobile focado em criar aplicações modernas, eficientes e de alta performance.",
+      "jobTitle": "Desenvolvedor Fullstack"
+    }
+  }
 }

@@ -1,9 +1,18 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Contato",
-  description: "Entre em contato com Pedro Marques, Desenvolvedor Fullstack. Vamos conversar sobre tecnologia e construir soluções inovadoras.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata.contact" });
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

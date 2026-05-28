@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import Desktop from "../Menu/Desktop";
 import Mobile from "../Menu/Mobile";
@@ -6,6 +7,7 @@ import Logo from "../Menu/Logo";
 
 const Header = (): React.JSX.Element => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const t = useTranslations("components.header");
 
     function handleMenu() {
         setIsOpen((prev) => !prev);
@@ -19,7 +21,7 @@ const Header = (): React.JSX.Element => {
             <nav className="w-full max-w-6xl  flex justify-end items-center md:justify-end md:mx-5 lg:mx-0 lg:justify-center 
              relative">
                 <Logo />
-                <button aria-label="Abrir/fechar Menu" onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">
+                <button aria-label={t("menuToggleAriaLabel")} onClick={handleMenu} className="md:hidden w-8 h-8 mr-7 z-20">
                     <div className={`bg-white h-1 mb-1.5 transition-transform block 
                         ${isOpen ? "rotate-45 translate-y-2.5" : "rotate-0"}`} />
                     <div className={`bg-white h-1 mb-1.5 transition-transform block 

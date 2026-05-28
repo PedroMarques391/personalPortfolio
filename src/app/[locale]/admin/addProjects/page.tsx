@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/Input";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Toast } from "@/components/ui/Toast";
 import { useMutationProjects } from "@/services/projects/mutations";
-import { ProjectData, projectScheme } from "@/validations/project.scheme";
+import { ProjectData, createProjectScheme } from "@/validations/project.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiTrashAlt } from "react-icons/bi";
 import { FiLoader } from "react-icons/fi";
@@ -22,6 +23,11 @@ const Page = (): React.JSX.Element => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [message, setMessage] = useState({} as IMessageInterface);
   const { createProject } = useMutationProjects();
+  
+  const t = useTranslations("admin.addProject");
+  const validationT = useTranslations("validations.project");
+  
+  const schema = useMemo(() => createProjectScheme(validationT), [validationT]);
 
   const {
     register,
@@ -29,7 +35,7 @@ const Page = (): React.JSX.Element => {
     formState: { errors },
     reset,
   } = useForm<ProjectData>({
-    resolver: zodResolver(projectScheme),
+    resolver: zodResolver(schema),
   });
 
   useEffect(() => {
@@ -47,9 +53,9 @@ const Page = (): React.JSX.Element => {
     if (!image) {
       setShowModal(true);
       setMessage({
-        title: "Selecione uma Imagem",
-        subtitle: "É nescessario selecionar uma imagem para o projeto.",
-        content: "Tenta Novamente",
+        title: t("noImageTitle"),
+        subtitle: t("noImageSubtitle"),
+        content: t("noImageContent"),
         success: false,
       });
 
@@ -65,17 +71,17 @@ const Page = (): React.JSX.Element => {
 
       setShowModal(true);
       setMessage({
-        title: "Projeto Adicionado com Sucesso",
-        subtitle: "Obrigado por adicionar um novo projeto.",
-        content: "Obrigado por adicionar um novo projeto.",
+        title: t("successTitle"),
+        subtitle: t("successSubtitle"),
+        content: t("successContent"),
         success: true,
       });
     } catch (error: any) {
       setShowModal(true);
       setMessage({
-        title: "Algo deu errado",
+        title: t("errorTitle"),
         subtitle: error.message,
-        content: "Tente Novamente",
+        content: t("errorContent"),
         success: false,
       });
     } finally {
@@ -92,8 +98,8 @@ const Page = (): React.JSX.Element => {
   return (
     <AdminLayout>
       <SectionHeader
-        title="Novo Projeto"
-        subtitle="Adicionar um"
+        title={t("sectionTitle")}
+        subtitle={t("sectionSubtitle")}
         id="newProject"
       />
 
@@ -149,7 +155,7 @@ const Page = (): React.JSX.Element => {
                   d="M7 16V4m0 0L3 8m4-4l4 4m6 4h4m0 0l-4 4m4-4l-4-4"
                 ></path>
               </svg>
-              <span>Arraste ou selecione uma imagem</span>
+              <span>{t("imageUploadLabel")}</span>
             </div>
           )}
 
@@ -175,13 +181,13 @@ const Page = (): React.JSX.Element => {
           duration={1.0}
           {...register("title")}
           error={errors.title?.message}
-          label="Titulo"
+          label={t("titleLabel")}
         />
         <Input
           duration={1.0}
           {...register("content")}
           error={errors.content?.message}
-          label="Descrição"
+          label={t("descriptionLabel")}
         />
         <div className="relative w-[90%] sm:w-[90%]  md:w-[90%] lg:w-[70%] my-3">
           <select
@@ -202,25 +208,25 @@ const Page = (): React.JSX.Element => {
               value=""
               disabled
             >
-              Selecionar
+              {t("typeSelectPlaceholder")}
             </option>
 
             <option className="bg-gray-light text-gray-dark" value="web">
-              Web
+              {t("typeWeb")}
             </option>
 
             <option className="bg-gray-light text-gray-dark" value="mobile">
-              Mobile
+              {t("typeMobile")}
             </option>
 
             <option
               className="bg-gray-light text-gray-dark "
               value="automações"
             >
-              Automações
+              {t("typeAutomation")}
             </option>
             <option className="bg-gray-light text-gray-dark " value="api">
-              Api
+              {t("typeApi")}
             </option>
           </select>
           <label
@@ -233,7 +239,7 @@ const Page = (): React.JSX.Element => {
           peer-focus:top-0 peer-focus:text-sm peer-focus:bg-black text-white px-2 
           peer-valid:top-0 peer-valid:bg-black peer-valid:text-sm`}
           >
-            Tipo{" "}
+            {t("typeLabel")}{" "}
           </label>
           {errors.type?.message && (
             <span className="text-red-500 text-sm">{errors.type.message}</span>
@@ -243,17 +249,17 @@ const Page = (): React.JSX.Element => {
           duration={1.0}
           {...register("tags")}
           error={errors.tags?.message}
-          label="Tags"
+          label={t("tagsLabel")}
         />
         <Input
           duration={1.0}
           {...register("url")}
           error={errors.url?.message}
-          label="URL"
+          label={t("urlLabel")}
         />
 
         <button
-          title="Prosseguir"
+          title={t("submitTitle")}
           disabled={loading}
           className="p-3  bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-300 my-5 w-52 text-center disabled:bg-orange-500/60 disabled:cursor-not-allowed rounded-xl"
           type="submit"
@@ -261,7 +267,7 @@ const Page = (): React.JSX.Element => {
           {loading ? (
             <FiLoader className="animate-spin text-black w-full text-center text-xl" />
           ) : (
-            "Adicionar Projeto"
+            t("submitButton")
           )}
         </button>
       </form>

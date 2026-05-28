@@ -10,6 +10,7 @@ import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,6 +32,7 @@ type ViewMode = "grid" | "list";
 const validFilters = ["all", "web", "mobile", "api", "automações"];
 
 const ProjectsPage = (): React.JSX.Element => {
+  const t = useTranslations("pages.projects");
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -114,7 +116,7 @@ const ProjectsPage = (): React.JSX.Element => {
   };
 
   const prefetchFilter = (filterType: string) => {
-    const type = filterType === "Todos" ? "all" : filterType.toLowerCase();
+    const type = filterType === "all" ? "all" : filterType.toLowerCase();
     const queryKey = ["projects", "all", 1, type, ""];
 
     if (!queryClient.getQueryData(queryKey)) {
@@ -148,7 +150,7 @@ const ProjectsPage = (): React.JSX.Element => {
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
-      <SectionHeader title="Projetos" subtitle="Um pouco do meu trabalho" />
+      <SectionHeader title={t("title")} subtitle={t("subtitle")} />
       <div className="flex flex-wrap justify-center gap-3 md:gap-5 mt-10 w-[90%] mx-auto">
         {validFilters.map((filter, index) => (
           <Button
@@ -165,7 +167,7 @@ const ProjectsPage = (): React.JSX.Element => {
                     py-2 transition duration-300`}
             duration={index * 0.2}
           >
-            {filter === "all" ? "Todos" : filter}
+            {filter === "all" ? t("filterAll") : filter}
           </Button>
         ))}
       </div>
@@ -176,7 +178,7 @@ const ProjectsPage = (): React.JSX.Element => {
             [...Array(totalPages)].map((_, index) => (
               <Link
                 prefetch
-                title={`Página ${index + 1}`}
+                title={t("paginationTitle", { page: index + 1 })}
                 about={`pagination-link-${index + 1}`}
                 href={{
                   pathname: "/projects",
@@ -229,7 +231,7 @@ const ProjectsPage = (): React.JSX.Element => {
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             className="h-10 rounded-l-lg border border-gray-400 focus:border-orange-600 active:border-orange-600 focus:outline-orange-600 focus:ring-0 focus:outline bg-transparent text-sm md:text-base w-full px-3"
             type="text"
-            placeholder="Buscar projeto..."
+            placeholder={t("searchPlaceholder")}
           />
           <button
             disabled={!searchTerm.trim()}
@@ -245,8 +247,8 @@ const ProjectsPage = (): React.JSX.Element => {
           <button
             onClick={toggleView}
             className="bg-gray-light h-10 px-4 rounded-xl flex items-center justify-center transition-colors hover:text-orange-500 shadow-sm border-2 border-transparent hover:border-orange-500 duration-300"
-            aria-label="Toggle view"
-            title={`Visualização em ${view === "grid" ? "lista" : "grade"}`}
+            aria-label={t("toggleViewAriaLabel")}
+            title={view === "grid" ? t("viewModeList") : t("viewModeGrid")}
           >
             {view === "grid" ? <CiGrid2H size={24} /> : <CiGrid41 size={24} />}
           </button>

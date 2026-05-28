@@ -1,22 +1,23 @@
 import z from "zod";
 
-const projectScheme = z.object({
-  title: z.string().min(1, "O nome é obrigatório."),
-  content: z.string().min(1, "A descrição é obrigatória."),
-  type: z.enum(["web", "mobile", "automações", "api"], {
-    errorMap: () => ({
-      message: "Permitido apenas (web, mobile, automações, api)",
+const createProjectScheme = (t: (key: string) => string) =>
+  z.object({
+    title: z.string().min(1, t("titleRequired")),
+    content: z.string().min(1, t("contentRequired")),
+    type: z.enum(["web", "mobile", "automações", "api"], {
+      errorMap: () => ({
+        message: t("typeInvalid"),
+      }),
     }),
-  }),
-  tags: z
-    .string()
-    .min(1, "A tag é obrigatória e deve ser separada por vírgula."),
-  url: z
-    .string()
-    .min(1, "A url é obrigatória do projeto é obrigatória.")
-    .url("Insira uma url valida."),
-});
+    tags: z
+      .string()
+      .min(1, t("tagsRequired")),
+    url: z
+      .string()
+      .min(1, t("urlRequired"))
+      .url(t("urlInvalid")),
+  });
 
-type ProjectData = z.infer<typeof projectScheme>;
+type ProjectData = z.infer<ReturnType<typeof createProjectScheme>>;
 
-export { projectScheme, type ProjectData };
+export { createProjectScheme, type ProjectData };

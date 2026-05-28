@@ -5,12 +5,15 @@ import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import TechList from "@/components/ui/TechList";
 import Handler from "@/utils/handler";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
 import { BiDownload } from "react-icons/bi";
 import cat from "../../../../public/assets/aboutImage.jpeg";
 
 const About = (): React.JSX.Element => {
+  const t = useTranslations("pages.about");
+
   const languages: string[] = [
     "JavaScript",
     "TypeScript",
@@ -65,13 +68,13 @@ const About = (): React.JSX.Element => {
   ];
 
   const techCategories = [
-    { title: "Linguagens", skills: languages },
-    { title: "Front-End", skills: frontend },
-    { title: "Back-End", skills: backend },
-    { title: "Mobile", skills: mobile },
-    { title: "Banco de Dados", skills: database },
-    { title: "Ferramentas", skills: tools },
-    { title: "Bibliotecas & UI", skills: libraries },
+    { titleKey: "techLanguages", skills: languages },
+    { titleKey: "techFrontend", skills: frontend },
+    { titleKey: "techBackend", skills: backend },
+    { titleKey: "techMobile", skills: mobile },
+    { titleKey: "techDatabase", skills: database },
+    { titleKey: "techTools", skills: tools },
+    { titleKey: "techLibraries", skills: libraries },
   ];
 
   return (
@@ -85,37 +88,19 @@ const About = (): React.JSX.Element => {
         >
           <div className="p-0 md:p-4 text-gray-soft w-full lg:w-[90%] text-center  mx-auto md:mx-0">
             <h1 className="text-xl lg:text-2xl font-bold font-serif w-full  md:text-left">
-              Olá, me chamo Pedro Marques
+              {t("greeting")}
             </h1>
 
             <p className="text-sm md:text-base lg:text-lg mt-10 mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
-              Sou um desenvolvedor Full-Stack apaixonado por criar soluções
-              eficientes e inovadoras. Minha jornada profissional começou na
-              área de Logística, formado pela Universidade Paulista (UNIP), onde
-              desenvolvi uma forte capacidade analítica e de resolução de
-              problemas. No entanto, foi na tecnologia que encontrei minha
-              verdadeira vocação. Atualmente, estou cursando Análise e
-              Desenvolvimento de Sistemas na UniCesumar, consolidando minha base
-              teórica enquanto atuo ativamente no mercado.
+              {t("bioParagraph1")}
             </p>
 
             <p className="text-sm md:text-base lg:text-lg mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
-              Tenho sólida experiência no desenvolvimento web e mobile,
-              utilizando tecnologias como React, Next.js, React Native,
-              TypeScript e TailwindCSS no Front-End, e Node.js (NestJS, Express,
-              Fastify) no Back-End. Trabalho com bancos de dados relacionais e
-              não relacionais, além de ferramentas modernas do ecossistema de
-              desenvolvimento.
+              {t("bioParagraph2")}
             </p>
 
             <p className="text-sm md:text-base lg:text-lg mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
-              Neste momento, meu foco principal está em aprofundar meus
-              conhecimentos no Back-End e em arquitetura de software, estudando
-              Java, mensageria e orquestração de containers com Docker e
-              Kubernetes. Também tenho explorado ativamente o universo da
-              Inteligência Artificial. Meu grande objetivo é construir projetos
-              que gerem valor real para os usuários, mantendo-me em constante
-              evolução técnica e profissional.
+              {t("bioParagraph3")}
             </p>
           </div>
 
@@ -129,7 +114,7 @@ const About = (): React.JSX.Element => {
               <p>
                 <BiDownload size={20} />
               </p>
-              <p className=" font-medium">Download CV</p>
+              <p className=" font-medium">{t("downloadCvText")}</p>
             </Button>
             <AdaCallButton />
           </div>
@@ -143,7 +128,7 @@ const About = (): React.JSX.Element => {
           <div className="w-[90%] h-auto mx-auto">
             <Image
               src={cat}
-              alt="Perfil"
+              alt={t("profileImageAlt")}
               width={"300"}
               height={"300"}
               priority
@@ -155,7 +140,7 @@ const About = (): React.JSX.Element => {
       </div>
       <div className="w-[90%] md:w-full  flex flex-col justify-center items-center mx-auto">
         <h1 className="text-gray-dark text-2xl font-mono py-10 text-center md:text-left w-full">
-          Tecnologias
+          {t("technologiesTitle")}
         </h1>
         <div className="w-full flex flex-col gap-6">
           {techCategories.map((category, index) => (
@@ -164,7 +149,7 @@ const About = (): React.JSX.Element => {
               className="flex flex-col md:flex-row md:items-center gap-4"
             >
               <h2 className="text-gray-soft text md:text-2xl font-semibold w-48 text-left shrink-0">
-                {category.title}
+                {t(category.titleKey as any)}
               </h2>
               <ul className="flex flex-wrap gap-3">
                 {category.skills.map((skill, i) => (
