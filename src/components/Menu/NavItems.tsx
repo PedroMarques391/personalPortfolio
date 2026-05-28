@@ -1,7 +1,7 @@
 "use client";
+import { usePathname } from "@/i18n/navigation";
 import { motion, useInView } from "motion/react";
 import Link, { LinkProps } from "next/link";
-import { usePathname } from "next/navigation";
 import { useRef } from "react";
 
 interface INavItemsProps extends LinkProps {
@@ -22,8 +22,8 @@ const NavItems = ({
 }: INavItemsProps): React.JSX.Element => {
   const pathName: string = usePathname();
   const hrefPathname = typeof href === "string" ? href : href?.pathname;
-  const isCurrentPath: boolean = pathName === hrefPathname;
-
+  const isCurrentPath: boolean =
+    pathName === hrefPathname?.replace(/^\/(pt|en)/, "");
   return (
     <li
       className={`text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2 `}

@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LanguageToggle } from "../ui/LanguageToggle";
 import { NavItems } from "./NavItems";
 
@@ -29,7 +29,7 @@ const variants = {
 
 const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
   const t = useTranslations("components.navbar");
-
+  const locale = useLocale();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -48,22 +48,31 @@ const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
         >
           <LanguageToggle />
           <motion.div variants={variants}>
-            <NavItems onClick={() => setIsOpen(false)} href="/">
+            <NavItems onClick={() => setIsOpen(false)} href={`/${locale}/`}>
               {t("homeLink")}
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
-            <NavItems onClick={() => setIsOpen(false)} href="/projects">
+            <NavItems
+              onClick={() => setIsOpen(false)}
+              href={`/${locale}/projects`}
+            >
               {t("projectsLink")}
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
-            <NavItems onClick={() => setIsOpen(false)} href="/about">
+            <NavItems
+              onClick={() => setIsOpen(false)}
+              href={`/${locale}/about`}
+            >
               {t("aboutLink")}
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
-            <NavItems onClick={() => setIsOpen(false)} href="/contact">
+            <NavItems
+              onClick={() => setIsOpen(false)}
+              href={`/${locale}/contact`}
+            >
               {t("contactLink")}
             </NavItems>
           </motion.div>

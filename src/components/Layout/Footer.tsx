@@ -1,8 +1,8 @@
 "use client";
 
 import Handler from "@/utils/handler";
-import { useTranslations } from "next-intl";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
 import { NavItems } from "../Menu/NavItems";
 import { Button } from "../ui/Button";
 
@@ -22,7 +22,7 @@ const Footer = (): React.JSX.Element => {
   const router = useRouter();
   const t = useTranslations("components.footer");
   const navT = useTranslations("components.navbar");
-  const { locale } = useParams();
+  const locale = useLocale();
 
   const socialItems: ISocialItemsInterface[] = [
     {
