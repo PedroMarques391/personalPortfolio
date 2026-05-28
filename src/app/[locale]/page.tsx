@@ -12,6 +12,7 @@ import { skills } from "@/utils";
 import Handler from "@/utils/handler";
 import { usePrefetchQuery } from "@tanstack/react-query";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -29,6 +30,8 @@ import { TbWorldWww } from "react-icons/tb";
 export default function Home() {
   const stacks: string[] = ["FullStack", "Mobile"];
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const t = useTranslations("pages.home");
+  const svc = useTranslations("sections.services");
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -55,21 +58,21 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center md:items-start  gap-6 order-2 md:order-1 mt-10 md:mt-0 p-2 flex-1 pt-0 md:pt-20">
           <div>
             <h1 className="sr-only">
-              Pedro Marques - Desenvolvedor Fullstack e Mobile
+              {t("srOnlyTitle")}
             </h1>
             <div
               className="text-lg sm:text-xl lg:text-3xl font-bold w-full text-center md:text-start flex gap-2 flex-wrap"
               aria-hidden="true"
             >
-              Olá, meu nome é{" "}
+              {t("title")}
               <Typewriter
-                writing="Pedro Marques"
+                writing="Pedro"
                 hiddenCursor
                 color="text-orange-500"
               />
             </div>
             <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start h-10 items-center">
-              Desenvolvedor{" "}
+              {t("developerLabel")}{" "}
               <Typewriter
                 key={currentIndex}
                 writing={stacks[currentIndex]}
@@ -84,33 +87,32 @@ export default function Home() {
             transition={{ duration: 0.45, ease: "linear" }}
             className="opacity-0 text-justify text-lg leading-relaxed break-words w-full lg:w-4/5"
           >
-            Nos últimos anos, fiquei imerso ao desenvolvimento de aplicações web{" "}
-            <span className="text-orange-500">FullStack</span> enquanto também
-            encaro de forma proativa os desafios do desenvolvimento de
-            aplicativos <span className="text-orange-500">Mobile</span>.
+            {t.rich("heroDescription", {
+              highlight: (chunks) => <span className="text-orange-500">{chunks}</span>,
+            })}
           </motion.p>
           <div className="flex w-full lg:mx-4 justify-center items-center md:justify-start gap-x-5 flex-wrap">
             <Link
               className="flex items-center gap-3 p-3 md:gap-4 transition"
               href="/contact"
               prefetch
-              aria-label="Ir para a página de contato"
+              aria-label={t("contactAriaLabel")}
             >
               <Button
-                aria-label="Entrar em Contato"
+                aria-label={t("contactButtonAriaLabel")}
                 styles="flex items-center gap-2 text-white"
               >
                 <FiMessageCircle size={20} />
-                <p>Contato</p>
+                <p>{t("contactButtonText")}</p>
               </Button>
             </Link>
             <Button
-              aria-label="Baixar Currículo"
+              aria-label={t("downloadCvAriaLabel")}
               styles="flex items-center gap-2 w-auto p-3 text-white focus:ring focus:ring-gray-light"
               onClick={Handler.download}
             >
               <MdFileDownload size={20} />
-              <p>CV</p>
+              <p>{t("downloadCvText")}</p>
             </Button>
             <AdaCallButton />
           </div>
@@ -129,7 +131,7 @@ export default function Home() {
           >
             <Image
               src="/assets/profile.webp"
-              alt="Pedro Marques - Desenvolvedor Fullstack e Mobile"
+              alt={t("profileImageAlt")}
               width={600}
               height={600}
               priority
@@ -141,13 +143,13 @@ export default function Home() {
             <Link
               className="mx-3"
               prefetch
-              aria-label="Perfil no GitHub"
+              aria-label={t("githubAriaLabel")}
               target="_blank"
               rel="noopener noreferrer"
               href={"https://github.com/PedroMarques391"}
             >
               <Button
-                aria-label="Link para o GitHub"
+                aria-label={t("githubLinkAriaLabel")}
                 styles={"w-auto p-3 rounded-full"}
               >
                 <FaGithub size={25} />
@@ -156,13 +158,13 @@ export default function Home() {
             <Link
               className="mx-3"
               prefetch
-              aria-label="Perfil no Twitter"
-              target="_black"
+              aria-label={t("twitterAriaLabel")}
+              target="_blank"
               rel="noopener noreferrer"
               href={"https://x.com/PedroMarques391"}
             >
               <Button
-                aria-label="Link para o X - Antigo Twitter"
+                aria-label={t("twitterLinkAriaLabel")}
                 styles={"w-auto p-3 rounded-full"}
               >
                 <BsTwitterX size={25} />
@@ -171,13 +173,13 @@ export default function Home() {
             <Link
               className="mx-3"
               prefetch
-              aria-label="Perfil no Instagram"
+              aria-label={t("linkedinAriaLabel")}
               target="_blank"
               rel="noopener noreferrer"
               href={"https://www.linkedin.com/in/pedromarques391/"}
             >
               <Button
-                aria-label="Link para o Instagram"
+                aria-label={t("linkedinLinkAriaLabel")}
                 styles={"w-auto p-3 rounded-full"}
               >
                 <ImLinkedin size={25} />
@@ -193,7 +195,7 @@ export default function Home() {
             tracking-wider w-full l
           "
             >
-              Tecnologias
+              {t("technologiesTitle")}
             </h1>
             <div className="w-full py-2">
               <MarqueeEffect>
@@ -212,46 +214,40 @@ export default function Home() {
 
       <section className=" w-full flex flex-col gap-y-2">
         <button
-          aria-label="Botão que leva até os cards de serviços."
+          aria-label={t("scrollToServicesAriaLabel")}
           onClick={() => Handler.scroll("service")}
           className="mx-auto text-center p-6 animate-bounce "
         >
           <MdOutlineKeyboardDoubleArrowDown size={60} color="#d1d1d1" />
         </button>
         <SectionHeader
-          title="Serviços"
-          subtitle="Veja o que posso fazer por você..."
+          title={svc("title")}
+          subtitle={svc("subtitle")}
           id="service"
         />
         <div className="flex gap-6 mt-10 flex-wrap justify-center overflow-hidden md:overflow-visible">
           <ServicesCards
             icon={<TbWorldWww size={50} />}
-            title="Desenvolvimento Web"
+            title={svc("webDevTitle")}
           >
-            Construo sites modernos, responsivos e de alta performance, criados
-            sob medida para atender às suas necessidades. Utilizo tecnologias
-            como{" "}
-            <code className="text-orange-500">
-              Node.js, Next.js, React e Tailwind
-            </code>{" "}
-            para oferecer soluções eficientes e personalizadas.
+            {svc.rich("webDevDescription", {
+              code: (chunks) => <code className="text-orange-500">{chunks}</code>,
+            })}
           </ServicesCards>
 
           <ServicesCards
             icon={<IoIosPhonePortrait size={50} />}
-            title="Desenvolvimento Mobile"
+            title={svc("mobileDevTitle")}
           >
-            Projeto aplicativos móveis personalizados, modernos e de alta
-            performance, com suporte nativo para Android e soluções
-            multiplataforma utilizando{" "}
-            <span className="text-orange-500">React Native e Flutter</span>.
+            {svc.rich("mobileDevDescription", {
+              highlight: (chunks) => <span className="text-orange-500">{chunks}</span>,
+            })}
           </ServicesCards>
 
-          <ServicesCards icon={<FaRobot size={50} />} title="Bots e automações">
-            Desenvolvo automações web utilizando{" "}
-            <span className="text-orange-500">Python e JavaScript</span>, com
-            especialização na criação de bots personalizados para{" "}
-            <span className="text-orange-500">WhatsApp e Telegram</span>.
+          <ServicesCards icon={<FaRobot size={50} />} title={svc("botsTitle")}>
+            {svc.rich("botsDescription", {
+              highlight: (chunks) => <span className="text-orange-500">{chunks}</span>,
+            })}
           </ServicesCards>
         </div>
         <Link
@@ -259,7 +255,7 @@ export default function Home() {
           href={"/projects"}
         >
           <h1 className="text-gray-soft tracking-wider text-xl font-semibold group-hover:text-orange-500 duration-1000 transition-colors">
-            Veja Meus Projetos
+            {t("seeMyProjects")}
           </h1>
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"

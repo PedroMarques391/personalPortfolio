@@ -1,0 +1,223 @@
+{
+    "metadata": {
+        "root": {
+            "title": "Pedro Marques | Fullstack Developer",
+            "titleTemplate": "%s | Pedro Marques",
+            "description": "Web Portfolio of Pedro Marques, Fullstack and Mobile Developer specializing in modern, responsive, and high-performance applications.",
+            "keywords": "Pedro Marques, Fullstack Developer, Web Developer, web portfolio, React, Next.js, Node.js, TypeScript, Mobile",
+            "ogTitle": "Pedro Marques | Fullstack Developer",
+            "ogDescription": "Discover my work as a Fullstack Developer, building modern and efficient solutions."
+        },
+        "about": {
+            "title": "About Me",
+            "description": "Learn more about Pedro Marques' journey as a Fullstack and Mobile Developer, his skills and professional experiences."
+        },
+        "projects": {
+            "title": "Projects",
+            "description": "Explore the project portfolio developed by Pedro Marques. Fullstack, Mobile, and Automation solutions."
+        },
+        "contact": {
+            "title": "Contact",
+            "description": "Get in touch with Pedro Marques, Fullstack Developer. Let's talk about technology and build innovative solutions."
+        }
+    },
+    "pages": {
+        "home": {
+            "srOnlyTitle": "Pedro Marques - Fullstack and Mobile Developer",
+            "title": "Hello, My name is",
+            "developerLabel": "Developer",
+            "heroDescription": "In recent years, I've been immersed in developing <highlight>FullStack</highlight> web applications while also proactively tackling the challenges of <highlight>Mobile</highlight> app development.",
+            "contactAriaLabel": "Go to contact page",
+            "contactButtonAriaLabel": "Get in Touch",
+            "contactButtonText": "Contact",
+            "downloadCvAriaLabel": "Download Resume",
+            "downloadCvText": "CV",
+            "profileImageAlt": "Pedro Marques - Fullstack and Mobile Developer",
+            "githubAriaLabel": "GitHub profile",
+            "githubLinkAriaLabel": "Link to GitHub",
+            "twitterAriaLabel": "Twitter profile",
+            "twitterLinkAriaLabel": "Link to X - formerly Twitter",
+            "linkedinAriaLabel": "LinkedIn profile",
+            "linkedinLinkAriaLabel": "Link to LinkedIn",
+            "technologiesTitle": "Technologies",
+            "scrollToServicesAriaLabel": "Button that scrolls to the services cards.",
+            "seeMyProjects": "See My Projects"
+        },
+        "about": {
+            "greeting": "Hi, my name is Pedro Marques",
+            "bioParagraph1": "I'm a Full-Stack developer passionate about creating efficient and innovative solutions. My professional journey began in Logistics, graduating from Universidade Paulista (UNIP), where I developed strong analytical and problem-solving skills. However, it was in technology that I found my true calling. I'm currently pursuing a degree in Systems Analysis and Development at UniCesumar, consolidating my theoretical foundation while actively working in the market.",
+            "bioParagraph2": "I have solid experience in web and mobile development, using technologies such as React, Next.js, React Native, TypeScript, and TailwindCSS on the Front-End, and Node.js (NestJS, Express, Fastify) on the Back-End. I work with relational and non-relational databases, as well as modern tools from the development ecosystem.",
+            "bioParagraph3": "Currently, my main focus is on deepening my knowledge in Back-End development and software architecture, studying Java, messaging systems, and container orchestration with Docker and Kubernetes. I've also been actively exploring the Artificial Intelligence space. My ultimate goal is to build projects that generate real value for users, while constantly evolving both technically and professionally.",
+            "downloadCvText": "Download CV",
+            "profileImageAlt": "Profile",
+            "technologiesTitle": "Technologies",
+            "techLanguages": "Languages",
+            "techFrontend": "Front-End",
+            "techBackend": "Back-End",
+            "techMobile": "Mobile",
+            "techDatabase": "Databases",
+            "techTools": "Tools",
+            "techLibraries": "Libraries & UI"
+        },
+        "projects": {
+            "title": "Projects",
+            "subtitle": "A bit of my work",
+            "filterAll": "All",
+            "paginationTitle": "Page {page}",
+            "searchPlaceholder": "Search project...",
+            "toggleViewAriaLabel": "Toggle view",
+            "viewModeGrid": "Grid view",
+            "viewModeList": "List view"
+        },
+        "contact": {
+            "sectionTitle": "Contact me",
+            "sectionSubtitle": "Liked what you saw?",
+            "nameLabel": "Name",
+            "emailLabel": "Email",
+            "phoneLabel": "Phone",
+            "messageLabel": "Message",
+            "submitText": "Send",
+            "submittingText": "Sending",
+            "successTitle": "Message Sent Successfully!",
+            "successSubtitle": "Thank you for reaching out.",
+            "successContent": "Your message was sent successfully. We'll get back to you soon.",
+            "errorTitle": "Error Sending Message",
+            "errorSubtitle": "There was a problem sending your message.",
+            "errorContent": "Please try again later or contact us directly through Instagram."
+        },
+        "notFound": {
+            "errorLabel": "ERROR",
+            "title": "PAGE NOT FOUND",
+            "description": "It seems this page got lost in cyberspace. Don't worry, we'll get you back on track.",
+            "backToHome": "Back to home"
+        }
+    },
+    "sections": {
+        "services": {
+            "title": "Services",
+            "subtitle": "See what I can do for you...",
+            "webDevTitle": "Web Development",
+            "webDevDescription": "I build modern, responsive, and high-performance websites, custom-made to meet your needs. I use technologies such as <code>Node.js, Next.js, React and Tailwind</code> to deliver efficient and personalized solutions.",
+            "mobileDevTitle": "Mobile Development",
+            "mobileDevDescription": "I design custom, modern, and high-performance mobile applications with native Android support and cross-platform solutions using <highlight>React Native and Flutter</highlight>.",
+            "botsTitle": "Bots & Automations",
+            "botsDescription": "I develop web automations using <highlight>Python and JavaScript</highlight>, specializing in creating custom bots for <highlight>WhatsApp and Telegram</highlight>."
+        }
+    },
+    "components": {
+        "navbar": {
+            "homeLink": "Home",
+            "projectsLink": "Projects",
+            "aboutLink": "About Me",
+            "contactLink": "Contact"
+        },
+        "footer": {
+            "description": "A developer passionate about turning ideas into interactive, responsive, and captivating digital experiences. Always seeking innovation and solutions that combine creativity and functionality.",
+            "navigationTitle": "Navigation",
+            "socialTitle": "Social Media"
+        },
+        "header": {
+            "menuToggleAriaLabel": "Open/close Menu"
+        },
+        "ada": {
+            "callButtonText": "Have you talked to Ada?"
+        },
+        "chat": {
+            "suggestion1": "Hello!",
+            "suggestion2": "What are the main projects?",
+            "suggestion3": "Who are you?",
+            "suggestion4": "What can you do here?",
+            "genericError": "Sorry, an unexpected error occurred. Please try again later.",
+            "creditsError": "⚠️ The portfolio's temporary credit limit has been reached. Pedro has been notified to reload!",
+            "fetchingProjects": "Fetching projects...",
+            "todayLabel": "Today",
+            "onlineStatus": "Online",
+            "avatarAlt": "Ada's avatar",
+            "centerLabel": "Center",
+            "expandLabel": "Expand",
+            "closeLabel": "Close",
+            "inputPlaceholder": "Type your message...",
+            "sendAriaLabel": "Send message"
+        },
+        "projectsNotFound": {
+            "title": "Nothing here",
+            "subtitle": "New projects come with time",
+            "refreshButton": "Refresh"
+        },
+        "projectCard": {
+            "deleteTitle": "Delete Project"
+        }
+    },
+    "validations": {
+        "contact": {
+            "nameRequired": "Name is required.",
+            "emailInvalid": "Please enter a valid email.",
+            "phoneRequired": "Phone is required",
+            "phoneInvalid": "Invalid phone number",
+            "messageRequired": "Message is required."
+        },
+        "auth": {
+            "fieldRequired": "This field cannot be empty.",
+            "emailInvalid": "Please enter a valid email",
+            "passwordRequired": "What is your password?"
+        },
+        "project": {
+            "titleRequired": "Title is required.",
+            "contentRequired": "Description is required.",
+            "typeInvalid": "Only allowed: web, mobile, automations, api",
+            "tagsRequired": "Tags are required and must be separated by commas.",
+            "urlRequired": "Project URL is required.",
+            "urlInvalid": "Please enter a valid URL."
+        }
+    },
+    "admin": {
+        "login": {
+            "title": "Access Panel",
+            "emailLabel": "Email",
+            "passwordLabel": "Password",
+            "submitting": "Signing in...",
+            "submit": "Sign In"
+        },
+        "addProject": {
+            "sectionTitle": "New Project",
+            "sectionSubtitle": "Add a",
+            "imageUploadLabel": "Drag or select an image",
+            "titleLabel": "Title",
+            "descriptionLabel": "Description",
+            "typeLabel": "Type",
+            "typeSelectPlaceholder": "Select",
+            "typeWeb": "Web",
+            "typeMobile": "Mobile",
+            "typeAutomation": "Automations",
+            "typeApi": "Api",
+            "tagsLabel": "Tags",
+            "urlLabel": "URL",
+            "submitButton": "Add Project",
+            "submitTitle": "Proceed",
+            "noImageTitle": "Select an Image",
+            "noImageSubtitle": "An image is required for the project.",
+            "noImageContent": "Try Again",
+            "successTitle": "Project Added Successfully",
+            "successSubtitle": "Thank you for adding a new project.",
+            "successContent": "Thank you for adding a new project.",
+            "errorTitle": "Something went wrong",
+            "errorContent": "Try Again"
+        },
+        "myProjects": {
+            "sectionTitle": "Registrations",
+            "sectionSubtitle": ""
+        },
+        "layout": {
+            "newProject": "New Project",
+            "myProjects": "My Projects",
+            "logoutTitle": "logout"
+        }
+    },
+    "seo": {
+        "jsonLd": {
+            "headline": "Pedro Marques - Fullstack Developer",
+            "description": "Fullstack and Mobile Developer focused on creating modern, efficient, and high-performance applications.",
+            "jobTitle": "Fullstack Developer"
+        }
+    }
+}

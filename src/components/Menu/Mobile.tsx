@@ -1,4 +1,8 @@
+"use client";
+
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { LanguageToggle } from "../ui/LanguageToggle";
 import { NavItems } from "./NavItems";
 
 interface IMobileProps {
@@ -24,6 +28,8 @@ const variants = {
 };
 
 const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
+  const t = useTranslations("components.navbar");
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -40,24 +46,25 @@ const Mobile = ({ isOpen, setIsOpen }: IMobileProps): React.JSX.Element => {
           animate="visible"
           exit="hidden"
         >
+          <LanguageToggle />
           <motion.div variants={variants}>
             <NavItems onClick={() => setIsOpen(false)} href="/">
-              Home
+              {t("homeLink")}
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
             <NavItems onClick={() => setIsOpen(false)} href="/projects">
-              Projetos
+              {t("projectsLink")}
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
             <NavItems onClick={() => setIsOpen(false)} href="/about">
-              Sobre Mim
+              {t("aboutLink")}
             </NavItems>
           </motion.div>
           <motion.div variants={variants}>
             <NavItems onClick={() => setIsOpen(false)} href="/contact">
-              Contato
+              {t("contactLink")}
             </NavItems>
           </motion.div>
         </motion.ul>

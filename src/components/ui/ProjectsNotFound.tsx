@@ -1,6 +1,9 @@
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 const ProjectsNotFound = (): React.JSX.Element => {
+  const t = useTranslations("components.projectsNotFound");
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
@@ -17,7 +20,7 @@ const ProjectsNotFound = (): React.JSX.Element => {
         }}
         className="text-lg md:text-xl font-medium text-gray-500 "
       >
-        Nada por aqui
+        {t("title")}
       </motion.span>
 
       <motion.p
@@ -26,7 +29,7 @@ const ProjectsNotFound = (): React.JSX.Element => {
         transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         className="text-gray-400"
       >
-        Novos projetos surgem com o tempo
+        {t("subtitle")}
       </motion.p>
 
       <motion.button
@@ -35,7 +38,7 @@ const ProjectsNotFound = (): React.JSX.Element => {
         whileTap={{ scale: 0.85 }}
         className="uppercase bg-gray-light rounded-md w-fit border border-transparent text-gray-dark p-2 transition duration-300"
       >
-        reflesh
+        {t("refreshButton")}
       </motion.button>
     </motion.div>
   );

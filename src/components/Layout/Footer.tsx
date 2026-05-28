@@ -1,6 +1,7 @@
 "use client";
 
 import Handler from "@/utils/handler";
+import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { NavItems } from "../Menu/NavItems";
 import { Button } from "../ui/Button";
@@ -11,7 +12,7 @@ interface ISocialItemsInterface {
   duration: number;
 }
 interface INavItemsInterface {
-  text: string;
+  textKey: string;
   href: string | { pathname: string; query: { page: number } };
   duration: number;
 }
@@ -19,6 +20,8 @@ interface INavItemsInterface {
 const Footer = (): React.JSX.Element => {
   const pathName: string = usePathname();
   const router = useRouter();
+  const t = useTranslations("components.footer");
+  const navT = useTranslations("components.navbar");
 
   const socialItems: ISocialItemsInterface[] = [
     {
@@ -40,14 +43,14 @@ const Footer = (): React.JSX.Element => {
   ];
 
   const navLinkItems: INavItemsInterface[] = [
-    { text: "Home", href: "/", duration: 0.5 },
+    { textKey: "homeLink", href: "/", duration: 0.5 },
     {
-      text: "Projetos",
+      textKey: "projectsLink",
       href: { pathname: "/projects", query: { page: 1 } },
       duration: 1.0,
     },
-    { text: "Sobre mim", href: "/about", duration: 1.5 },
-    { text: "Contato", href: "/contact", duration: 2.0 },
+    { textKey: "aboutLink", href: "/about", duration: 1.5 },
+    { textKey: "contactLink", href: "/contact", duration: 2.0 },
   ];
 
   function handleClick(
@@ -71,9 +74,7 @@ const Footer = (): React.JSX.Element => {
             Pedro Marques
           </h1>
           <p className="text-gray-soft text-mono text-xl text-justify md:text-left lg:text-justify shrink-0 hyphens-none lg:w-[80%] ">
-            Desenvolvedor apaixonado por transformar ideias em experiências
-            digitais interativas, responsivas e cativantes. Sempre em busca de
-            inovação e soluções que unam criatividade e funcionalidade.
+            {t("description")}
           </p>
         </div>
         <hr className=" mt-2 md:hidden" />
@@ -81,7 +82,7 @@ const Footer = (): React.JSX.Element => {
           <div className="grid grid-cols-2 mt-10 md:mt-0 mx-auto  gap-10">
             <nav className="w-full flex flex-col justify-start items-center">
               <h1 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
-                Navegação
+                {t("navigationTitle")}
               </h1>
               <ul className="space-y-2 flex flex-col">
                 {navLinkItems.map((navItem, index) => (
@@ -90,7 +91,7 @@ const Footer = (): React.JSX.Element => {
                     onClick={() => handleClick(navItem.href)}
                     href={navItem.href}
                   >
-                    {navItem.text}
+                    {navT(navItem.textKey as any)}
                   </NavItems>
                 ))}
               </ul>
@@ -98,7 +99,7 @@ const Footer = (): React.JSX.Element => {
 
             <nav className="w-full flex flex-col justify-start items-center">
               <h1 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
-                Redes Sociais
+                {t("socialTitle")}
               </h1>
               <div className="space-y-2 md:space-y-5">
                 {socialItems.map((socialItem, index) => (

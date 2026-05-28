@@ -1,4 +1,4 @@
-import { default as ProjectRepository } from "@/app/api/repository/ProjectRepository";
+import ProjectRepository from "@/app/api/repository/ProjectRepository";
 import { AuthTokenService } from "@/app/api/services/AuthTokenService";
 import { IProject, TProjectType } from "@/model/ProjectModel";
 import { NextRequest, NextResponse } from "next/server";

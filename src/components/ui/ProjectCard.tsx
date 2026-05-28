@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
@@ -28,6 +29,7 @@ const ProjectCard = ({
   view = "list",
 }: IProjectCardProps): React.JSX.Element => {
   const ref = useRef(null);
+  const t = useTranslations("components.projectCard");
 
   return (
     <motion.section
@@ -70,7 +72,7 @@ const ProjectCard = ({
 
         {onDelete && (
           <button
-            title="Deletar Projeto"
+            title={t("deleteTitle")}
             onClick={async (e) => {
               e.stopPropagation();
               await onDelete();
