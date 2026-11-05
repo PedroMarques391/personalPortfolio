@@ -8,13 +8,12 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { Roboto } from "next/font/google";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import "./globals.css";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "700"],
+  style: ["normal"],
   display: "swap",
 });
 
@@ -27,6 +26,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata.root" });
 
   return {
+    metadataBase: new URL("https://pedromarques.dev.br"),
     title: {
       template: t("titleTemplate"),
       default: t("title"),
@@ -38,12 +38,27 @@ export async function generateMetadata({
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDescription"),
-      url: "https://pedromarques.dev.br",
+      url: `https://pedromarques.dev.br/${locale}`,
       siteName: "Pedro Marques Portfolio",
       locale: locale === "pt" ? "pt_BR" : "en_US",
       type: "website",
+      images: [
+        {
+          url: "/assets/profile.webp",
+          width: 600,
+          height: 600,
+          alt: t("ogTitle"),
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      images: ["/assets/profile.webp"],
     },
     alternates: {
+      canonical: `/${locale}`,
       languages: {
         pt: "/pt",
         en: "/en",
@@ -71,8 +86,8 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <body className={`${roboto.className} antialiased`}>
-        <Script
-          id="faq-schema"
+        <script
+          id="profile-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(schema),
