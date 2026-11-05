@@ -145,7 +145,9 @@
             "refreshButton": "Refresh"
         },
         "projectCard": {
-            "deleteTitle": "Delete Project"
+            "deleteTitle": "Delete Project",
+            "editTitle": "Edit Project",
+            "visitTitle": "Open project"
         }
     },
     "validations": {
@@ -180,37 +182,61 @@
         },
         "addProject": {
             "sectionTitle": "New Project",
-            "sectionSubtitle": "Add a",
-            "imageUploadLabel": "Drag or select an image",
-            "titleLabel": "Title",
-            "descriptionLabel": "Description",
-            "typeLabel": "Type",
-            "typeSelectPlaceholder": "Select",
+            "sectionSubtitle": "Publish a",
+            "imageUploadLabel": "Drag an image here or click to browse",
+            "imageUploadHint": "PNG, JPG or WEBP (recommended 16:9 ratio)",
+            "changeImage": "Change image",
+            "removeImage": "Remove",
+            "titleLabel": "Project Title",
+            "descriptionLabel": "Detailed description",
+            "typeLabel": "Category",
+            "typeSelectPlaceholder": "Select category",
             "typeWeb": "Web",
             "typeMobile": "Mobile",
             "typeAutomation": "Automations",
-            "typeApi": "Api",
-            "tagsLabel": "Tags",
-            "urlLabel": "URL",
-            "submitButton": "Add Project",
+            "typeApi": "API",
+            "tagsLabel": "Technologies (comma-separated)",
+            "tagsQuickAdd": "Quick suggestions:",
+            "urlLabel": "Project / Repository URL",
+            "previewTitle": "Card Live Preview",
+            "previewEmptyTitle": "Your project title",
+            "previewEmptyDescription": "The project description will appear here as you type the details on the side.",
+            "submitButton": "Publish Project",
+            "saveChangesButton": "Save Changes",
+            "cancelButton": "Cancel",
             "submitTitle": "Proceed",
             "noImageTitle": "Select an Image",
-            "noImageSubtitle": "An image is required for the project.",
-            "noImageContent": "Try Again",
-            "successTitle": "Project Added Successfully",
-            "successSubtitle": "Thank you for adding a new project.",
-            "successContent": "Thank you for adding a new project.",
+            "noImageSubtitle": "A cover image is required for the project.",
+            "noImageContent": "Try again",
+            "successTitle": "Project Published",
+            "successSubtitle": "Your new project is now live on the portfolio.",
+            "successContent": "Registration completed successfully.",
+            "updateSuccessTitle": "Project Updated",
+            "updateSuccessSubtitle": "Your changes have been saved successfully.",
+            "updateSuccessContent": "Project details have been updated.",
             "errorTitle": "Something went wrong",
-            "errorContent": "Try Again"
+            "errorContent": "Please check the fields and try again."
         },
         "myProjects": {
-            "sectionTitle": "Registrations",
-            "sectionSubtitle": ""
+            "sectionTitle": "My Projects",
+            "sectionSubtitle": "Manage",
+            "totalCount": "{count, plural, =0 {No projects} one {# registered project} other {# registered projects}}",
+            "searchPlaceholder": "Search by title or technology...",
+            "filterAll": "All",
+            "newProjectButton": "New Project",
+            "editModalTitle": "Edit Project",
+            "editModalSubtitle": "Update the details or cover image of the project",
+            "deleteConfirmTitle": "Delete project?",
+            "deleteConfirmDescription": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
+            "confirmDeleteButton": "Yes, delete",
+            "cancelDeleteButton": "Cancel",
+            "deleteSuccessTitle": "Project Deleted",
+            "deleteSuccessSubtitle": "The project has been removed from your portfolio."
         },
         "layout": {
             "newProject": "New Project",
             "myProjects": "My Projects",
-            "logoutTitle": "logout"
+            "logoutTitle": "Logout"
         }
     },
     "seo": {

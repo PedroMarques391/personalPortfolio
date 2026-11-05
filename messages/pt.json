@@ -145,7 +145,9 @@
       "refreshButton": "Atualizar"
     },
     "projectCard": {
-      "deleteTitle": "Deletar Projeto"
+      "deleteTitle": "Excluir Projeto",
+      "editTitle": "Editar Projeto",
+      "visitTitle": "Abrir projeto"
     }
   },
   "validations": {
@@ -180,37 +182,61 @@
     },
     "addProject": {
       "sectionTitle": "Novo Projeto",
-      "sectionSubtitle": "Adicionar um",
-      "imageUploadLabel": "Arraste ou selecione uma imagem",
-      "titleLabel": "Titulo",
-      "descriptionLabel": "Descrição",
-      "typeLabel": "Tipo",
-      "typeSelectPlaceholder": "Selecionar",
+      "sectionSubtitle": "Publicar um",
+      "imageUploadLabel": "Arraste uma imagem aqui ou clique para selecionar",
+      "imageUploadHint": "PNG, JPG ou WEBP (proporção recomendada 16:9)",
+      "changeImage": "Trocar imagem",
+      "removeImage": "Remover",
+      "titleLabel": "Título do Projeto",
+      "descriptionLabel": "Descrição detalhada",
+      "typeLabel": "Categoria",
+      "typeSelectPlaceholder": "Selecionar categoria",
       "typeWeb": "Web",
       "typeMobile": "Mobile",
       "typeAutomation": "Automações",
-      "typeApi": "Api",
-      "tagsLabel": "Tags",
-      "urlLabel": "URL",
-      "submitButton": "Adicionar Projeto",
+      "typeApi": "API",
+      "tagsLabel": "Tecnologias (separadas por vírgula)",
+      "tagsQuickAdd": "Sugestões rápidas:",
+      "urlLabel": "URL do Projeto / Repositório",
+      "previewTitle": "Pré-visualização do Card",
+      "previewEmptyTitle": "Título do seu projeto",
+      "previewEmptyDescription": "A descrição do projeto aparecerá aqui conforme você digita os detalhes ao lado.",
+      "submitButton": "Publicar Projeto",
+      "saveChangesButton": "Salvar Alterações",
+      "cancelButton": "Cancelar",
       "submitTitle": "Prosseguir",
       "noImageTitle": "Selecione uma Imagem",
-      "noImageSubtitle": "É nescessario selecionar uma imagem para o projeto.",
-      "noImageContent": "Tenta Novamente",
-      "successTitle": "Projeto Adicionado com Sucesso",
-      "successSubtitle": "Obrigado por adicionar um novo projeto.",
-      "successContent": "Obrigado por adicionar um novo projeto.",
+      "noImageSubtitle": "É necessário selecionar uma imagem de capa para o projeto.",
+      "noImageContent": "Tente novamente",
+      "successTitle": "Projeto Publicado",
+      "successSubtitle": "Seu novo projeto já está visível no portfólio.",
+      "successContent": "Cadastro concluído com sucesso.",
+      "updateSuccessTitle": "Projeto Atualizado",
+      "updateSuccessSubtitle": "As alterações foram salvas com sucesso.",
+      "updateSuccessContent": "Os dados do projeto já foram atualizados.",
       "errorTitle": "Algo deu errado",
-      "errorContent": "Tente Novamente"
+      "errorContent": "Verifique os campos e tente novamente."
     },
     "myProjects": {
-      "sectionTitle": "Cadastros",
-      "sectionSubtitle": ""
+      "sectionTitle": "Meus Projetos",
+      "sectionSubtitle": "Gerenciar",
+      "totalCount": "{count, plural, =0 {Nenhum projeto} one {# projeto cadastrado} other {# projetos cadastrados}}",
+      "searchPlaceholder": "Buscar por título ou tecnologia...",
+      "filterAll": "Todos",
+      "newProjectButton": "Novo Projeto",
+      "editModalTitle": "Editar Projeto",
+      "editModalSubtitle": "Atualize as informações ou a imagem de capa do projeto",
+      "deleteConfirmTitle": "Excluir projeto?",
+      "deleteConfirmDescription": "Tem certeza que deseja excluir \"{title}\"? Esta ação não pode ser desfeita.",
+      "confirmDeleteButton": "Sim, excluir",
+      "cancelDeleteButton": "Cancelar",
+      "deleteSuccessTitle": "Projeto Excluído",
+      "deleteSuccessSubtitle": "O projeto foi removido do portfólio."
     },
     "layout": {
       "newProject": "Novo Projeto",
       "myProjects": "Meus Projetos",
-      "logoutTitle": "sair"
+      "logoutTitle": "Sair"
     }
   },
   "seo": {

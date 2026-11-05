@@ -2,71 +2,53 @@
 
 import { IMessageInterface } from "@/app/[locale]/contact/page";
 import AdminLayout from "@/components/Layout/AdminLayout";
-import { Input } from "@/components/ui/Input";
+import ProjectForm from "@/components/ui/ProjectForm";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { Toast } from "@/components/ui/Toast";
 import { useMutationProjects } from "@/services/projects/mutations";
-import { ProjectData, createProjectScheme } from "@/validations/project.scheme";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { ProjectData } from "@/validations/project.scheme";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { BiTrashAlt } from "react-icons/bi";
-import { FiLoader } from "react-icons/fi";
+import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 const Page = (): React.JSX.Element => {
-  const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [message, setMessage] = useState({} as IMessageInterface);
-  const { createProject } = useMutationProjects();
-  
-  const t = useTranslations("admin.addProject");
-  const validationT = useTranslations("validations.project");
-  
-  const schema = useMemo(() => createProjectScheme(validationT), [validationT]);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<ProjectData>({
-    resolver: zodResolver(schema),
+  const [message, setMessage] = useState<IMessageInterface>({
+    title: "",
+    subtitle: "",
+    content: "",
+    success: false,
   });
+  const { createProject } = useMutationProjects();
+  const t = useTranslations("admin.addProject");
 
-  useEffect(() => {
+  function handleRequireImageError() {
+    setShowModal(true);
+    setMessage({
+      title: t("noImageTitle"),
+      subtitle: t("noImageSubtitle"),
+      content: t("noImageContent"),
+      success: false,
+    });
+
+    setTimeout(() => {
+      setShowModal(false);
+    }, 3000);
+  }
+
+  async function handleNewProject({
+    data,
+    image,
+  }: {
+    data: ProjectData;
+    image: File | null;
+  }) {
     if (!image) {
-      setPreview(null);
+      handleRequireImageError();
       return;
     }
-    const objectUrl = URL.createObjectURL(image);
-    setPreview(objectUrl);
 
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [image]);
-
-  async function handleNewProject(data: ProjectData) {
-    if (!image) {
-      setShowModal(true);
-      setMessage({
-        title: t("noImageTitle"),
-        subtitle: t("noImageSubtitle"),
-        content: t("noImageContent"),
-        success: false,
-      });
-
-      setTimeout(() => {
-        setShowModal(false);
-      }, 2000);
-      return;
-    }
     try {
-      setLoading(true);
-
       await createProject.mutateAsync({ data, image });
 
       setShowModal(true);
@@ -76,22 +58,21 @@ const Page = (): React.JSX.Element => {
         content: t("successContent"),
         success: true,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : t("errorTitle");
       setShowModal(true);
       setMessage({
         title: t("errorTitle"),
-        subtitle: error.message,
+        subtitle: errorMessage,
         content: t("errorContent"),
         success: false,
       });
+      throw error;
     } finally {
-      setLoading(false);
-      setPreview(null);
-      setImage(null);
       setTimeout(() => {
         setShowModal(false);
-      }, 2000);
-      reset();
+      }, 3000);
     }
   }
 
@@ -114,163 +95,12 @@ const Page = (): React.JSX.Element => {
         </Toast.Content>
       </Toast.Root>
 
-      <form
-        onSubmit={handleSubmit(handleNewProject)}
-        className="flex flex-col mt-5 max-w-xl mx-auto items-center"
-      >
-        <section className="w-72 h-64 mx-auto my-5 flex flex-col items-center justify-center bg-slate-200 rounded-lg border-2 border-dashed border-orange-500 overflow-hidden relative">
-          {preview ? (
-            <>
-              <Image
-                width={500}
-                height={500}
-                src={preview}
-                alt="preview"
-                className="w-full h-full object-cover"
-              />
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setImage(null);
-                }}
-                className="absolute top-2 right-2 bg-red-500/50 hover:bg-red-500/100 transition-colors duration-300 text-white p-2 rounded z-20"
-              >
-                <BiTrashAlt size={20} color="white" />
-              </button>
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center text-orange-500">
-              <svg
-                className="w-12 h-12 mb-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M7 16V4m0 0L3 8m4-4l4 4m6 4h4m0 0l-4 4m4-4l-4-4"
-                ></path>
-              </svg>
-              <span>{t("imageUploadLabel")}</span>
-            </div>
-          )}
-
-          <input
-            type="file"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                setImage(e.dataTransfer.files[0]);
-              }
-            }}
-            accept="image/*"
-            className="absolute w-full h-full opacity-0 cursor-pointer"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                setImage(e.target.files[0]);
-              }
-            }}
-          />
-        </section>
-
-        <Input
-          duration={1.0}
-          {...register("title")}
-          error={errors.title?.message}
-          label={t("titleLabel")}
-        />
-        <Input
-          duration={1.0}
-          {...register("content")}
-          error={errors.content?.message}
-          label={t("descriptionLabel")}
-        />
-        <div className="relative w-[90%] sm:w-[90%]  md:w-[90%] lg:w-[70%] my-3">
-          <select
-            {...register("type")}
-            id="select"
-            required
-            className={`peer text-white border-2 bg-transparent 
-                    rounded-md w-full h-12 px-4 outline-none 
-                    transition duration-300 focus:border-orange-500 
-                    appearance-none ${
-                      errors.type
-                        ? "border-red-500 focus:border-red-500"
-                        : "border-gray-soft"
-                    }`}
-          >
-            <option
-              className="bg-gray-light text-gray-dark text-center"
-              value=""
-              disabled
-            >
-              {t("typeSelectPlaceholder")}
-            </option>
-
-            <option className="bg-gray-light text-gray-dark" value="web">
-              {t("typeWeb")}
-            </option>
-
-            <option className="bg-gray-light text-gray-dark" value="mobile">
-              {t("typeMobile")}
-            </option>
-
-            <option
-              className="bg-gray-light text-gray-dark "
-              value="automações"
-            >
-              {t("typeAutomation")}
-            </option>
-            <option className="bg-gray-light text-gray-dark " value="api">
-              {t("typeApi")}
-            </option>
-          </select>
-          <label
-            htmlFor={"select"}
-            className={`
-          absolute left-4 top-[50%] -translate-y-[50%] text-accent 
-          bg-transparent pointer-events-none transition-all duration-300 
-          peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
-          peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-accent 
-          peer-focus:top-0 peer-focus:text-sm peer-focus:bg-black text-white px-2 
-          peer-valid:top-0 peer-valid:bg-black peer-valid:text-sm`}
-          >
-            {t("typeLabel")}{" "}
-          </label>
-          {errors.type?.message && (
-            <span className="text-red-500 text-sm">{errors.type.message}</span>
-          )}
-        </div>
-        <Input
-          duration={1.0}
-          {...register("tags")}
-          error={errors.tags?.message}
-          label={t("tagsLabel")}
-        />
-        <Input
-          duration={1.0}
-          {...register("url")}
-          error={errors.url?.message}
-          label={t("urlLabel")}
-        />
-
-        <button
-          title={t("submitTitle")}
-          disabled={loading}
-          className="p-3  bg-orange-500 text-white hover:bg-orange-600 transition-colors duration-300 my-5 w-52 text-center disabled:bg-orange-500/60 disabled:cursor-not-allowed rounded-xl"
-          type="submit"
-        >
-          {loading ? (
-            <FiLoader className="animate-spin text-black w-full text-center text-xl" />
-          ) : (
-            t("submitButton")
-          )}
-        </button>
-      </form>
+      <ProjectForm
+        mode="create"
+        showLivePreview
+        onSubmitProject={handleNewProject}
+        onRequireImageError={handleRequireImageError}
+      />
     </AdminLayout>
   );
 };
