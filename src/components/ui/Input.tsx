@@ -9,6 +9,8 @@ interface IInputProps
   label: string;
   error?: string;
   duration?: number;
+  containerClassName?: string;
+  labelBgClassName?: string;
 }
 
 interface ITextAreaProps
@@ -19,6 +21,8 @@ interface ITextAreaProps
   label: string;
   duration?: number;
   error?: string;
+  containerClassName?: string;
+  labelBgClassName?: string;
 }
 
 function Input({
@@ -26,11 +30,13 @@ function Input({
   error,
   duration,
   type = "text",
+  containerClassName = "w-[90%] sm:w-[90%] md:w-[90%] lg:w-[70%]",
+  labelBgClassName = "bg-black peer-focus:bg-black peer-valid:bg-black",
   ...props
 }: IInputProps): React.JSX.Element {
   const errorId = `${label}-error`;
   return (
-    <div className="w-[90%] sm:w-[90%] md:w-[90%] lg:w-[70%]">
+    <div className={containerClassName}>
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -56,12 +62,12 @@ function Input({
         <label
           htmlFor={label}
           className={`
-                    absolute left-4 top-0 -translate-y-[50%] text-sm bg-black
+                    absolute left-4 top-0 -translate-y-[50%] text-sm
                     pointer-events-none transition-all duration-300 
                     peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
                     peer-placeholder-shown:bg-transparent
-                    peer-focus:top-0 peer-focus:text-sm peer-focus:bg-black text-white px-2 
-                    peer-valid:top-0 peer-valid:bg-black peer-valid:text-sm`}
+                    peer-focus:top-0 peer-focus:text-sm text-white px-2 
+                    peer-valid:top-0 peer-valid:text-sm ${labelBgClassName}`}
         >
           {label}
         </label>
@@ -79,11 +85,13 @@ function TextArea({
   label,
   error,
   duration,
+  containerClassName = "w-[90%] sm:w-[90%] md:w-[90%] lg:w-[70%]",
+  labelBgClassName = "bg-black peer-focus:bg-black peer-valid:bg-black",
   ...props
 }: ITextAreaProps): React.JSX.Element {
   const errorId = `${label}-error`;
   return (
-    <div className="w-[90%] sm:w-[90%] md:w-[90%] lg:w-[70%]">
+    <div className={containerClassName}>
       <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
@@ -109,12 +117,12 @@ function TextArea({
         <label
           htmlFor={label}
           className={`
-                    absolute left-4 top-0 -translate-y-[50%] text-sm bg-black
+                    absolute left-4 top-0 -translate-y-[50%] text-sm
                     pointer-events-none transition-all duration-300 
                     peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
                     peer-placeholder-shown:bg-transparent
-                    peer-focus:top-0 peer-focus:text-sm peer-focus:bg-black text-white px-2 
-                    peer-valid:top-0 peer-valid:bg-black peer-valid:text-sm`}
+                    peer-focus:top-0 peer-focus:text-sm text-white px-2 
+                    peer-valid:top-0 peer-valid:text-sm ${labelBgClassName}`}
         >
           {label}
         </label>
@@ -131,3 +139,4 @@ function TextArea({
 Input.TextArea = TextArea;
 
 export { Input };
+
