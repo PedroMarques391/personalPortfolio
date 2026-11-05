@@ -19,10 +19,12 @@ export async function POST(req: NextRequest) {
     );
 
     return CookieService.setAuthCookie(response, token);
-  } catch (error: any) {
-    console.error("[login] Error to login", error.message);
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : "Erro ao realizar login.";
+    console.error("[login] Error to login", message);
     return NextResponse.json(
-      { success: false, message: error.message },
+      { success: false, message },
       { status: 400 },
     );
   }

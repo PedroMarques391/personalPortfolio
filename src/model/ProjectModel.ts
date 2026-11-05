@@ -12,6 +12,7 @@ export interface IProjectRepository {
   ): Promise<GetProjectsResponse>;
   getProjectsByUserId(userId: string): Promise<TProjectRow[]>;
   addProject(data: IProject): Promise<ResultSetHeader>;
+  updateProject(id: string, data: IProject): Promise<ResultSetHeader>;
   deleteProject(id: string): Promise<ResultSetHeader>;
 }
 

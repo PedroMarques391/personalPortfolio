@@ -43,18 +43,39 @@ export class Requests {
     return result;
   }
 
-  static async deleteProject(id: number) {
-    try {
-      const response = await fetch(`${this._urlBase}?id=${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("[fetchProjects] error to get projects", error);
+  static async updateProject(
+    id: number,
+    data: ProjectData,
+    image?: File | null,
+    currentImageURL?: string,
+  ) {
+    const imageURL = image ? await imageToBase64(image) : currentImageURL;
+
+    const response = await fetch(`${this._urlBase}?id=${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, imageURL }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
     }
+    return result;
+  }
+
+  static async deleteProject(id: number) {
+    const response = await fetch(`${this._urlBase}?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   }
 }

@@ -53,6 +53,22 @@ class ProjectRepository implements IProjectRepository {
     return rows;
   }
 
+  async updateProject(id: string, data: IProject): Promise<ResultSetHeader> {
+    const query = `UPDATE projects SET title = ?, content = ?, type = ?, tags = ?, url = ?, imageURL = ? WHERE id = ? AND user_id = ?;`;
+    const [rows] = await MySQL.execute<ResultSetHeader>(query, [
+      data.title,
+      data.content,
+      data.type,
+      data.tags,
+      data.url,
+      data.imageURL,
+      id,
+      data.user_id,
+    ]);
+
+    return rows;
+  }
+
   async deleteProject(id: string): Promise<ResultSetHeader> {
     const query = "DELETE FROM projects WHERE id = ?";
 

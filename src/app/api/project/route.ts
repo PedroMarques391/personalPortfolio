@@ -92,6 +92,45 @@ export async function POST(req: NextRequest) {
   }
 }
 
+export async function PUT(req: NextRequest) {
+  const projectRepository = new ProjectRepository();
+  const projectService = new ProjectService(projectRepository);
+  try {
+    const payload = await AuthTokenService.verifyToken(req);
+
+    const { searchParams } = req.nextUrl;
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Missing required query parameter: id.",
+        },
+        { status: 400 },
+      );
+    }
+
+    const body: IProject = await req.json();
+    const data = {
+      ...body,
+      user_id: payload.id as string,
+    };
+
+    const message = await projectService.updateProject(id, data);
+
+    return NextResponse.json({ success: true, message }, { status: 200 });
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Erro ao atualizar projeto.";
+    console.error("[update-project] Error to update project", errorMessage);
+    return NextResponse.json(
+      { success: false, message: errorMessage },
+      { status: 400 },
+    );
+  }
+}
+
 export async function DELETE(req: NextRequest) {
   const projectRepository = new ProjectRepository();
   const projectService = new ProjectService(projectRepository);

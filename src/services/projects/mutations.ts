@@ -28,5 +28,30 @@ export function useMutationProjects() {
     },
   });
 
-  return { deleteProject, createProject };
+  const updateProject = useMutation({
+    mutationFn: async ({
+      id,
+      data,
+      image,
+      currentImageURL,
+    }: {
+      id: number;
+      data: ProjectData;
+      image?: File | null;
+      currentImageURL?: string;
+    }) => {
+      await Requests.updateProject(id, data, image, currentImageURL);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["projects"] });
+      return;
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    },
+  });
+
+  return { deleteProject, createProject, updateProject };
 }

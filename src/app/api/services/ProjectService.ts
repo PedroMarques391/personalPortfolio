@@ -37,10 +37,6 @@ class ProjectService {
       throw new Error("userId is required");
     }
     const results = await this.projectRepository.getProjectsByUserId(userId);
-
-    if (results.length === 0) {
-      throw new Error("Nenhum projeto encontrado para este usuário");
-    }
     return results;
   }
 
@@ -51,6 +47,23 @@ class ProjectService {
     const project = await this.projectRepository.addProject(data);
     await CacheService.invalidateCache("projects:*");
     return `Project added successfully with id ${project.insertId}.`;
+  }
+
+  async updateProject(id: string, data: IProject): Promise<string> {
+    if (!id) {
+      throw new Error("id is required");
+    }
+    if (!data) {
+      throw new Error("Project data is required");
+    }
+    const updatedProject = await this.projectRepository.updateProject(id, data);
+
+    if (!updatedProject.affectedRows) {
+      throw new Error(`Project with id ${id} not found or unauthorized.`);
+    }
+
+    await CacheService.invalidateCache("projects:*");
+    return `Project with id ${id} updated successfully.`;
   }
 
   async deleteProject(id: string): Promise<string> {
