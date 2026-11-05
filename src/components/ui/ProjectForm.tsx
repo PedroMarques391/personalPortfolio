@@ -7,11 +7,17 @@ import ProjectTagsField from "@/components/ui/ProjectForm/ProjectTagsField";
 import { TProjectCategory } from "@/model/ProjectModel";
 import { ProjectData, createProjectScheme } from "@/validations/project.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiLoader } from "react-icons/fi";
-import { LuCpu, LuGlobe, LuServer, LuSmartphone } from "react-icons/lu";
+import {
+  LuCpu,
+  LuGlobe,
+  LuServer,
+  LuSmartphone,
+  LuSparkles,
+} from "react-icons/lu";
 
 export interface InitialProjectValues {
   id: number;
@@ -46,12 +52,14 @@ const ProjectForm = ({
 }: ProjectFormProps): React.JSX.Element => {
   const t = useTranslations("admin.addProject");
   const validationT = useTranslations("validations.project");
+  const locale = useLocale();
 
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(
     initialValues?.imageURL ?? null,
   );
   const [loading, setLoading] = useState(false);
+  const [isImproving, setIsImproving] = useState(false);
 
   const schema = useMemo(() => createProjectScheme(validationT), [validationT]);
 
@@ -116,6 +124,37 @@ const ProjectForm = ({
       icon: LuCpu,
     },
   ];
+
+  const handleImproveDescription = async () => {
+    if (!watchedContent?.trim() || isImproving) return;
+
+    try {
+      setIsImproving(true);
+      const response = await fetch("/api/chat/improve-description", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: watchedContent,
+          title: watchedTitle,
+          type: watchedType,
+          tags: watchedTags,
+          locale,
+        }),
+      });
+
+      const result = await response.json();
+      if (response.ok && result.content) {
+        setValue("content", result.content, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      }
+    } catch (error) {
+      console.error("[improve-description] Error:", error);
+    } finally {
+      setIsImproving(false);
+    }
+  };
 
   const handleFileSubmit = async (data: ProjectData) => {
     if (mode === "create" && !image) {
@@ -236,6 +275,31 @@ const ProjectForm = ({
           {...register("content")}
           error={errors.content?.message}
           label={t("descriptionLabel")}
+          actionSlot={
+            <button
+              type="button"
+              onClick={handleImproveDescription}
+              disabled={!watchedContent?.trim() || isImproving}
+              title={
+                !watchedContent?.trim()
+                  ? t("improveWithAdaHint")
+                  : t("improveWithAda")
+              }
+              className="px-3 py-1 rounded-full bg-black/30 hover:bg-gray-800 border border-white/10 hover:border-white/20 text-[11px] font-medium text-gray-dark hover:text-gray-soft flex items-center gap-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {isImproving ? (
+                <>
+                  <FiLoader size={12} className="animate-spin text-orange-400" />
+                  <span className="text-gray-soft">{t("improvingWithAda")}</span>
+                </>
+              ) : (
+                <>
+                  <LuSparkles size={12} className="text-orange-400" />
+                  <span>{t("improveWithAda")}</span>
+                </>
+              )}
+            </button>
+          }
         />
 
         <ProjectTagsField

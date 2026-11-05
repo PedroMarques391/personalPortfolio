@@ -23,6 +23,7 @@ interface ITextAreaProps
   error?: string;
   containerClassName?: string;
   labelBgClassName?: string;
+  actionSlot?: React.ReactNode;
 }
 
 function Input({
@@ -87,6 +88,7 @@ function TextArea({
   duration,
   containerClassName = "w-[90%] sm:w-[90%] md:w-[90%] lg:w-[70%]",
   labelBgClassName = "bg-black peer-focus:bg-black peer-valid:bg-black",
+  actionSlot,
   ...props
 }: ITextAreaProps): React.JSX.Element {
   const errorId = `${label}-error`;
@@ -127,10 +129,17 @@ function TextArea({
           {label}
         </label>
       </motion.div>
-      {error && (
-        <p id={errorId} role="alert" className="mb-2 text-red-500 text-sm">
-          {error}
-        </p>
+      {(error || actionSlot) && (
+        <div className="flex items-center justify-between gap-2 -mt-1 mb-1">
+          {error ? (
+            <p id={errorId} role="alert" className="text-red-500 text-sm">
+              {error}
+            </p>
+          ) : (
+            <span />
+          )}
+          {actionSlot && <div className="ml-auto">{actionSlot}</div>}
+        </div>
       )}
     </div>
   );
@@ -139,4 +148,6 @@ function TextArea({
 Input.TextArea = TextArea;
 
 export { Input };
+
+
 
