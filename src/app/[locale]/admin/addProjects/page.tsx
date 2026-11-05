@@ -1,39 +1,27 @@
 "use client";
 
-import { IMessageInterface } from "@/app/[locale]/contact/page";
 import AdminLayout from "@/components/Layout/AdminLayout";
 import ProjectForm from "@/components/ui/ProjectForm";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { Toast } from "@/components/ui/Toast";
+import { FeedbackToast } from "@/components/ui/Toast";
+import { useToastFeedback } from "@/hooks/useToastFeedback";
 import { useMutationProjects } from "@/services/projects/mutations";
 import { ProjectData } from "@/validations/project.scheme";
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
-import { IoClose } from "react-icons/io5";
+import React from "react";
 
 const Page = (): React.JSX.Element => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [message, setMessage] = useState<IMessageInterface>({
-    title: "",
-    subtitle: "",
-    content: "",
-    success: false,
-  });
+  const { open, message, triggerToast, closeToast } = useToastFeedback();
   const { createProject } = useMutationProjects();
   const t = useTranslations("admin.addProject");
 
   function handleRequireImageError() {
-    setShowModal(true);
-    setMessage({
+    triggerToast({
       title: t("noImageTitle"),
       subtitle: t("noImageSubtitle"),
       content: t("noImageContent"),
       success: false,
     });
-
-    setTimeout(() => {
-      setShowModal(false);
-    }, 3000);
   }
 
   async function handleNewProject({
@@ -51,8 +39,7 @@ const Page = (): React.JSX.Element => {
     try {
       await createProject.mutateAsync({ data, image });
 
-      setShowModal(true);
-      setMessage({
+      triggerToast({
         title: t("successTitle"),
         subtitle: t("successSubtitle"),
         content: t("successContent"),
@@ -61,18 +48,13 @@ const Page = (): React.JSX.Element => {
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : t("errorTitle");
-      setShowModal(true);
-      setMessage({
+      triggerToast({
         title: t("errorTitle"),
         subtitle: errorMessage,
         content: t("errorContent"),
         success: false,
       });
       throw error;
-    } finally {
-      setTimeout(() => {
-        setShowModal(false);
-      }, 3000);
     }
   }
 
@@ -84,16 +66,7 @@ const Page = (): React.JSX.Element => {
         id="newProject"
       />
 
-      <Toast.Root type={message.success ? "success" : "error"} open={showModal}>
-        <Toast.ActionButton onClick={() => setShowModal(false)}>
-          <Toast.Icon icon={IoClose} color="red" size={20} />
-        </Toast.ActionButton>
-        <Toast.Title>{message.title}</Toast.Title>
-        <Toast.Subtitle>{message.subtitle}</Toast.Subtitle>
-        <Toast.Content>
-          <p>{message.content}</p>
-        </Toast.Content>
-      </Toast.Root>
+      <FeedbackToast open={open} message={message} onClose={closeToast} />
 
       <ProjectForm
         mode="create"
