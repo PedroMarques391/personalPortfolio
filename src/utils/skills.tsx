@@ -40,3 +40,85 @@ export const skills: ISkillsInterface[] = [
     { icon: <SiReacthookform className="text-pink-500" />, technology: "React Hook Form" },
     { icon: <SiZod className="text-green-400" />, technology: "Zod" },
 ];
+
+export interface ITechCategory {
+    titleKey: string;
+    skills: string[];
+}
+
+export const techCategories: ITechCategory[] = [
+    {
+        titleKey: "techLanguages",
+        skills: ["JavaScript", "TypeScript", "Java", "HTML", "CSS", "SQL"],
+    },
+    {
+        titleKey: "techFrontend",
+        skills: [
+            "React.js",
+            "Next.js",
+            "Astro",
+            "SvelteKit",
+            "Vue.js",
+            "TailwindCSS",
+            "Bootstrap",
+        ],
+    },
+    {
+        titleKey: "techBackend",
+        skills: ["Node.js", "NestJS", "Express.js", "Fastify", "Spring Boot"],
+    },
+    {
+        titleKey: "techMobile",
+        skills: ["React Native", "Expo Go", "Flutter"],
+    },
+    {
+        titleKey: "techDatabase",
+        skills: [
+            "PostgreSQL",
+            "MySQL",
+            "MongoDB",
+            "Redis",
+            "SQLite",
+            "Prisma ORM",
+        ],
+    },
+    {
+        titleKey: "techTools",
+        skills: [
+            "Git",
+            "Docker",
+            "Kubernetes",
+            "AWS",
+            "Firebase",
+            "Linux",
+            "Postman",
+            "Insomnia",
+            "Swagger",
+        ],
+    },
+    {
+        titleKey: "techLibraries",
+        skills: [
+            "React Query",
+            "Material UI",
+            "Chakra UI",
+            "DaisyUI",
+            "Shadcn UI",
+            "React Native Paper",
+        ],
+    },
+];
+
+export const SUGGESTED_PROJECT_TAGS: readonly string[] = [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Node.js",
+    "TailwindCSS",
+    "Flutter",
+    "React Native",
+    "Docker",
+    "MySQL",
+    "Redis",
+] as const;
+

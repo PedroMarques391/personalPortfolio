@@ -1,34 +1,25 @@
 "use client";
 import Skeleton from "@/components/Motions/Skeleton";
+import CategoryFilterPills from "@/components/ui/CategoryFilterPills";
 import ProjectCard from "@/components/ui/ProjectCard";
 import ProjectsNotFound from "@/components/ui/ProjectsNotFound";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ViewModeToggle, { ViewMode } from "@/components/ui/ViewModeToggle";
 import { useDebounce } from "@/hooks/useDebounce";
-import { TProjectType } from "@/model/ProjectModel";
+import {
+  IProjectInterface,
+  PROJECT_FILTER_OPTIONS,
+  TProjectType,
+} from "@/model/ProjectModel";
 import { useProjects } from "@/services/projects/queries";
 import { Requests } from "@/services/requests";
 import { useQueryClient } from "@tanstack/react-query";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CgSearch } from "react-icons/cg";
-import { CiGrid2H, CiGrid41 } from "react-icons/ci";
-
-export interface IProjectInterface {
-  id: number;
-  imageURL: string;
-  title: string;
-  type: string;
-  content: React.ReactNode;
-  tags: string;
-  url: string;
-}
-
-type ViewMode = "grid" | "list";
-
-const validFilters = ["all", "web", "mobile", "api", "automações"];
 
 const ProjectsPage = (): React.JSX.Element => {
   const t = useTranslations("pages.projects");
@@ -39,7 +30,9 @@ const ProjectsPage = (): React.JSX.Element => {
   const rawViewMode = searchParams.get("view") as ViewMode;
   const rawFilter = searchParams.get("type") as TProjectType;
   const rawSearch = searchParams.get("search") || "";
-  const filter = !validFilters.includes(rawFilter?.toLowerCase())
+  const filter = !PROJECT_FILTER_OPTIONS.includes(
+    rawFilter?.toLowerCase() as TProjectType,
+  )
     ? "all"
     : (rawFilter as TProjectType);
   const view: ViewMode =
@@ -95,14 +88,13 @@ const ProjectsPage = (): React.JSX.Element => {
     });
   }, [currentPage, queryClient, totalPages, filter]);
 
-  const toggleView = () => {
-    const nextView = view === "grid" ? "list" : "grid";
+  const handleViewChange = (nextView: ViewMode) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("view", nextView);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  const handleFilter = (rule: string) => {
+  const handleFilter = (rule: TProjectType) => {
     setSearchTerm("");
     const params = new URLSearchParams(searchParams.toString());
     params.delete("search");
@@ -111,7 +103,7 @@ const ProjectsPage = (): React.JSX.Element => {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  const prefetchFilter = (filterType: string) => {
+  const prefetchFilter = (filterType: TProjectType) => {
     const type = filterType === "all" ? "all" : filterType.toLowerCase();
     const queryKey = ["projects", "all", 1, type, ""];
 
@@ -147,38 +139,15 @@ const ProjectsPage = (): React.JSX.Element => {
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">
       <SectionHeader as="h1" title={t("title")} subtitle={t("subtitle")} />
-      <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-10 w-[90%] mx-auto">
-        {validFilters.map((filterOption) => {
-          const isActive = filter.toLowerCase() === filterOption.toLowerCase();
-          return (
-            <button
-              key={filterOption}
-              type="button"
-              aria-pressed={isActive}
-              onClick={() => handleFilter(filterOption)}
-              onMouseEnter={() => prefetchFilter(filterOption)}
-              onTouchStart={() => prefetchFilter(filterOption)}
-              className={`relative uppercase rounded-xl px-5 py-2.5 text-xs md:text-sm tracking-wider transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 ${
-                isActive
-                  ? "font-bold text-white"
-                  : "bg-gray-light text-gray-dark hover:text-gray-soft"
-              }`}
-            >
-              {isActive && (
-                <motion.span
-                  layoutId="projects-filter-pill"
-                  transition={{ type: "spring", visualDuration: 0.28, bounce: 0.18 }}
-                  aria-hidden="true"
-                  className="absolute inset-0 rounded-xl bg-gray-light border border-orange-500 shadow-[0_0_18px_rgba(249,115,22,0.28)]"
-                />
-              )}
-              <span className="relative z-10">
-                {filterOption === "all" ? t("filterAll") : filterOption}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+
+      <CategoryFilterPills
+        activeFilter={filter}
+        onSelectFilter={handleFilter}
+        onPrefetchFilter={prefetchFilter}
+        allLabel={t("filterAll")}
+        layoutId="projects-filter-pill"
+        className="justify-center md:gap-4 mt-10 w-[90%] mx-auto"
+      />
 
       <div className="my-6 w-[90%] mx-auto grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
         <div className="flex justify-start space-x-2 order-2 md:order-1 col-span-1">
@@ -250,15 +219,14 @@ const ProjectsPage = (): React.JSX.Element => {
         </div>
 
         <div className="flex justify-end order-3 md:order-3 col-span-1">
-          <button
-            type="button"
-            onClick={toggleView}
-            className="bg-gray-light h-10 px-4 rounded-xl flex items-center justify-center transition-colors hover:text-orange-500 shadow-sm border-2 border-transparent hover:border-orange-500 duration-300"
-            aria-label={t("toggleViewAriaLabel")}
-            title={view === "grid" ? t("viewModeList") : t("viewModeGrid")}
-          >
-            {view === "grid" ? <CiGrid2H size={24} /> : <CiGrid41 size={24} />}
-          </button>
+          <ViewModeToggle
+            view={view}
+            onChange={handleViewChange}
+            variant="single"
+            ariaLabel={t("toggleViewAriaLabel")}
+            gridLabel={t("viewModeGrid")}
+            listLabel={t("viewModeList")}
+          />
         </div>
       </div>
 

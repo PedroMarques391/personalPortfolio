@@ -6,28 +6,20 @@ import UseTime from "@/components/Motions/ContactMotion";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { Toast } from "@/components/ui/Toast/index";
+import { FeedbackToast } from "@/components/ui/Toast";
+import { useToastFeedback } from "@/hooks/useToastFeedback";
 import { insertMaskInPhone } from "@/utils/phoneMask";
 import { ContactData, createContactScheme } from "@/validations/contact.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
-
-export interface IMessageInterface {
-  title: string;
-  subtitle: string;
-  content: string;
-  success: boolean;
-}
 
 const Contact = (): React.JSX.Element => {
   const t = useTranslations("pages.contact");
   const validationT = useTranslations("validations.contact");
   const [pending, setPending] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [message, setMessage] = useState<IMessageInterface | null>(null);
+  const { open, message, triggerToast, closeToast } = useToastFeedback();
 
   const schema = useMemo(() => createContactScheme(validationT), [validationT]);
 
@@ -57,22 +49,20 @@ const Contact = (): React.JSX.Element => {
         throw new Error("Failed to send message");
       }
 
-      setMessage({
+      triggerToast({
         title: t("successTitle"),
         subtitle: t("successSubtitle"),
         content: t("successContent"),
         success: true,
       });
-      setShowModal(true);
       reset();
     } catch {
-      setMessage({
+      triggerToast({
         title: t("errorTitle"),
         subtitle: t("errorSubtitle"),
         content: t("errorContent"),
         success: false,
       });
-      setShowModal(true);
     } finally {
       setPending(false);
     }
@@ -84,32 +74,11 @@ const Contact = (): React.JSX.Element => {
     clearErrors("phone");
   }
 
-  useEffect(() => {
-    if (!showModal) return;
-    const timer = setTimeout(() => {
-      setShowModal(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [showModal]);
-
   return (
     <section className="w-full flex flex-col justify-center items-center relative overflow-hidden">
       <UseTime />
 
-      <Toast.Root
-        type={message?.success ? "success" : "error"}
-        open={showModal}
-      >
-        <Toast.ActionButton onClick={() => setShowModal(false)}>
-          <Toast.Icon icon={GrClose} color="red" size={20} />
-        </Toast.ActionButton>
-        <Toast.Title>{message?.title}</Toast.Title>
-        <Toast.Subtitle>{message?.subtitle}</Toast.Subtitle>
-        <Toast.Content>
-          <p>{message?.content}</p>
-        </Toast.Content>
-      </Toast.Root>
+      <FeedbackToast open={open} message={message} onClose={closeToast} />
 
       <SectionHeader
         as="h1"

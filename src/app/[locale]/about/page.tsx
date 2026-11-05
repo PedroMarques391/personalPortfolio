@@ -10,6 +10,7 @@ import {
   staggerContainer,
   staggerFastContainer,
 } from "@/utils/motion";
+import { techCategories } from "@/utils/skills";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -19,69 +20,6 @@ import cat from "../../../../public/assets/aboutImage.jpeg";
 
 const About = (): React.JSX.Element => {
   const t = useTranslations("pages.about");
-
-  const languages: string[] = [
-    "JavaScript",
-    "TypeScript",
-    "Java",
-    "HTML",
-    "CSS",
-    "SQL",
-  ];
-  const frontend: string[] = [
-    "React.js",
-    "Next.js",
-    "Astro",
-    "SvelteKit",
-    "Vue.js",
-    "TailwindCSS",
-    "Bootstrap",
-  ];
-  const backend: string[] = [
-    "Node.js",
-    "NestJS",
-    "Express.js",
-    "Fastify",
-    "Spring Boot",
-  ];
-  const database: string[] = [
-    "PostgreSQL",
-    "MySQL",
-    "MongoDB",
-    "Redis",
-    "SQLite",
-    "Prisma ORM",
-  ];
-  const mobile: string[] = ["React Native", "Expo Go", "Flutter"];
-  const tools: string[] = [
-    "Git",
-    "Docker",
-    "Kubernetes",
-    "AWS",
-    "Firebase",
-    "Linux",
-    "Postman",
-    "Insomnia",
-    "Swagger",
-  ];
-  const libraries: string[] = [
-    "React Query",
-    "Material UI",
-    "Chakra UI",
-    "DaisyUI",
-    "Shadcn UI",
-    "React Native Paper",
-  ];
-
-  const techCategories = [
-    { titleKey: "techLanguages", skills: languages },
-    { titleKey: "techFrontend", skills: frontend },
-    { titleKey: "techBackend", skills: backend },
-    { titleKey: "techMobile", skills: mobile },
-    { titleKey: "techDatabase", skills: database },
-    { titleKey: "techTools", skills: tools },
-    { titleKey: "techLibraries", skills: libraries },
-  ];
 
   return (
     <div className="w-full flex flex-col mb-10">
