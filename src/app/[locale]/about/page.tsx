@@ -1,9 +1,15 @@
 "use client";
 
+import Tilt3DCard from "@/components/Motions/Tilt3DCard";
 import { Button } from "@/components/ui/Button";
 import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import TechList from "@/components/ui/TechList";
 import Handler from "@/utils/handler";
+import {
+  fadeUpBlur,
+  staggerContainer,
+  staggerFastContainer,
+} from "@/utils/motion";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -79,83 +85,115 @@ const About = (): React.JSX.Element => {
 
   return (
     <div className="w-full flex flex-col mb-10">
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-10">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
         <motion.section
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, type: "spring" }}
-          className="lg:col-span-2 order-2 md:order-1 "
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+          className="lg:col-span-2 order-2 md:order-1"
         >
-          <div className="p-0 md:p-4 text-gray-soft w-full lg:w-[90%] text-center  mx-auto md:mx-0">
-            <h1 className="text-xl lg:text-2xl font-bold font-serif w-full  md:text-left">
+          <div className="p-0 md:p-4 text-gray-soft w-full lg:w-[90%] text-center mx-auto md:mx-0">
+            <motion.h1
+              variants={fadeUpBlur}
+              className="text-2xl lg:text-3xl font-bold text-white w-full md:text-left tracking-tight"
+            >
               {t("greeting")}
-            </h1>
+            </motion.h1>
 
-            <p className="text-sm md:text-base lg:text-lg mt-10 mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
+            <motion.p
+              variants={fadeUpBlur}
+              className="text-sm md:text-base lg:text-lg mt-8 mb-4 text-left leading-relaxed break-words max-w-prose"
+            >
               {t("bioParagraph1")}
-            </p>
+            </motion.p>
 
-            <p className="text-sm md:text-base lg:text-lg mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
+            <motion.p
+              variants={fadeUpBlur}
+              className="text-sm md:text-base lg:text-lg mb-4 text-left leading-relaxed break-words max-w-prose"
+            >
               {t("bioParagraph2")}
-            </p>
+            </motion.p>
 
-            <p className="text-sm md:text-base lg:text-lg mb-4 text-left lg:text-justify leading-relaxed hyphens-none break-words">
+            <motion.p
+              variants={fadeUpBlur}
+              className="text-sm md:text-base lg:text-lg mb-4 text-left leading-relaxed break-words max-w-prose"
+            >
               {t("bioParagraph3")}
-            </p>
+            </motion.p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 mt-8 ml-3">
+          <motion.div
+            variants={fadeUpBlur}
+            className="flex flex-wrap items-center gap-4 mt-8 md:ml-4"
+          >
             <Button
+              type="button"
               onClick={Handler.download}
-              styles={
-                "bg-gray-800 w-auto px-6 py-3 rounded-md hover:scale-105 transition-transform duration-300 hover:border hover:border-white hover:text-white text-gray-300"
-              }
+              styles="bg-gray-800 w-auto px-6 py-3 rounded-md hover:scale-105 transition-transform duration-300 hover:border hover:border-white hover:text-white text-gray-300"
             >
-              <p>
-                <BiDownload size={20} />
-              </p>
-              <p className=" font-medium">{t("downloadCvText")}</p>
+              <BiDownload size={20} />
+              <span className="font-medium">{t("downloadCvText")}</span>
             </Button>
             <AdaCallButton />
-          </div>
+          </motion.div>
         </motion.section>
         <motion.section
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, type: "spring" }}
+          initial={{ opacity: 0, x: 20, scale: 0.96 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="lg:col-span-1 flex justify-center items-center order-1 md:order-2"
         >
-          <div className="w-[90%] h-auto mx-auto">
-            <Image
-              src={cat}
-              alt={t("profileImageAlt")}
-              width={"300"}
-              height={"300"}
-              priority
-              className="object-cover mx-auto w-auto h-auto"
-              placeholder="blur"
-            />
+          <div className="w-[90%] max-w-[320px] h-auto mx-auto">
+            <Tilt3DCard
+              maxTilt={10}
+              glareOpacity={0.2}
+              perspective={900}
+              className="relative p-3 rounded-2xl bg-gradient-to-br from-white/[0.06] to-transparent border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+            >
+              <div
+                aria-hidden="true"
+                style={{ transform: "translateZ(-15px)" }}
+                className="absolute inset-3 rounded-xl border border-orange-500/30 pointer-events-none"
+              />
+              <div style={{ transform: "translateZ(20px)" }}>
+                <Image
+                  src={cat}
+                  alt={t("profileImageAlt")}
+                  width={300}
+                  height={300}
+                  priority
+                  className="object-cover mx-auto w-full h-auto rounded-xl shadow-lg"
+                  placeholder="blur"
+                />
+              </div>
+            </Tilt3DCard>
           </div>
         </motion.section>
       </div>
-      <div className="w-[90%] md:w-full  flex flex-col justify-center items-center mx-auto">
-        <h1 className="text-gray-dark text-2xl font-mono py-10 text-center md:text-left w-full">
+      <div className="w-[90%] md:w-full flex flex-col justify-center items-center mx-auto">
+        <h2 className="text-gray-dark text-2xl font-mono py-10 text-center md:text-left w-full">
           {t("technologiesTitle")}
-        </h1>
+        </h2>
         <div className="w-full flex flex-col gap-6">
           {techCategories.map((category, index) => (
             <div
               key={index}
               className="flex flex-col md:flex-row md:items-center gap-4"
             >
-              <h2 className="text-gray-soft text md:text-2xl font-semibold w-48 text-left shrink-0">
+              <h3 className="text-gray-soft text-lg md:text-xl font-semibold w-48 text-left shrink-0">
                 {t(category.titleKey as any)}
-              </h2>
-              <ul className="flex flex-wrap gap-3">
+              </h3>
+              <motion.ul
+                variants={staggerFastContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                className="flex flex-wrap gap-3"
+              >
                 {category.skills.map((skill, i) => (
                   <TechList key={i}>{skill}</TechList>
                 ))}
-              </ul>
+              </motion.ul>
             </div>
           ))}
         </div>
