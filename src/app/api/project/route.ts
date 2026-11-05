@@ -51,8 +51,10 @@ export async function GET(req: NextRequest) {
     }
 
     throw new Error("Invalid role parameter.");
-  } catch (error: any) {
-    console.error("[get-projects] Error to get projects:", error.message);
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    console.error("[get-projects] Error to get projects:", errorMessage);
 
     return NextResponse.json(
       {
@@ -79,10 +81,12 @@ export async function POST(req: NextRequest) {
     const message = await projectService.addProject(data);
 
     return NextResponse.json({ success: true, message }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Erro ao adicionar projeto.";
     console.error("[add-project] Error to add project", error);
     return NextResponse.json(
-      { success: false, message: error.message },
+      { success: false, message: errorMessage },
       { status: 500 },
     );
   }
@@ -92,6 +96,8 @@ export async function DELETE(req: NextRequest) {
   const projectRepository = new ProjectRepository();
   const projectService = new ProjectService(projectRepository);
   try {
+    await AuthTokenService.verifyToken(req);
+
     const { searchParams } = req.nextUrl;
     const id = searchParams.get("id");
 
@@ -111,14 +117,16 @@ export async function DELETE(req: NextRequest) {
       { success: true, message: "Projeto deletado com sucesso." },
       { status: 200 },
     );
-  } catch (error: any) {
-    console.error("[delete-project] Error to delete project", error.message);
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Erro ao deletar projeto, tente novamente.";
+    console.error("[delete-project] Error to delete project", errorMessage);
     return NextResponse.json(
       {
         success: false,
-        message: error.message
-          ? error.message
-          : "Erro ao deletar projeto, tente novemente.",
+        message: errorMessage,
       },
       { status: 400 },
     );

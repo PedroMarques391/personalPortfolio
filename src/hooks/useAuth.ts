@@ -24,8 +24,8 @@ function useAuth() {
       }
 
       route.push("/admin/addProjects");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Erro ao autenticar.");
       setTimeout(() => {
         setError("");
       }, 2000);

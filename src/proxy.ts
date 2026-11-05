@@ -8,10 +8,7 @@ const handleI18nRouting = createMiddleware(routing);
 const protectedRoutes = [
   "/admin/addProjects",
   "/admin/myProjects",
-  "/api/project/add-project",
-  "/api/project/auth/logout",
-  "/api/project/get-project/user-projects",
-  "/api/project/delete-project",
+  "/api/auth/logout",
 ];
 
 export default async function proxy(req: NextRequest) {
@@ -28,10 +25,19 @@ export default async function proxy(req: NextRequest) {
   if (isProtectedRoute) {
     try {
       await AuthTokenService.verifyToken(req);
-    } catch (err) {
-      console.log("[middleware] Error verifying token", err);
+    } catch {
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json(
+          { success: false, message: "Unauthorized" },
+          { status: 401 },
+        );
+      }
       return NextResponse.redirect(new URL("/", req.url));
     }
+  }
+
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next();
   }
 
   return handleI18nRouting(req);
@@ -39,10 +45,7 @@ export default async function proxy(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|images|assets|.*\\..*).*)",
-    "/api/project/add-project/:path*",
-    "/api/project/auth/logout/:path*",
-    "/api/project/get-project/user-projects/:path*",
-    "/api/project/delete-project/:path*",
+    "/((?!api|_next/static|_next/image|favicon.ico|images|assets|file|.*\\..*).*)",
+    "/api/auth/logout/:path*",
   ],
 };

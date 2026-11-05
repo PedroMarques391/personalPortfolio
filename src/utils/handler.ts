@@ -1,8 +1,8 @@
 export default class Handler {
   static download(): void {
     const link = document.createElement("a");
-    link.href = "/curriculo.pdf";
-    link.download = "curriculo.pdf";
+    link.href = "/file/pedro-marques-fullstack.pdf";
+    link.download = "pedro-marques-fullstack.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

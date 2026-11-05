@@ -49,10 +49,15 @@ export async function POST(req: NextRequest) {
     });
 
     return result.toUIMessageStreamResponse();
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error("Error in /api/chat:", e);
-    return new Response(JSON.stringify({ error: e.message }), {
-      status: e.status ?? 500,
+    const message = e instanceof Error ? e.message : "Internal Server Error";
+    const status =
+      typeof e === "object" && e !== null && "status" in e && typeof (e as { status: unknown }).status === "number"
+        ? (e as { status: number }).status
+        : 500;
+    return new Response(JSON.stringify({ error: message }), {
+      status,
       headers: { "Content-Type": "application/json" },
     });
   }

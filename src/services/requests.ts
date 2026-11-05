@@ -6,14 +6,18 @@ export class Requests {
 
   static async getProject(url: string) {
     try {
-      const response = await fetch(url);
+      const resolvedUrl =
+        typeof window === "undefined" && url.startsWith("/")
+          ? `${process.env.NEXT_PUBLIC_URL_BASE || "http://localhost:3000"}${url}`
+          : url;
+
+      const response = await fetch(resolvedUrl);
       const data = await response.json();
       if (!data.success) {
         throw new Error(data.message);
       }
       return data;
-    } catch (error) {
-      console.log("[fetchProjects] error to get projects", error);
+    } catch {
       return {
         success: false,
         message: "Erro ao buscar os projetos. Tente novamente.",

@@ -21,8 +21,10 @@ export function useMutationProjects() {
       await queryClient.invalidateQueries({ queryKey: ["projects"] });
       return;
     },
-    onError: (error: any) => {
-      console.log(error.message);
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
     },
   });
 

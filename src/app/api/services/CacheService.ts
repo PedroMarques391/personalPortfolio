@@ -2,6 +2,7 @@ import redis from "@/redis/connection";
 
 class CacheService {
   static async setCache<T>(key: string, value: T, ttl: number): Promise<void> {
+    if (!redis.isReady) return;
     try {
       await redis.setEx(key, ttl, JSON.stringify(value));
     } catch (error) {
@@ -13,6 +14,7 @@ class CacheService {
   }
 
   static async getCache<T>(key: string): Promise<T | null> {
+    if (!redis.isReady) return null;
     try {
       const value = await redis.get(key);
       if (!value) return null;
@@ -27,6 +29,7 @@ class CacheService {
   }
 
   static async invalidateCache(pattern: string): Promise<void> {
+    if (!redis.isReady) return;
     try {
       const keys = await redis.keys(pattern);
       if (keys.length > 0) {
