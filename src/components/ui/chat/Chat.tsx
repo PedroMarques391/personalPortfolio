@@ -1,18 +1,13 @@
-import { getTimeForMessage } from "@/utils/time";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import {
-  BsArrowsAngleExpand,
-  BsArrowsMove,
-  BsSendArrowUp,
-} from "react-icons/bs";
+import React, { useState } from "react";
+import { BsArrowsAngleExpand, BsArrowsMove } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
 import Ada from "../../../../public/assets/ada.webp";
 import { Modal } from "../Modal";
-import ChatBubble from "./ChatBubble";
+import ChatFooter from "./ChatFooter";
+import ChatMessageList from "./ChatMessageList";
 
 interface ChatProps {
   showChatModal: boolean;
@@ -23,19 +18,10 @@ const Chat = ({
   showChatModal,
   handleCloseModal,
 }: ChatProps): React.JSX.Element => {
-  const [input, setInput] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isCentered, setIsCentered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const t = useTranslations("components.chat");
   const locale = useLocale();
-
-  const suggestions: string[] = [
-    t("suggestion1"),
-    t("suggestion2"),
-    t("suggestion3"),
-    t("suggestion4"),
-  ];
 
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
@@ -65,7 +51,6 @@ const Chat = ({
         {
           id: `error-${Date.now()}`,
           role: "assistant",
-
           content: errorMessage,
           parts: [
             {
@@ -78,25 +63,6 @@ const Chat = ({
       ]);
     },
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    sendMessage({ text: input });
-    setInput("");
-  };
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const handleCenterModal = () => {
-    setIsCentered((prev) => !prev);
-  };
-
-  const handleExpandModal = () => {
-    setIsExpanded((prev) => !prev);
-  };
 
   return (
     <Modal.Root
@@ -119,7 +85,7 @@ const Chat = ({
             aria-label={t("centerLabel")}
             aria-roledescription="button"
             title={t("centerLabel")}
-            onClick={handleCenterModal}
+            onClick={() => setIsCentered((prev) => !prev)}
           >
             <BsArrowsMove
               size={16}
@@ -130,7 +96,7 @@ const Chat = ({
             aria-label={t("expandLabel")}
             aria-roledescription="button"
             title={t("expandLabel")}
-            onClick={handleExpandModal}
+            onClick={() => setIsExpanded((prev) => !prev)}
           >
             <BsArrowsAngleExpand
               size={16}
@@ -148,131 +114,8 @@ const Chat = ({
         </div>
       </Modal.Header>
 
-      <Modal.Content>
-        <p className=" text-gray-dark text-center">{t("todayLabel")}</p>
-
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={
-              message.role === "user"
-                ? "flex flex-col items-end gap-1 ml-auto max-w-[75%]"
-                : "flex items-end gap-2.5 max-w-[85%]"
-            }
-          >
-            {message.role !== "user" && (
-              <Image
-                src={Ada}
-                alt="Ada"
-                width={28}
-                height={28}
-                className="rounded-full object-cover w-7 h-7 flex-shrink-0"
-              />
-            )}
-
-            <div
-              className={message.role !== "user" ? "flex flex-col gap-1" : ""}
-            >
-              {message.role !== "user" && (
-                <p className="text-[11px] text-gray-dark font-medium">Ada </p>
-              )}
-
-              {message.parts.map((part, i) => {
-                switch (part.type) {
-                  case "text":
-                    return (
-                      <ChatBubble
-                        key={`${message.id}-${i}`}
-                        message={part.text}
-                        role={message.role as "user" | "assistant"}
-                        id={message.id}
-                        index={i}
-                        time={getTimeForMessage(message.id, i)}
-                      />
-                    );
-                  case "tool-recentsProjects":
-                    if ("state" in part && part.state === "output-available") {
-                      const result = part.output as {
-                        answer: string;
-                        lastProjecs: string;
-                      };
-                      const messageText = result
-                        ? `${result.lastProjecs}`
-                        : t("fetchingProjects");
-                      return (
-                        <ChatBubble
-                          key={`${message.id}-${i}`}
-                          message={messageText}
-                          role={message.role as "user" | "assistant"}
-                          id={message.id}
-                          index={i}
-                          time={getTimeForMessage(message.id, i)}
-                        />
-                      );
-                    }
-                    return null;
-
-                  case "tool-whoAreYou":
-                    if ("state" in part && part.state === "output-available") {
-                      const { response } = part.output as { response: string };
-                      return (
-                        <ChatBubble
-                          key={`${message.id}-${i}`}
-                          message={response}
-                          role={message.role as "user" | "assistant"}
-                          id={message.id}
-                          index={i}
-                          time={getTimeForMessage(message.id, i)}
-                        />
-                      );
-                    }
-                    return null;
-
-                  default:
-                    return null;
-                }
-              })}
-            </div>
-          </div>
-        ))}
-
-        <div ref={messagesEndRef} />
-      </Modal.Content>
-
-      <Modal.Footer>
-        <div className="grid grid-cols-2 gap-2 px-4 w-full max-w-4xl mx-auto">
-          {suggestions.map((suggestion) => (
-            <button
-              key={suggestion}
-              onClick={() => sendMessage({ text: suggestion })}
-              className="px-4 py-2 bg-gray-light text-gray-soft text-sm rounded-xl hover:text-orange-400 transition-colors border-2 border-transparent hover:border-orange-500 duration-300"
-            >
-              {suggestion}
-            </button>
-          ))}
-        </div>
-
-        <form
-          onSubmit={handleSubmit}
-          className="flex items-center gap-2 w-full max-w-5xl mx-auto"
-        >
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={t("inputPlaceholder")}
-            className="flex-1 bg-gray-light text-gray-soft text-sm rounded-xl px-4 py-2.5 placeholder:text-gray-dark/50 focus:outline-none outline-none focus:ring-1 focus:ring-orange-500/30 border border-white/5 transition-all disabled:opacity-50"
-          />
-          <Modal.ActionButton
-            type="submit"
-            className="bg-orange-500 hover:bg-orange-400 text-black p-2.5 rounded-xl transition-colors flex-shrink-0 disabled:opacity-50 disabled:hover:bg-orange-500"
-            aria-label={t("sendAriaLabel")}
-            disabled={!input.trim()}
-          >
-            <BsSendArrowUp size={16} />
-          </Modal.ActionButton>
-        </form>
-      </Modal.Footer>
+      <ChatMessageList messages={messages} />
+      <ChatFooter onSendMessage={(text) => sendMessage({ text })} />
     </Modal.Root>
   );
 };
