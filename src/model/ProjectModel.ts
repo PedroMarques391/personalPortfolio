@@ -1,6 +1,16 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 
-export type TProjectType = "all" | "web" | "mobile" | "automações" | "api";
+export type TProjectCategory = "web" | "mobile" | "automações" | "api";
+
+export type TProjectType = "all" | TProjectCategory;
+
+export const PROJECT_FILTER_OPTIONS: readonly TProjectType[] = [
+  "all",
+  "web",
+  "mobile",
+  "api",
+  "automações",
+] as const;
 
 export type GetProjectsResponse = { rows: TProjectRow[]; total: number };
 
@@ -28,4 +38,15 @@ export interface IProject {
   total?: number;
 }
 
+export interface IProjectInterface {
+  id: number;
+  imageURL: string;
+  title: string;
+  type: TProjectCategory;
+  content: string;
+  tags: string;
+  url: string;
+}
+
 export type TProjectRow = IProject & RowDataPacket;
+
