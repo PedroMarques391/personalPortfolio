@@ -1,6 +1,6 @@
 "use client";
 import { motion, useInView } from "motion/react";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import { useRef } from "react";
 import { IconType } from "react-icons";
 
@@ -8,6 +8,14 @@ interface IButtonProps extends React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > {
+  children: React.ReactNode;
+  styles?: string;
+  duration?: number;
+}
+
+interface IButtonLinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>,
+    LinkProps {
   children: React.ReactNode;
   styles?: string;
   duration?: number;
@@ -24,7 +32,7 @@ interface IButtonFooterProps extends React.DetailedHTMLProps<
 
 function Button({
   children,
-  styles,
+  styles = "",
   duration = 0.5,
   ...props
 }: IButtonProps): React.JSX.Element {
@@ -37,10 +45,33 @@ function Button({
       <button
         {...props}
         className={`p-4 border border-transparent flex gap-2 text-sm items-center justify-center rounded-3xl bg-gray-light w-40 
-                hover:border-orange-400 hover:scale-110 hover:text-orange-400 transform origin-center z-10 duration-300 ease-in-out ${styles}`}
+                hover:border-orange-400 hover:scale-105 hover:text-orange-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 transform origin-center z-10 duration-300 ease-in-out ${styles}`}
       >
         {children}
       </button>
+    </motion.div>
+  );
+}
+
+function ButtonLink({
+  children,
+  styles = "",
+  duration = 0.5,
+  ...props
+}: IButtonLinkProps): React.JSX.Element {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: duration, ease: "easeInOut" }}
+    >
+      <Link
+        {...props}
+        className={`p-4 border border-transparent flex gap-2 text-sm items-center justify-center rounded-3xl bg-gray-light w-40 
+                hover:border-orange-400 hover:scale-105 hover:text-orange-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 transform origin-center z-10 duration-300 ease-in-out ${styles}`}
+      >
+        {children}
+      </Link>
     </motion.div>
   );
 }
@@ -64,8 +95,8 @@ function Footer({
       prefetch
       target="_blank"
       rel="noopener noreferrer"
-      className="block py-2 text-base md:text-xl tracking-wider text-gray-dark text-center px-2 duration-200"
-      aria-label={`Abrir link ${children} em uma nova aba`}
+      className="block py-2 text-base md:text-xl tracking-wider text-gray-dark text-center px-2 duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md"
+      aria-label={`${children}`}
     >
       <motion.p
         ref={ref}
@@ -101,22 +132,24 @@ function Float({
 
   return (
     <button
+      type="button"
+      aria-label="Scroll to top"
+      aria-hidden={!show}
+      tabIndex={show ? 0 : -1}
       onClick={onClick}
-      className={`w-10 h-10 sm:h-12 sm:w-12 bg-white/30 justify-center items-center flex fixed bottom-10 right-5 md:right-10 rounded-xl duration-500 transition-opacity ${
-        show ? "opacity-1" : "opacity-0"
+      className={`w-12 h-12 bg-gray-light/90 backdrop-blur-md border border-white/15 text-orange-500 hover:bg-orange-500 hover:text-black shadow-lg justify-center items-center flex fixed bottom-10 rounded-full duration-300 transition-all z-30 ${
+        show
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 translate-y-4 pointer-events-none"
       } ${side === "left" ? "left-5 md:left-10" : "right-5 md:right-10"}`}
     >
-      <Icon
-        aria-label="Scroll To Top"
-        className="text-4xl md:text-6xl"
-        color="#1c1c1c"
-      />
+      <Icon aria-hidden="true" className="text-2xl md:text-3xl" />
     </button>
   );
 }
 
+Button.Link = ButtonLink;
 Button.Footer = Footer;
-
 Button.Float = Float;
 
 export { Button };

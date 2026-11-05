@@ -1,5 +1,5 @@
-"use client";
 import { usePathname } from "@/i18n/navigation";
+import { spring } from "@/utils/motion";
 import { motion, useInView } from "motion/react";
 import Link, { LinkProps } from "next/link";
 import { useRef } from "react";
@@ -22,25 +22,35 @@ const NavItems = ({
 }: INavItemsProps): React.JSX.Element => {
   const pathName: string = usePathname();
   const hrefPathname = typeof href === "string" ? href : href?.pathname;
+  const normalizedTarget = hrefPathname?.replace(/^\/(pt|en)/, "") || "/";
   const isCurrentPath: boolean =
-    pathName === hrefPathname?.replace(/^\/(pt|en)/, "");
+    pathName === normalizedTarget ||
+    (normalizedTarget === "/" && pathName === "");
   return (
-    <li
-      className={`text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2 `}
-    >
+    <li className="text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2">
       <Link
         {...props}
         href={href}
-        className=" w-full h-full block py-4"
+        aria-current={isCurrentPath ? "page" : undefined}
+        className={`w-full h-full block py-4 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md ${
+          isCurrentPath ? "text-white font-medium" : "text-gray-soft hover:text-white"
+        }`}
         prefetch={true}
-        replace
       >
         {children}
-        <p
-          className={`absolute bottom-0 left-0 group-hover:w-full group-hover:bg-orange-500/70 h-1 bg-orange-500 transition-all duration-300 ${
-            isCurrentPath ? "w-full group-hover:bg-orange-500" : "w-0"
-          }`}
-        />
+        {isCurrentPath ? (
+          <motion.span
+            layoutId="navbar-active-indicator"
+            transition={spring.snappy}
+            aria-hidden="true"
+            className="absolute bottom-0 left-0 right-0 h-1 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.6)]"
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-3/4 h-0.5 bg-orange-500/60 transition-all duration-300 rounded-full"
+          />
+        )}
       </Link>
     </li>
   );

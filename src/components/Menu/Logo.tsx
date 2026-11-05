@@ -9,8 +9,7 @@ const Logo = (): React.JSX.Element => {
       href={`/${locale}/`}
       locale={undefined}
       prefetch
-      replace
-      className="absolute top-[50%] -translate-y-[50%] left-5 text-white flex flex-col text-lg leading-5"
+      className="absolute top-[50%] -translate-y-[50%] left-5 text-white flex flex-col text-lg leading-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md p-1"
     >
       <code>{"<Pedro"}</code>
       <code className="text-orange-400 ml-5 md:ml-7">{"Marques/>"}</code>

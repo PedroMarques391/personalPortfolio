@@ -8,9 +8,7 @@ interface IChatModalContext {
   closeChat: () => void;
 }
 
-export const ChatModalContext = createContext<IChatModalContext>(
-  {} as IChatModalContext,
-);
+export const ChatModalContext = createContext<IChatModalContext | null>(null);
 
 export const ChatModalProvider = ({
   children,

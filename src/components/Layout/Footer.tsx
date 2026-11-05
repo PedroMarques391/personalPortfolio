@@ -68,23 +68,26 @@ const Footer = (): React.JSX.Element => {
   }
 
   return (
-    <footer className="bg-gray-light w-full py-10 stycky bottom-0 ">
-      <section className="grid grid-col-1 md:grid-cols-2 w-[90%] lg:w-[80%] mx-auto gap-2">
-        <div className="flex gap-5 flex-col text-white w-full ">
-          <h1 className="text-gray-dark font-mono text-2xl text-center md:text-left md:text-3xl tracking-wider ">
+    <footer className="bg-gray-light w-full py-10">
+      <section className="grid grid-cols-1 md:grid-cols-2 w-[90%] lg:w-[80%] mx-auto gap-6">
+        <div className="flex gap-4 flex-col text-white w-full">
+          <h2 className="text-gray-dark font-mono text-2xl text-center md:text-left md:text-3xl tracking-wider">
             Pedro Marques
-          </h1>
-          <p className="text-gray-soft text-mono text-xl text-justify md:text-left lg:text-justify shrink-0 hyphens-none lg:w-[80%] ">
+          </h2>
+          <p className="text-gray-soft font-mono text-base md:text-lg text-left leading-relaxed lg:w-[85%]">
             {t("description")}
           </p>
         </div>
-        <hr className=" mt-2 md:hidden" />
+        <hr className="mt-2 border-white/10 md:hidden" />
         <div className="flex flex-col gap-5 text-white w-full">
-          <div className="grid grid-cols-2 mt-10 md:mt-0 mx-auto  gap-10">
-            <nav className="w-full flex flex-col justify-start items-center">
-              <h1 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
+          <div className="grid grid-cols-2 mt-6 md:mt-0 mx-auto gap-10">
+            <nav
+              aria-label={t("navigationTitle")}
+              className="w-full flex flex-col justify-start items-center"
+            >
+              <h2 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
                 {t("navigationTitle")}
-              </h1>
+              </h2>
               <ul className="space-y-2 flex flex-col">
                 {navLinkItems.map((navItem, index) => (
                   <NavItems
@@ -98,11 +101,14 @@ const Footer = (): React.JSX.Element => {
               </ul>
             </nav>
 
-            <nav className="w-full flex flex-col justify-start items-center">
-              <h1 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
+            <nav
+              aria-label={t("socialTitle")}
+              className="w-full flex flex-col justify-start items-center"
+            >
+              <h2 className="text-[16px] md:text-xl lg:text-2xl font-mono tracking-wider font-semibold text-gray-dark mb-3">
                 {t("socialTitle")}
-              </h1>
-              <div className="space-y-2 md:space-y-5">
+              </h2>
+              <div className="space-y-2 md:space-y-4">
                 {socialItems.map((socialItem, index) => (
                   <Button.Footer
                     key={index}

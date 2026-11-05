@@ -10,7 +10,7 @@ import {
   BsSendArrowUp,
 } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
-import Ada from "../../../../public/assets/ada.jpg";
+import Ada from "../../../../public/assets/ada.webp";
 import { Modal } from "../Modal";
 import ChatBubble from "./ChatBubble";
 
@@ -44,13 +44,18 @@ const Chat = ({
         "x-locale": locale,
       },
     }),
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       let errorMessage = t("genericError");
+      const errMsg = e instanceof Error ? e.message : "";
+      const errStatus =
+        typeof e === "object" && e !== null && "status" in e
+          ? (e as { status?: number }).status
+          : undefined;
 
       if (
-        e.message?.includes("credits") ||
-        e.message?.includes("tokens") ||
-        e.status === 402
+        errMsg.includes("credits") ||
+        errMsg.includes("tokens") ||
+        errStatus === 402
       ) {
         errorMessage = t("creditsError");
       }

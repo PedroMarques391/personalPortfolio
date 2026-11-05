@@ -29,8 +29,8 @@ export function Root({
     }
   }, [open]);
 
-  let sizeClasses = "w-[42rem] h-[32rem]";
-  if (size === "expanded") sizeClasses = "w-[90vw] h-[90vh]";
+  let sizeClasses = "w-[94vw] max-w-[42rem] h-[82vh] max-h-[34rem]";
+  if (size === "expanded") sizeClasses = "w-[94vw] h-[90vh]";
   if (size === "fullscreen") sizeClasses = "w-screen h-screen";
 
   return (
@@ -38,20 +38,25 @@ export function Root({
       {open && (
         <motion.dialog
           ref={modalRef}
+          onCancel={(e) => {
+            e.preventDefault();
+            onClose?.();
+          }}
           layout
           transition={{ duration: 0.3, ease: "easeOut" }}
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className={`bg-[#111111] rounded-2xl text-white backdrop:bg-black/90 p-0 outline-none shadow-[0_8px_40px_rgba(0,0,0,0.6)] border border-white/5 overflow-hidden fixed  flex flex-col z-50 ${sizeClasses} ${position === "bottom-right" ? "ml-auto mt-auto mb-2 mr-2" : ""} ${className}`}
+          className={`bg-[#111111] rounded-2xl text-white backdrop:bg-black/80 p-0 outline-none shadow-[0_8px_40px_rgba(0,0,0,0.6)] border border-white/10 overflow-hidden fixed flex flex-col z-50 ${sizeClasses} ${position === "bottom-right" ? "ml-auto mt-auto mb-2 mr-2" : ""} ${className}`}
         >
           <div className="w-full h-full flex flex-col relative">
             {showCloseButton && (
               <button
+                type="button"
                 onClick={onClose}
                 className="absolute top-0 right-0 m-1 w-fit h-fit p-1 rounded-lg"
-                aria-label="Fechar"
-                title="Fechar"
+                aria-label="Close"
+                title="Close"
               >
                 <CgClose size={16} className="text-gray-200" />
               </button>
