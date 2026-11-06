@@ -1,3 +1,5 @@
+import React, { memo } from "react";
+
 type ChatBubbleProps = {
   message: string;
   role: "user" | "assistant" | "system";
@@ -9,12 +11,10 @@ type ChatBubbleProps = {
 const ChatBubble = ({
   message,
   role,
-  id,
-  index,
   time,
 }: ChatBubbleProps): React.JSX.Element => {
   return (
-    <div key={`${id}-${index}`} className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1">
       <div
         className={
           role === "user"
@@ -35,4 +35,4 @@ const ChatBubble = ({
   );
 };
 
-export default ChatBubble;
+export default memo(ChatBubble);

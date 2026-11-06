@@ -45,6 +45,7 @@ const Page = (): React.JSX.Element => {
 
         <Input
           duration={0.5}
+          type="password"
           {...register("password")}
           error={errors.password?.message}
           label={t("passwordLabel")}

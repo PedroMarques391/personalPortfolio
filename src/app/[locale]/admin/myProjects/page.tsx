@@ -19,7 +19,7 @@ import { ProjectData } from "@/validations/project.scheme";
 import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { CgSearch } from "react-icons/cg";
 import { LuPlus } from "react-icons/lu";
 
@@ -64,46 +64,49 @@ const ProjectsPage = (): React.JSX.Element => {
     });
   }, [projects, selectedType, searchQuery]);
 
-  async function handleUpdateProject({
-    data: formData,
-    image,
-    currentImageURL,
-  }: {
-    data: ProjectData;
-    image: File | null;
-    currentImageURL?: string;
-  }) {
-    if (!editingProject) return;
+  const handleUpdateProject = useCallback(
+    async ({
+      data: formData,
+      image,
+      currentImageURL,
+    }: {
+      data: ProjectData;
+      image: File | null;
+      currentImageURL?: string;
+    }) => {
+      if (!editingProject) return;
 
-    try {
-      await updateProject.mutateAsync({
-        id: editingProject.id,
-        data: formData,
-        image,
-        currentImageURL,
-      });
+      try {
+        await updateProject.mutateAsync({
+          id: editingProject.id,
+          data: formData,
+          image,
+          currentImageURL,
+        });
 
-      setEditingProject(null);
-      triggerToast({
-        title: addT("updateSuccessTitle"),
-        subtitle: addT("updateSuccessSubtitle"),
-        content: addT("updateSuccessContent"),
-        success: true,
-      });
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : addT("errorTitle");
-      triggerToast({
-        title: addT("errorTitle"),
-        subtitle: errorMessage,
-        content: addT("errorContent"),
-        success: false,
-      });
-      throw error;
-    }
-  }
+        setEditingProject(null);
+        triggerToast({
+          title: addT("updateSuccessTitle"),
+          subtitle: addT("updateSuccessSubtitle"),
+          content: addT("updateSuccessContent"),
+          success: true,
+        });
+      } catch (error: unknown) {
+        const errorMessage =
+          error instanceof Error ? error.message : addT("errorTitle");
+        triggerToast({
+          title: addT("errorTitle"),
+          subtitle: errorMessage,
+          content: addT("errorContent"),
+          success: false,
+        });
+        throw error;
+      }
+    },
+    [editingProject, updateProject, addT, triggerToast],
+  );
 
-  async function handleConfirmDelete() {
+  const handleConfirmDelete = useCallback(async () => {
     if (!deletingProject) return;
 
     try {
@@ -124,7 +127,36 @@ const ProjectsPage = (): React.JSX.Element => {
         success: false,
       });
     }
-  }
+  }, [deletingProject, deleteProject, t, addT, triggerToast]);
+
+  const handleCloseEdit = useCallback(() => setEditingProject(null), []);
+  const handleCloseDelete = useCallback(() => setDeletingProject(null), []);
+  const handleRequireImageError = useCallback(() => {
+    triggerToast({
+      title: addT("noImageTitle"),
+      subtitle: addT("noImageSubtitle"),
+      content: addT("noImageContent"),
+      success: false,
+    });
+  }, [addT, triggerToast]);
+
+  const handleStartEdit = useCallback((project: IProjectInterface) => {
+    setEditingProject({
+      id: project.id,
+      title: project.title,
+      content: String(project.content ?? ""),
+      type:
+        (project.type?.toLowerCase() as InitialProjectValues["type"]) ||
+        "web",
+      tags: project.tags,
+      url: project.url,
+      imageURL: project.imageURL,
+    });
+  }, []);
+
+  const handleStartDelete = useCallback((project: IProjectInterface) => {
+    setDeletingProject(project);
+  }, []);
 
   return (
     <AdminLayout>
@@ -203,20 +235,8 @@ const ProjectsPage = (): React.JSX.Element => {
                 title={project.title}
                 url={project.url}
                 view={view}
-                onEdit={() =>
-                  setEditingProject({
-                    id: project.id,
-                    title: project.title,
-                    content: String(project.content ?? ""),
-                    type:
-                      (project.type?.toLowerCase() as InitialProjectValues["type"]) ||
-                      "web",
-                    tags: project.tags,
-                    url: project.url,
-                    imageURL: project.imageURL,
-                  })
-                }
-                onDelete={() => setDeletingProject(project)}
+                onEdit={() => handleStartEdit(project)}
+                onDelete={() => handleStartDelete(project)}
               >
                 {project.content}
               </ProjectCard>
@@ -233,16 +253,9 @@ const ProjectsPage = (): React.JSX.Element => {
 
       <EditProjectModal
         project={editingProject}
-        onClose={() => setEditingProject(null)}
+        onClose={handleCloseEdit}
         onSubmitProject={handleUpdateProject}
-        onRequireImageError={() =>
-          triggerToast({
-            title: addT("noImageTitle"),
-            subtitle: addT("noImageSubtitle"),
-            content: addT("noImageContent"),
-            success: false,
-          })
-        }
+        onRequireImageError={handleRequireImageError}
       />
 
       <ConfirmDialog
@@ -255,7 +268,7 @@ const ProjectsPage = (): React.JSX.Element => {
         cancelLabel={t("cancelDeleteButton")}
         isLoading={deleteProject.isPending}
         onConfirm={handleConfirmDelete}
-        onCancel={() => setDeletingProject(null)}
+        onCancel={handleCloseDelete}
       />
     </AdminLayout>
   );

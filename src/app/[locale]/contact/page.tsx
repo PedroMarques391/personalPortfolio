@@ -28,8 +28,6 @@ const Contact = (): React.JSX.Element => {
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
-    clearErrors,
   } = useForm<ContactData>({
     resolver: zodResolver(schema),
   });
@@ -66,12 +64,6 @@ const Contact = (): React.JSX.Element => {
     } finally {
       setPending(false);
     }
-  }
-
-  function handleMask(e: React.ChangeEvent<HTMLInputElement>): void {
-    const formattedPhone: string = insertMaskInPhone(e.target.value);
-    setValue("phone", formattedPhone);
-    clearErrors("phone");
   }
 
   return (
@@ -117,11 +109,14 @@ const Contact = (): React.JSX.Element => {
             <Input
               duration={0.8}
               type="tel"
-              {...register("phone")}
+              {...register("phone", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.value = insertMaskInPhone(e.target.value);
+                },
+              })}
               error={errors.phone?.message}
               label={t("phoneLabel")}
               maxLength={15}
-              onChange={handleMask}
             />
             <Input.TextArea
               duration={1.0}

@@ -26,9 +26,12 @@ interface HeroSectionProps {
 
 const STACKS = ["FullStack", "Mobile"] as const;
 
-const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
+const StackSwitcher = React.memo(function StackSwitcher({
+  label,
+}: {
+  label: string;
+}) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const t = useTranslations("pages.home");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +39,21 @@ const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  return (
+    <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start h-10 items-center">
+      {label}{" "}
+      <Typewriter
+        key={currentIndex}
+        writing={STACKS[currentIndex]}
+        color="text-orange-500"
+      />
+    </h2>
+  );
+});
+
+const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
+  const t = useTranslations("pages.home");
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
@@ -54,14 +72,7 @@ const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
             {t("title")}
             <Typewriter writing="Pedro" hiddenCursor color="text-orange-500" />
           </div>
-          <h2 className="text-xl lg:text-2xl text-white text-center md:text-left flex gap-2 justify-center md:justify-start h-10 items-center">
-            {t("developerLabel")}{" "}
-            <Typewriter
-              key={currentIndex}
-              writing={STACKS[currentIndex]}
-              color="text-orange-500"
-            />
-          </h2>
+          <StackSwitcher label={t("developerLabel")} />
         </motion.div>
 
         <motion.p
@@ -170,9 +181,9 @@ const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
           </h2>
           <div className="w-full py-2">
             <MarqueeEffect>
-              {skills.map((skill, index) => (
+              {skills.map((skill) => (
                 <HardSkillsCard
-                  key={index}
+                  key={skill.technology}
                   icon={skill.icon}
                   technology={skill.technology}
                 />

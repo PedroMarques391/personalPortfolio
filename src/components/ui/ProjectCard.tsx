@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { LuExternalLink, LuImage, LuPencil, LuTrash2 } from "react-icons/lu";
 
 interface IProjectCardProps {
@@ -37,6 +37,8 @@ const ProjectCard = ({
   const ref = useRef<HTMLElement>(null);
   const t = useTranslations("components.projectCard");
   const isAdminCard = Boolean(onEdit || onDelete);
+  const isDataOrBlob =
+    Boolean(src) && (src.startsWith("data:") || src.startsWith("blob:"));
   const parsedTags = tags
     ? tags
         .split(",")
@@ -48,7 +50,6 @@ const ProjectCard = ({
     <motion.article
       title={title}
       ref={ref}
-      layout="position"
       style={{ borderRadius: 12 }}
       initial={{ opacity: 0, y: 16, scale: 0.97 }}
       animate={{
@@ -84,6 +85,7 @@ const ProjectCard = ({
               src={src}
               alt={title || "Project cover"}
               fill
+              unoptimized={isDataOrBlob}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={priority}
               className="group-hover:scale-105 transform transition duration-500 ease-out object-cover"
@@ -217,5 +219,5 @@ const ProjectCard = ({
   );
 };
 
-export default ProjectCard;
+export default memo(ProjectCard);
 

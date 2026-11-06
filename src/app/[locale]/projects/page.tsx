@@ -18,7 +18,7 @@ import { AnimatePresence } from "motion/react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CgSearch } from "react-icons/cg";
 
 const ProjectsPage = (): React.JSX.Element => {
@@ -88,39 +88,48 @@ const ProjectsPage = (): React.JSX.Element => {
     });
   }, [currentPage, queryClient, totalPages, filter]);
 
-  const handleViewChange = (nextView: ViewMode) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("view", nextView);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  const handleViewChange = useCallback(
+    (nextView: ViewMode) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("view", nextView);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
 
-  const handleFilter = (rule: TProjectType) => {
-    setSearchTerm("");
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("search");
-    params.set("page", "1");
-    params.set("type", rule.toLowerCase());
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  const handleFilter = useCallback(
+    (rule: TProjectType) => {
+      setSearchTerm("");
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("search");
+      params.set("page", "1");
+      params.set("type", rule.toLowerCase());
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
 
-  const prefetchFilter = (filterType: TProjectType) => {
-    const type = filterType === "all" ? "all" : filterType.toLowerCase();
-    const queryKey = ["projects", "all", 1, type, ""];
+  const prefetchFilter = useCallback(
+    (filterType: TProjectType) => {
+      const type = filterType === "all" ? "all" : filterType.toLowerCase();
+      const queryKey = ["projects", "all", 1, type, ""];
 
-    if (!queryClient.getQueryData(queryKey)) {
-      queryClient.prefetchQuery({
-        queryKey,
-        staleTime: 1000 * 60 * 5,
-        queryFn: async () => {
-          return await Requests.getProject(
-            `/api/project?role=all&page=1&type=${type}`,
-          );
-        },
-      });
-    }
-  };
+      if (!queryClient.getQueryData(queryKey)) {
+        queryClient.prefetchQuery({
+          queryKey,
+          staleTime: 1000 * 60 * 5,
+          queryFn: async () => {
+            return await Requests.getProject(
+              `/api/project?role=all&page=1&type=${type}`,
+            );
+          },
+        });
+      }
+    },
+    [queryClient],
+  );
 
-  function handleSearch() {
+  const handleSearch = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
     const currentSearch = params.get("search") || "";
 
@@ -134,7 +143,7 @@ const ProjectsPage = (): React.JSX.Element => {
     params.set("page", "1");
 
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
+  }, [debouncedSearchTerm, pathname, router, searchParams]);
 
   return (
     <div className="w-full h-full text-gray-soft flex flex-col justify-center items-center mt-10 mx-auto">

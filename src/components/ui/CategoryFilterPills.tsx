@@ -76,4 +76,4 @@ const CategoryFilterPills = ({
   );
 };
 
-export default CategoryFilterPills;
+export default React.memo(CategoryFilterPills);

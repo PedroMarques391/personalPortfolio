@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 
 interface IChatModalContext {
   isChatOpen: boolean;
@@ -17,17 +17,20 @@ export const ChatModalProvider = ({
 }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const openChat = () => setIsChatOpen(true);
-  const closeChat = () => setIsChatOpen(false);
+  const openChat = useCallback(() => setIsChatOpen(true), []);
+  const closeChat = useCallback(() => setIsChatOpen(false), []);
+
+  const value = useMemo(
+    () => ({
+      isChatOpen,
+      openChat,
+      closeChat,
+    }),
+    [isChatOpen, openChat, closeChat],
+  );
 
   return (
-    <ChatModalContext.Provider
-      value={{
-        isChatOpen,
-        openChat,
-        closeChat,
-      }}
-    >
+    <ChatModalContext.Provider value={value}>
       {children}
     </ChatModalContext.Provider>
   );
