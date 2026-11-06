@@ -8,8 +8,8 @@ import { TProjectCategory } from "@/model/ProjectModel";
 import { ProjectData, createProjectScheme } from "@/validations/project.scheme";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Control, useForm, useWatch } from "react-hook-form";
 import { FiLoader } from "react-icons/fi";
 import {
   LuCpu,
@@ -42,6 +42,60 @@ interface ProjectFormProps {
   onRequireImageError?: () => void;
 }
 
+const MAX_CONTENT_LENGTH = 255;
+
+const DescriptionActionSlot = React.memo(function DescriptionActionSlot({
+  control,
+  isImproving,
+  onImprove,
+}: {
+  control: Control<ProjectData>;
+  isImproving: boolean;
+  onImprove: () => void;
+}) {
+  const t = useTranslations("admin.addProject");
+  const content = useWatch({ control, name: "content" }) || "";
+  const remainingChars = MAX_CONTENT_LENGTH - content.length;
+  const hasContent = content.trim().length > 0;
+
+  return (
+    <div className="flex items-center gap-3">
+      <span
+        className={`text-[11px] tabular-nums transition-colors ${
+          remainingChars <= 20
+            ? remainingChars <= 0
+              ? "text-red-400 font-semibold"
+              : "text-amber-400 font-medium"
+            : "text-gray-dark"
+        }`}
+        aria-live="polite"
+      >
+        {remainingChars} {t("charactersRemaining")}
+      </span>
+
+      <button
+        type="button"
+        onClick={onImprove}
+        disabled={!hasContent || isImproving}
+        title={!hasContent ? t("improveWithAdaHint") : t("improveWithAda")}
+        className="px-3 py-1 rounded-full bg-black/30 hover:bg-gray-800 border border-white/10 hover:border-white/20 text-[11px] font-medium text-gray-dark hover:text-gray-soft flex items-center gap-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        {isImproving ? (
+          <>
+            <FiLoader size={12} className="animate-spin text-orange-400" />
+            <span className="text-gray-soft">{t("improvingWithAda")}</span>
+          </>
+        ) : (
+          <>
+            <LuSparkles size={12} className="text-orange-400" />
+            <span>{t("improveWithAda")}</span>
+          </>
+        )}
+      </button>
+    </div>
+  );
+});
+
 const ProjectForm = ({
   mode,
   initialValues,
@@ -66,8 +120,9 @@ const ProjectForm = ({
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
+    getValues,
     reset,
     formState: { errors },
   } = useForm<ProjectData>({
@@ -81,6 +136,8 @@ const ProjectForm = ({
     },
   });
 
+  const initialId = initialValues?.id;
+
   useEffect(() => {
     if (initialValues) {
       reset({
@@ -93,7 +150,7 @@ const ProjectForm = ({
       setPreview(initialValues.imageURL);
       setImage(null);
     }
-  }, [initialValues, reset]);
+  }, [initialId, reset]);
 
   useEffect(() => {
     if (!image) {
@@ -108,25 +165,25 @@ const ProjectForm = ({
     return () => URL.revokeObjectURL(objectUrl);
   }, [image, mode]);
 
-  const watchedTitle = watch("title");
-  const watchedContent = watch("content");
-  const watchedType = watch("type");
-  const watchedTags = watch("tags");
-  const watchedUrl = watch("url");
+  const selectedType = useWatch({ control, name: "type" });
 
-  const categories = [
-    { value: "web" as const, label: t("typeWeb"), icon: LuGlobe },
-    { value: "mobile" as const, label: t("typeMobile"), icon: LuSmartphone },
-    { value: "api" as const, label: t("typeApi"), icon: LuServer },
-    {
-      value: "automações" as const,
-      label: t("typeAutomation"),
-      icon: LuCpu,
-    },
-  ];
+  const categories = useMemo(
+    () => [
+      { value: "web" as const, label: t("typeWeb"), icon: LuGlobe },
+      { value: "mobile" as const, label: t("typeMobile"), icon: LuSmartphone },
+      { value: "api" as const, label: t("typeApi"), icon: LuServer },
+      {
+        value: "automações" as const,
+        label: t("typeAutomation"),
+        icon: LuCpu,
+      },
+    ],
+    [t],
+  );
 
-  const handleImproveDescription = async () => {
-    if (!watchedContent?.trim() || isImproving) return;
+  const handleImproveDescription = useCallback(async () => {
+    const currentContent = getValues("content")?.trim();
+    if (!currentContent || isImproving) return;
 
     try {
       setIsImproving(true);
@@ -134,17 +191,21 @@ const ProjectForm = ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: watchedContent,
-          title: watchedTitle,
-          type: watchedType,
-          tags: watchedTags,
+          content: currentContent,
+          title: getValues("title"),
+          type: getValues("type"),
+          tags: getValues("tags"),
           locale,
         }),
       });
 
       const result = await response.json();
       if (response.ok && result.content) {
-        setValue("content", result.content, {
+        const safeContent =
+          result.content.length > MAX_CONTENT_LENGTH
+            ? result.content.slice(0, MAX_CONTENT_LENGTH)
+            : result.content;
+        setValue("content", safeContent, {
           shouldValidate: true,
           shouldDirty: true,
         });
@@ -154,7 +215,7 @@ const ProjectForm = ({
     } finally {
       setIsImproving(false);
     }
-  };
+  }, [getValues, isImproving, locale, setValue]);
 
   const handleFileSubmit = async (data: ProjectData) => {
     if (mode === "create" && !image) {
@@ -190,6 +251,15 @@ const ProjectForm = ({
     }
   };
 
+  const handleSelectImage = useCallback((file: File) => {
+    setImage(file);
+  }, []);
+
+  const handleRemoveImage = useCallback(() => {
+    setImage(null);
+    setPreview(null);
+  }, []);
+
   return (
     <div
       className={
@@ -206,11 +276,8 @@ const ProjectForm = ({
       >
         <ImageUploadDropzone
           preview={preview}
-          onSelectImage={setImage}
-          onRemoveImage={() => {
-            setImage(null);
-            setPreview(null);
-          }}
+          onSelectImage={handleSelectImage}
+          onRemoveImage={handleRemoveImage}
         />
 
         <div className="flex flex-col gap-2 pt-1">
@@ -221,15 +288,15 @@ const ProjectForm = ({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {categories.map((cat) => {
               const Icon = cat.icon;
-              const isSelected = watchedType === cat.value;
+              const isSelected = selectedType === cat.value;
               return (
                 <button
                   key={cat.value}
                   type="button"
                   onClick={() =>
-                    setValue("type", cat.value, { shouldValidate: true })
+                    setValue("type", cat.value, { shouldValidate: true, shouldDirty: true })
                   }
-                  className={`py-2.5 px-3 rounded-lg border text-xs sm:text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200 ${
+                  className={`py-2.5 px-3 rounded-lg border text-xs sm:text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
                     isSelected
                       ? "bg-gray-800 border-orange-500 text-white"
                       : "bg-black/30 border-white/10 text-gray-dark hover:text-gray-soft hover:border-white/20"
@@ -251,7 +318,6 @@ const ProjectForm = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
           <Input
-            duration={0.4}
             containerClassName="w-full"
             labelBgClassName="bg-gray-light peer-focus:bg-gray-light peer-valid:bg-gray-light"
             {...register("title")}
@@ -259,7 +325,6 @@ const ProjectForm = ({
             label={t("titleLabel")}
           />
           <Input
-            duration={0.4}
             containerClassName="w-full"
             labelBgClassName="bg-gray-light peer-focus:bg-gray-light peer-valid:bg-gray-light"
             {...register("url")}
@@ -269,46 +334,26 @@ const ProjectForm = ({
         </div>
 
         <Input.TextArea
-          duration={0.4}
           containerClassName="w-full"
           labelBgClassName="bg-gray-light peer-focus:bg-gray-light peer-valid:bg-gray-light"
           {...register("content")}
           error={errors.content?.message}
           label={t("descriptionLabel")}
+          maxLength={MAX_CONTENT_LENGTH}
           actionSlot={
-            <button
-              type="button"
-              onClick={handleImproveDescription}
-              disabled={!watchedContent?.trim() || isImproving}
-              title={
-                !watchedContent?.trim()
-                  ? t("improveWithAdaHint")
-                  : t("improveWithAda")
-              }
-              className="px-3 py-1 rounded-full bg-black/30 hover:bg-gray-800 border border-white/10 hover:border-white/20 text-[11px] font-medium text-gray-dark hover:text-gray-soft flex items-center gap-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              {isImproving ? (
-                <>
-                  <FiLoader size={12} className="animate-spin text-orange-400" />
-                  <span className="text-gray-soft">{t("improvingWithAda")}</span>
-                </>
-              ) : (
-                <>
-                  <LuSparkles size={12} className="text-orange-400" />
-                  <span>{t("improveWithAda")}</span>
-                </>
-              )}
-            </button>
+            <DescriptionActionSlot
+              control={control}
+              isImproving={isImproving}
+              onImprove={handleImproveDescription}
+            />
           }
         />
 
         <ProjectTagsField
           register={register}
-          tagsValue={watchedTags}
+          control={control}
+          setValue={setValue}
           error={errors.tags?.message}
-          onChangeTags={(updated) =>
-            setValue("tags", updated, { shouldValidate: true })
-          }
         />
 
         <div className="flex items-center justify-end gap-3 pt-4 mt-2 border-t border-white/[0.06]">
@@ -340,17 +385,10 @@ const ProjectForm = ({
       </form>
 
       {showLivePreview && (
-        <ProjectLivePreview
-          previewSrc={preview}
-          title={watchedTitle}
-          content={watchedContent}
-          type={watchedType}
-          tags={watchedTags}
-          url={watchedUrl}
-        />
+        <ProjectLivePreview control={control} previewSrc={preview} />
       )}
     </div>
   );
 };
 
-export default ProjectForm;
+export default React.memo(ProjectForm);

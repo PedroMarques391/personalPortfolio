@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { LuImagePlus, LuRefreshCw, LuTrash2 } from "react-icons/lu";
 
 interface ImageUploadDropzoneProps {
@@ -20,6 +20,10 @@ const ImageUploadDropzone = ({
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const isDataOrBlob =
+    Boolean(preview) &&
+    (preview!.startsWith("data:") || preview!.startsWith("blob:"));
+
   return (
     <div className="w-full">
       <div
@@ -35,7 +39,7 @@ const ImageUploadDropzone = ({
             onSelectImage(e.dataTransfer.files[0]);
           }
         }}
-        className={`relative w-full aspect-[16/9] max-h-64 rounded-xl border-2 border-dashed transition-all duration-200 overflow-hidden flex flex-col items-center justify-center ${
+        className={`relative w-full aspect-[16/9] max-h-64 rounded-xl border-2 border-dashed transition-colors duration-150 overflow-hidden flex flex-col items-center justify-center ${
           isDragging
             ? "border-orange-500 bg-orange-500/10"
             : preview
@@ -49,9 +53,10 @@ const ImageUploadDropzone = ({
               fill
               src={preview}
               alt="Preview"
+              unoptimized={isDataOrBlob}
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200 flex items-end justify-between p-4 z-20">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-150 flex items-end justify-between p-4 z-20">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
@@ -106,4 +111,4 @@ const ImageUploadDropzone = ({
   );
 };
 
-export default ImageUploadDropzone;
+export default memo(ImageUploadDropzone);

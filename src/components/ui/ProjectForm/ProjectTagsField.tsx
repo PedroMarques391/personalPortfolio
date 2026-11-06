@@ -4,24 +4,25 @@ import { Input } from "@/components/ui/Input";
 import { SUGGESTED_PROJECT_TAGS } from "@/utils/skills";
 import { ProjectData } from "@/validations/project.scheme";
 import { useTranslations } from "next-intl";
-import React, { useMemo } from "react";
-import { UseFormRegister } from "react-hook-form";
+import React, { memo, useMemo } from "react";
+import { Control, UseFormRegister, UseFormSetValue, useWatch } from "react-hook-form";
 import { LuCheck, LuPlus, LuX } from "react-icons/lu";
 
 interface ProjectTagsFieldProps {
   register: UseFormRegister<ProjectData>;
-  tagsValue: string;
+  control: Control<ProjectData>;
+  setValue: UseFormSetValue<ProjectData>;
   error?: string;
-  onChangeTags: (updatedTags: string) => void;
 }
 
 const ProjectTagsField = ({
   register,
-  tagsValue,
+  control,
+  setValue,
   error,
-  onChangeTags,
 }: ProjectTagsFieldProps): React.JSX.Element => {
   const t = useTranslations("admin.addProject");
+  const tagsValue = useWatch({ control, name: "tags" }) || "";
 
   const currentTagList = useMemo(() => {
     if (!tagsValue) return [];
@@ -41,18 +42,17 @@ const ProjectTagsField = ({
         )
       : [...currentTagList, tag];
 
-    onChangeTags(updated.join(", "));
+    setValue("tags", updated.join(", "), { shouldValidate: true, shouldDirty: true });
   };
 
   const removeTagAt = (tagToRemove: string) => {
     const updated = currentTagList.filter((item) => item !== tagToRemove);
-    onChangeTags(updated.join(", "));
+    setValue("tags", updated.join(", "), { shouldValidate: true, shouldDirty: true });
   };
 
   return (
     <div className="flex flex-col gap-2">
       <Input
-        duration={0.4}
         containerClassName="w-full"
         labelBgClassName="bg-gray-light peer-focus:bg-gray-light peer-valid:bg-gray-light"
         {...register("tags")}
@@ -110,4 +110,4 @@ const ProjectTagsField = ({
   );
 };
 
-export default ProjectTagsField;
+export default memo(ProjectTagsField);

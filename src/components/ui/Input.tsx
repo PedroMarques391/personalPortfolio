@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import React from "react";
+import React, { memo } from "react";
 
 interface IInputProps
   extends React.DetailedHTMLProps<
@@ -26,7 +26,7 @@ interface ITextAreaProps
   actionSlot?: React.ReactNode;
 }
 
-function Input({
+const InputComponent = ({
   label,
   error,
   duration,
@@ -34,45 +34,56 @@ function Input({
   containerClassName = "w-[90%] sm:w-[90%] md:w-[90%] lg:w-[70%]",
   labelBgClassName = "bg-black peer-focus:bg-black peer-valid:bg-black",
   ...props
-}: IInputProps): React.JSX.Element {
+}: IInputProps): React.JSX.Element => {
   const errorId = `${label}-error`;
+
+  const inputElement = (
+    <div className="group relative my-3 w-full">
+      <input
+        id={label}
+        type={type}
+        placeholder=" "
+        aria-invalid={!!error}
+        aria-describedby={error ? errorId : undefined}
+        {...props}
+        required
+        className={`peer text-white border-2 bg-transparent 
+              rounded-md w-full h-12 px-4 outline-none 
+              transition duration-300 focus:border-orange-500 ${
+                error
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-gray-soft"
+              }`}
+      />
+      <label
+        htmlFor={label}
+        className={`
+                  absolute left-4 top-0 -translate-y-[50%] text-sm
+                  pointer-events-none transition-all duration-300 
+                  peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
+                  peer-placeholder-shown:bg-transparent
+                  peer-focus:top-0 peer-focus:text-sm text-white px-2 
+                  peer-valid:top-0 peer-valid:text-sm ${labelBgClassName}`}
+      >
+        {label}
+      </label>
+    </div>
+  );
+
   return (
     <div className={containerClassName}>
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: duration, type: "spring" }}
-        className="group relative my-3 w-full"
-      >
-        <input
-          id={label}
-          type={type}
-          placeholder=" "
-          aria-invalid={!!error}
-          aria-describedby={error ? errorId : undefined}
-          {...props}
-          required
-          className={`peer text-white border-2 bg-transparent 
-                rounded-md w-full h-12 px-4 outline-none 
-                transition duration-300 focus:border-orange-500 ${
-                  error
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-gray-soft"
-                }`}
-        />
-        <label
-          htmlFor={label}
-          className={`
-                    absolute left-4 top-0 -translate-y-[50%] text-sm
-                    pointer-events-none transition-all duration-300 
-                    peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
-                    peer-placeholder-shown:bg-transparent
-                    peer-focus:top-0 peer-focus:text-sm text-white px-2 
-                    peer-valid:top-0 peer-valid:text-sm ${labelBgClassName}`}
+      {duration ? (
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration, type: "spring" }}
+          className="w-full"
         >
-          {label}
-        </label>
-      </motion.div>
+          {inputElement}
+        </motion.div>
+      ) : (
+        inputElement
+      )}
       {error && (
         <p id={errorId} role="alert" className="text-red-500 text-sm">
           {error}
@@ -80,9 +91,9 @@ function Input({
       )}
     </div>
   );
-}
+};
 
-function TextArea({
+const TextAreaComponent = ({
   label,
   error,
   duration,
@@ -90,45 +101,56 @@ function TextArea({
   labelBgClassName = "bg-black peer-focus:bg-black peer-valid:bg-black",
   actionSlot,
   ...props
-}: ITextAreaProps): React.JSX.Element {
+}: ITextAreaProps): React.JSX.Element => {
   const errorId = `${label}-error`;
+
+  const textareaElement = (
+    <div className="group relative my-3 w-full">
+      <textarea
+        {...props}
+        id={label}
+        placeholder=" "
+        aria-invalid={!!error}
+        aria-describedby={error ? errorId : undefined}
+        required
+        className={`peer text-white border-2 
+               bg-transparent 
+              rounded-md w-full h-32 px-4 outline-none 
+              transition duration-300 focus:border-orange-500 pt-3 ${
+                error
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-gray-soft"
+              }`}
+      />
+      <label
+        htmlFor={label}
+        className={`
+                  absolute left-4 top-0 -translate-y-[50%] text-sm
+                  pointer-events-none transition-all duration-300 
+                  peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
+                  peer-placeholder-shown:bg-transparent
+                  peer-focus:top-0 peer-focus:text-sm text-white px-2 
+                  peer-valid:top-0 peer-valid:text-sm ${labelBgClassName}`}
+      >
+        {label}
+      </label>
+    </div>
+  );
+
   return (
     <div className={containerClassName}>
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: duration, type: "spring" }}
-        className="group relative my-3 w-full"
-      >
-        <textarea
-          {...props}
-          id={label}
-          placeholder=" "
-          aria-invalid={!!error}
-          aria-describedby={error ? errorId : undefined}
-          required
-          className={`peer text-white border-2 
-                 bg-transparent 
-                rounded-md w-full h-32 px-4 outline-none 
-                transition duration-300 focus:border-orange-500 pt-3 ${
-                  error
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-gray-soft"
-                }`}
-        />
-        <label
-          htmlFor={label}
-          className={`
-                    absolute left-4 top-0 -translate-y-[50%] text-sm
-                    pointer-events-none transition-all duration-300 
-                    peer-placeholder-shown:top-[50%] peer-placeholder-shown:text-base 
-                    peer-placeholder-shown:bg-transparent
-                    peer-focus:top-0 peer-focus:text-sm text-white px-2 
-                    peer-valid:top-0 peer-valid:text-sm ${labelBgClassName}`}
+      {duration ? (
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration, type: "spring" }}
+          className="w-full"
         >
-          {label}
-        </label>
-      </motion.div>
+          {textareaElement}
+        </motion.div>
+      ) : (
+        textareaElement
+      )}
       {(error || actionSlot) && (
         <div className="flex items-center justify-between gap-2 -mt-1 mb-1">
           {error ? (
@@ -143,11 +165,16 @@ function TextArea({
       )}
     </div>
   );
-}
+};
 
-Input.TextArea = TextArea;
+const MemoizedInput = memo(InputComponent);
+const MemoizedTextArea = memo(TextAreaComponent);
+
+type InputComponentType = typeof MemoizedInput & {
+  TextArea: typeof MemoizedTextArea;
+};
+
+const Input = MemoizedInput as unknown as InputComponentType;
+Input.TextArea = MemoizedTextArea;
 
 export { Input };
-
-
-
