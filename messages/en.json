@@ -166,6 +166,7 @@
         "project": {
             "titleRequired": "Title is required.",
             "contentRequired": "Description is required.",
+            "contentMax": "Description must be at most 255 characters.",
             "typeInvalid": "Only allowed: web, mobile, automations, api",
             "tagsRequired": "Tags are required and must be separated by commas.",
             "urlRequired": "Project URL is required.",
@@ -189,6 +190,7 @@
             "removeImage": "Remove",
             "titleLabel": "Project Title",
             "descriptionLabel": "Detailed description",
+            "charactersRemaining": "remaining",
             "improveWithAda": "Improve with Ada.ai",
             "improvingWithAda": "Ada improving...",
             "improveWithAdaHint": "Type a draft description first to improve with Ada.ai",
