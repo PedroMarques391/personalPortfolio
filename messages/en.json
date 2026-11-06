@@ -83,7 +83,18 @@
             "successContent": "Your message was sent successfully. We'll get back to you soon.",
             "errorTitle": "Error Sending Message",
             "errorSubtitle": "There was a problem sending your message.",
-            "errorContent": "Please try again later or contact us directly through Instagram."
+            "errorContent": "Please try again later or contact us directly through Instagram.",
+            "frierenAriaLabel": "Click Frieren to hear an iconic quote",
+            "frierenHint": "Click Frieren",
+            "frierenQuotes": {
+                "q1": "After all, that is what Himmel the Hero would have done.",
+                "q2": "A spell to turn sweet grapes into sour grapes...",
+                "q3": "There's a 99% chance it's a mimic... but what if there's a rare grimoire inside?",
+                "q4": "For an elf, 10 years pass in the blink of an eye.",
+                "q5": "I like magic because it's fun.",
+                "q6": "Zoltraak! ...Just kidding, I'm here to see if you'll send a message.",
+                "q7": "It was dark and scary inside that chest!"
+            }
         },
         "notFound": {
             "errorLabel": "ERROR",

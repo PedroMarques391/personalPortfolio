@@ -1,8 +1,9 @@
 "use client";
 import { useForm } from "react-hook-form";
 
-import UseAnimationFrame from "@/components/Motions/AnimationFrame";
+import AnimationFrame from "@/components/Motions/AnimationFrame";
 import UseTime from "@/components/Motions/ContactMotion";
+import FrierenWalker from "@/components/Motions/FrierenWalker";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -72,11 +73,13 @@ const Contact = (): React.JSX.Element => {
 
       <FeedbackToast open={open} message={message} onClose={closeToast} />
 
+      <FrierenWalker />
+
       <SectionHeader
         as="h1"
         title={t("sectionTitle")}
         subtitle={t("sectionSubtitle")}
-        styles="mt-40"
+        styles="mt-2"
       />
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 mt-10">
@@ -84,7 +87,7 @@ const Contact = (): React.JSX.Element => {
           aria-hidden="true"
           className="hidden md:flex w-full justify-center items-center"
         >
-          <UseAnimationFrame />
+          <AnimationFrame />
         </div>
         <div className="w-full flex flex-col justify-center items-center">
           <form

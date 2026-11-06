@@ -83,7 +83,18 @@
       "successContent": "Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.",
       "errorTitle": "Erro ao Enviar Mensagem",
       "errorSubtitle": "Ocorreu um problema ao enviar sua mensagem.",
-      "errorContent": "Tente novamente mais tarde ou entre em contato diretamente pelo instagram."
+      "errorContent": "Tente novamente mais tarde ou entre em contato diretamente pelo instagram.",
+      "frierenAriaLabel": "Clique na Frieren para ouvir uma frase marcante",
+      "frierenHint": "Clique na Frieren",
+      "frierenQuotes": {
+        "q1": "Afinal, era isso que o Herói Himmel teria feito.",
+        "q2": "Feitiço para transformar uvas doces em uvas azedas...",
+        "q3": "Tem 99% de chance de ser um mímico... mas e se tiver um grimório raro lá dentro?",
+        "q4": "Para uma elfa, 10 anos passam num piscar de olhos.",
+        "q5": "Eu gosto de magia porque é divertido.",
+        "q6": "Zoltraak! ...Brincadeira, só vim ver se você vai mandar mensagem.",
+        "q7": "Era escuro e assustador lá dentro daquele baú!"
+      }
     },
     "notFound": {
       "errorLabel": "ERROR",
