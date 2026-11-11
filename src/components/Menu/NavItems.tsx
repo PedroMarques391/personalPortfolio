@@ -1,10 +1,11 @@
-import { usePathname } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { spring } from "@/utils/motion";
 import { motion, useInView } from "motion/react";
-import Link, { LinkProps } from "next/link";
-import { useRef } from "react";
+import React, { ComponentProps, useRef } from "react";
 
-interface INavItemsProps extends LinkProps {
+type NavLinkProps = ComponentProps<typeof Link>;
+
+interface INavItemsProps extends NavLinkProps {
   children: React.ReactNode;
 }
 
@@ -21,15 +22,15 @@ const NavItems = ({
   ...props
 }: INavItemsProps): React.JSX.Element => {
   const pathName: string = usePathname();
-  const hrefPathname = typeof href === "string" ? href : href?.pathname;
-  const normalizedTarget = hrefPathname?.replace(/^\/(pt|en)/, "") || "/";
+  const hrefPathname = typeof href === "string" ? href : (href as any)?.pathname;
   const isCurrentPath: boolean =
-    pathName === normalizedTarget ||
-    (normalizedTarget === "/" && pathName === "");
+    pathName === hrefPathname ||
+    (hrefPathname === "/" && (pathName === "" || pathName === "/"));
+
   return (
     <li className="text-center w-32 md:w-[120px] lg:w-32 relative group text-base lg:text-lg px-2">
       <Link
-        {...props}
+        {...(props as any)}
         href={href}
         aria-current={isCurrentPath ? "page" : undefined}
         className={`w-full h-full block py-4 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-md ${

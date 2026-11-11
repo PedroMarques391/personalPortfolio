@@ -5,7 +5,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import Handler from "@/utils/handler";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { FaRobot } from "react-icons/fa";
 import { IoIosPhonePortrait } from "react-icons/io";
@@ -71,7 +71,7 @@ const ServicesSection = ({
 
       <Link
         className="my-10 mx-auto flex flex-row justify-center items-center w-fit p-4 gap-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded-lg"
-        href={`/${locale}/projects`}
+        href="/projects"
       >
         <span className="text-gray-soft tracking-wider text-xl font-semibold group-hover:text-orange-500 duration-300 transition-colors">
           {t("seeMyProjects")}

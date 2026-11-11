@@ -17,6 +17,10 @@ const roboto = Roboto({
   display: "swap",
 });
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -32,9 +36,24 @@ export async function generateMetadata({
       default: t("title"),
     },
     description: t("description"),
-    robots: "index, follow",
+    icons: {
+      icon: "/favicon.ico",
+      apple: "/assets/profile.webp",
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     keywords: t("keywords"),
     creator: "Pedro Marques",
+    authors: [{ name: "Pedro Marques", url: "https://pedromarques.dev.br" }],
     openGraph: {
       title: t("ogTitle"),
       description: t("ogDescription"),
@@ -44,9 +63,9 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/assets/profile.webp",
-          width: 600,
-          height: 600,
+          url: "/assets/og-banner.jpeg",
+          width: 1200,
+          height: 630,
           alt: t("ogTitle"),
         },
       ],
@@ -55,13 +74,15 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: t("ogTitle"),
       description: t("ogDescription"),
-      images: ["/assets/profile.webp"],
+      images: ["/assets/og-banner.jpeg"],
+      creator: "@opeedrodev",
     },
     alternates: {
       canonical: `/${locale}`,
       languages: {
         pt: "/pt",
         en: "/en",
+        "x-default": "/pt",
       },
     },
   };
@@ -79,7 +100,7 @@ export default async function RootLayout({ children, params }: Props) {
   }
 
   const tSeo = await getTranslations({ locale, namespace: "seo.jsonLd" });
-  const schema = generateJsonLD(tSeo);
+  const schema = generateJsonLD(tSeo, locale);
 
   const messages = await getMessages();
 

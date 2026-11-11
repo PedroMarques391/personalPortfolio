@@ -1,0 +1,25 @@
+# Pedro Marques — Desenvolvedor Fullstack & Mobile
+
+> Portfólio oficial de Pedro Marques, desenvolvedor Fullstack e Mobile especializado em aplicações web escaláveis, interfaces interativas modernas e APIs de alta performance.
+
+## Informações Principais
+
+- [Sobre Mim / About](https://pedromarques.dev.br/pt/sobre): Trajetória profissional, stack tecnológica, habilidades em frontend, backend, bancos de dados e metodologias.
+- [Projetos / Projects](https://pedromarques.dev.br/pt/projetos): Portfólio de sistemas em produção, dashboards, soluções mobile e integrações com IA.
+- [Contato / Contact](https://pedromarques.dev.br/pt/contato): Formulário e canais diretos para novos projetos, consultorias e parcerias profissionais.
+
+## Competências e Stack Tecnológica
+
+- **Front-end**: React, Next.js (App Router), TypeScript, JavaScript (ESNext), Tailwind CSS, Framer Motion / Motion, HTML5 semântico, CSS3 / Modern CSS.
+- **Back-end & APIs**: Node.js, Next.js API Routes, RESTful APIs, JWT / Jose, Bcrypt, Zod.
+- **Mobile**: React Native, Expo, mobile-first design.
+- **Bancos de Dados & Caching**: PostgreSQL, MySQL, Redis, ORMs e query builders.
+- **Qualidade, DevOps & Performance**: Core Web Vitals (LCP, INP, CLS), SEO & GEO, Docker, Git, CI/CD, Acessibilidade (WCAG 2.1 AA).
+
+## Redes & Contato Oficial
+
+- **Website**: https://pedromarques.dev.br
+- **LinkedIn**: https://www.linkedin.com/in/pedromarques391/
+- **GitHub**: https://github.com/PedroMarques391
+- **X / Twitter**: https://x.com/opeedrodev
+- **Instagram**: https://www.instagram.com/pedromarques.dev/

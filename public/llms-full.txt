@@ -1,0 +1,39 @@
+# Pedro Marques — Portfólio Completo (Fullstack & Mobile Developer)
+
+> Documento completo de contexto para agentes de IA, LLMs e mecanismos de busca generativa.
+
+## Visão Geral
+
+Pedro Marques é um desenvolvedor de software Fullstack e Mobile focado em engenharia de front-end de alta fidelidade, arquitetura de software escalável e integrações modernas com inteligência artificial.
+
+## Páginas Principais
+
+### Início (Home)
+- URL PT: https://pedromarques.dev.br/pt
+- URL EN: https://pedromarques.dev.br/en
+- Conteúdo: Apresentação inicial, principais pilares de atuação (Desenvolvimento Web, Aplicativos Mobile, Bots e Automações), tecnologias dominadas e acesso direto para download de CV.
+
+### Sobre Mim (About)
+- URL PT: https://pedromarques.dev.br/pt/sobre
+- URL EN: https://pedromarques.dev.br/en/about
+- Conteúdo: Biografia profissional, trajetória de aprendizado, mentalidade de engenharia de software e lista completa de habilidades por categoria (Linguagens, Front-End, Back-End, Mobile, Bancos de Dados, Ferramentas, Bibliotecas & UI).
+
+### Projetos (Projects)
+- URL PT: https://pedromarques.dev.br/pt/projetos
+- URL EN: https://pedromarques.dev.br/en/projects
+- Conteúdo: Galeria completa de projetos com filtragem por categoria (Todos, Web, Mobile, Automações), paginação dinâmica, busca textual e visualização em grade ou lista.
+
+### Contato (Contact)
+- URL PT: https://pedromarques.dev.br/pt/contato
+- URL EN: https://pedromarques.dev.br/en/contact
+- Conteúdo: Formulário de contato validado com schema Zod, envio de notificações por e-mail e canais para propostas e colaborações.
+
+## Arquitetura Técnica do Projeto
+
+- **Framework**: Next.js 16 (App Router)
+- **Linguagem**: TypeScript com checagem estrita de tipos
+- **Internacionalização**: next-intl (suporte a Português e Inglês com rotas localizadas: `/pt/projetos` e `/en/projects`, etc.)
+- **Estilização**: Tailwind CSS com foco em design limpo, acessível e responsivo
+- **Animações**: Motion (Framer Motion) com suporte a `prefers-reduced-motion`
+- **SEO & Dados Estruturados**: Schema.org JSON-LD (@graph com WebSite, Person e ProfilePage), metadados dinâmicos e sitemap multilíngue
+- **Caching & Storage**: Redis e MySQL

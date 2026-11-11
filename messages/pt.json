@@ -1,24 +1,24 @@
 {
   "metadata": {
     "root": {
-      "title": "Pedro Marques | Desenvolvedor Fullstack",
+      "title": "Pedro Marques | Desenvolvedor Fullstack & Mobile",
       "titleTemplate": "%s | Pedro Marques",
-      "description": "Portfólio Web de Pedro Marques, Desenvolvedor Fullstack e Mobile especializado em aplicações modernas, responsivas e de alta performance.",
-      "keywords": "Pedro Marques, Desenvolvedor Fullstack, Web Developer, portfólio web, React, Next.js, Node.js, TypeScript, Mobile",
-      "ogTitle": "Pedro Marques | Desenvolvedor Fullstack",
-      "ogDescription": "Conheça meu trabalho como Desenvolvedor Fullstack, construindo soluções modernas e eficientes."
+      "description": "Portfólio de Pedro Marques, Desenvolvedor Fullstack e Mobile especializado em aplicações web e mobile de alta performance com React, Next.js e TypeScript.",
+      "keywords": "Pedro Marques, Desenvolvedor Fullstack, Web Developer, Mobile Developer, React, Next.js, Node.js, TypeScript, React Native, Tailwind CSS",
+      "ogTitle": "Pedro Marques | Desenvolvedor Fullstack & Mobile",
+      "ogDescription": "Portfólio de Pedro Marques: conheça soluções modernas em desenvolvimento web, mobile e APIs de alta performance."
     },
     "about": {
       "title": "Sobre Mim",
-      "description": "Conheça mais sobre a trajetória de Pedro Marques, Desenvolvedor Fullstack e Mobile, suas habilidades e experiências profissionais."
+      "description": "Conheça mais sobre a trajetória de Pedro Marques, Desenvolvedor Fullstack e Mobile, suas habilidades técnicas, experiências e projetos em produção."
     },
     "projects": {
       "title": "Projetos",
-      "description": "Explore o portfólio de projetos desenvolvidos por Pedro Marques. Soluções Fullstack, Mobile e Automações."
+      "description": "Explore os projetos desenvolvidos por Pedro Marques: aplicações Fullstack, apps mobile e automações modernas com React, Next.js e Node.js."
     },
     "contact": {
       "title": "Contato",
-      "description": "Entre em contato com Pedro Marques, Desenvolvedor Fullstack. Vamos conversar sobre tecnologia e construir soluções inovadoras."
+      "description": "Entre em contato com Pedro Marques, Desenvolvedor Fullstack e Mobile. Vamos conversar sobre novas oportunidades, projetos e desenvolvimento de software."
     }
   },
   "pages": {

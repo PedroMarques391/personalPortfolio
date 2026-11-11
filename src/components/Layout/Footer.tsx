@@ -1,8 +1,8 @@
 "use client";
 
 import Handler from "@/utils/handler";
-import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { NavItems } from "../Menu/NavItems";
 import { Button } from "../ui/Button";
 
@@ -13,7 +13,7 @@ interface ISocialItemsInterface {
 }
 interface INavItemsInterface {
   textKey: string;
-  href: string | { pathname: string; query: { page: number } };
+  href: "/" | "/projects" | "/about" | "/contact";
   duration: number;
 }
 
@@ -22,7 +22,6 @@ const Footer = (): React.JSX.Element => {
   const router = useRouter();
   const t = useTranslations("components.footer");
   const navT = useTranslations("components.navbar");
-  const locale = useLocale();
 
   const socialItems: ISocialItemsInterface[] = [
     {
@@ -44,26 +43,17 @@ const Footer = (): React.JSX.Element => {
   ];
 
   const navLinkItems: INavItemsInterface[] = [
-    { textKey: "homeLink", href: `/${locale}/`, duration: 0.5 },
-    {
-      textKey: "projectsLink",
-      href: { pathname: `/${locale}/projects`, query: { page: 1 } },
-      duration: 1.0,
-    },
-    { textKey: "aboutLink", href: `/${locale}/about`, duration: 1.5 },
-    { textKey: "contactLink", href: `/${locale}/contact`, duration: 2.0 },
+    { textKey: "homeLink", href: "/", duration: 0.5 },
+    { textKey: "projectsLink", href: "/projects", duration: 1.0 },
+    { textKey: "aboutLink", href: "/about", duration: 1.5 },
+    { textKey: "contactLink", href: "/contact", duration: 2.0 },
   ];
 
-  function handleClick(
-    href: string | { pathname: string; query: { page: number } },
-  ) {
-    const url = typeof href === "string" ? href : href.pathname;
-
-    if (url === pathName) {
+  function handleClick(href: "/" | "/projects" | "/about" | "/contact") {
+    if (href === pathName) {
       Handler.scroll(0);
-    }
-    if (href !== pathName) {
-      router.push(url, { scroll: true });
+    } else {
+      router.push(href);
     }
   }
 

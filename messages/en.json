@@ -1,24 +1,24 @@
 {
     "metadata": {
         "root": {
-            "title": "Pedro Marques | Fullstack Developer",
+            "title": "Pedro Marques | Fullstack & Mobile Developer",
             "titleTemplate": "%s | Pedro Marques",
-            "description": "Web Portfolio of Pedro Marques, Fullstack and Mobile Developer specializing in modern, responsive, and high-performance applications.",
-            "keywords": "Pedro Marques, Fullstack Developer, Web Developer, web portfolio, React, Next.js, Node.js, TypeScript, Mobile",
-            "ogTitle": "Pedro Marques | Fullstack Developer",
-            "ogDescription": "Discover my work as a Fullstack Developer, building modern and efficient solutions."
+            "description": "Portfolio of Pedro Marques, Fullstack & Mobile Developer specializing in high-performance web and mobile applications with React, Next.js, and TypeScript.",
+            "keywords": "Pedro Marques, Fullstack Developer, Web Developer, Mobile Developer, React, Next.js, Node.js, TypeScript, React Native, Tailwind CSS",
+            "ogTitle": "Pedro Marques | Fullstack & Mobile Developer",
+            "ogDescription": "Pedro Marques portfolio: discover modern web and mobile applications, scalable architectures, and performant digital solutions."
         },
         "about": {
             "title": "About Me",
-            "description": "Learn more about Pedro Marques' journey as a Fullstack and Mobile Developer, his skills and professional experiences."
+            "description": "Learn more about Pedro Marques, Fullstack & Mobile Developer: engineering journey, technical competencies, backend architectures, and frontend expertise."
         },
         "projects": {
             "title": "Projects",
-            "description": "Explore the project portfolio developed by Pedro Marques. Fullstack, Mobile, and Automation solutions."
+            "description": "Explore software projects developed by Pedro Marques: production-ready Fullstack web apps, mobile solutions, and automations with modern technologies."
         },
         "contact": {
             "title": "Contact",
-            "description": "Get in touch with Pedro Marques, Fullstack Developer. Let's talk about technology and build innovative solutions."
+            "description": "Get in touch with Pedro Marques, Fullstack & Mobile Developer. Available for new opportunities, software consulting, and high-impact engineering projects."
         }
     },
     "pages": {

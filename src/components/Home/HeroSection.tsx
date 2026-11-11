@@ -10,6 +10,7 @@ import AdaCallButton from "@/components/ui/chat/AdaCallButton";
 import { skills } from "@/utils";
 import Handler from "@/utils/handler";
 import { fadeUpBlur, staggerContainer } from "@/utils/motion";
+import { getPathname } from "@/i18n/navigation";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -54,6 +55,10 @@ const StackSwitcher = React.memo(function StackSwitcher({
 
 const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
   const t = useTranslations("pages.home");
+  const contactHref = getPathname({
+    locale: locale as "pt" | "en",
+    href: "/contact",
+  });
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-x-6 h-full">
@@ -91,7 +96,7 @@ const HeroSection = ({ locale }: HeroSectionProps): React.JSX.Element => {
           className="flex w-full justify-center items-center md:justify-start gap-4 flex-wrap"
         >
           <Button.Link
-            href={`/${locale}/contact`}
+            href={contactHref}
             prefetch
             aria-label={t("contactButtonAriaLabel")}
             styles="flex items-center gap-2 text-white"
